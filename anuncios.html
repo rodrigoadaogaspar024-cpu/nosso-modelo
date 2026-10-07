@@ -16,124 +16,263 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #111827, #1f2937);
+      background:
+        radial-gradient(circle at top, #303030 0%, #111 40%, #080808 100%);
       color: white;
-      padding: 20px;
     }
 
     .container {
-      max-width: 700px;
+      width: 100%;
+      max-width: 650px;
       margin: auto;
+      padding: 20px 18px 40px;
+    }
+
+    .topo {
+      text-align: center;
+      padding: 20px 0 25px;
+    }
+
+    .icone {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #303030, #171717);
+      border: 1px solid #444;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+      font-size: 40px;
     }
 
     h1 {
-      text-align: center;
-      margin: 20px 0 10px;
+      font-size: 32px;
+      margin-bottom: 10px;
     }
 
     .subtitulo {
+      color: #aaa;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .cartao {
+      background: linear-gradient(145deg, #292929, #141414);
+      border: 1px solid #414141;
+      border-radius: 24px;
+      padding: 24px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    .titulo-cartao {
       text-align: center;
-      color: #cbd5e1;
-      margin-bottom: 25px;
+      font-size: 21px;
+      margin-bottom: 18px;
     }
 
-    .anuncio {
-      background: white;
-      color: #111827;
-      padding: 25px;
-      margin: 20px 0;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    .empresaAtual {
       text-align: center;
+      padding: 22px 15px;
+      border-radius: 18px;
+      background: #1b1b1b;
+      border: 1px solid #3c3c3c;
     }
 
-    .anuncio h2 {
-      margin-bottom: 15px;
+    .empresa-icone {
+      font-size: 35px;
+      margin-bottom: 8px;
     }
 
-    .empresa {
-      font-size: 22px;
+    #empresaParceira {
+      display: block;
+      font-size: 23px;
       font-weight: bold;
-      margin: 15px 0;
+      margin-top: 5px;
     }
 
     .descricao {
-      color: #4b5563;
+      color: #aaa;
       line-height: 1.6;
-      margin: 15px 0;
+      font-size: 14px;
+      margin: 16px 0;
+      text-align: center;
+    }
+
+    .beneficios {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .beneficio {
+      background: #1c1c1c;
+      border: 1px solid #333;
+      padding: 13px;
+      border-radius: 13px;
+      color: #ddd;
+      font-size: 14px;
     }
 
     .botao {
       display: block;
       width: 100%;
-      padding: 14px;
-      margin-top: 15px;
+      padding: 16px;
       border: none;
-      border-radius: 12px;
+      border-radius: 15px;
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
       text-decoration: none;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .botao:active {
+      transform: scale(0.98);
     }
 
     .parceiro {
-      background: #2563eb;
-      color: white;
+      background: white;
+      color: #111;
+    }
+
+    .divulgacao {
+      text-align: center;
+    }
+
+    .divulgacao .icone-secao {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .divulgacao h2 {
+      margin-bottom: 10px;
+      font-size: 21px;
+    }
+
+    .lista {
+      text-align: left;
+      margin: 18px 0;
+    }
+
+    .lista div {
+      padding: 11px 0;
+      border-bottom: 1px solid #303030;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    .chamada {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 17px;
+      background: #1c1c1c;
+      border: 1px solid #383838;
+    }
+
+    .chamada strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 16px;
+    }
+
+    .chamada span {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .voltar {
-      background: #374151;
+      margin-top: 20px;
+      background: #202020;
       color: white;
+      border: 1px solid #3b3b3b;
     }
 
-    .empresaAtual {
-      background: #f3f4f6;
-      padding: 15px;
-      border-radius: 12px;
-      margin-top: 15px;
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      line-height: 1.6;
+      padding: 25px 10px 5px;
     }
 
-    .semParceiro {
-      color: #6b7280;
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      #empresaParceira {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <main class="container">
 
-    <h1>📢 Anúncios</h1>
+    <header class="topo">
 
-    <p class="subtitulo">
-      Conheça os parceiros e espaços de divulgação do Nosso Modelo.
-    </p>
+      <div class="icone">
+        📢
+      </div>
+
+      <h1>Anúncios</h1>
+
+      <p class="subtitulo">
+        Conheça os parceiros e descubra
+        novas oportunidades no Nosso Modelo.
+      </p>
+
+    </header>
 
 
-    <div class="anuncio">
+    <!-- PARCEIRO EM DESTAQUE -->
 
-      <h2>🤝 Parceiro em Destaque</h2>
+    <section class="cartao">
+
+      <h2 class="titulo-cartao">
+        🤝 Parceiro em Destaque
+      </h2>
 
       <div class="empresaAtual">
-        🏢
+
+        <div class="empresa-icone">
+          🏢
+        </div>
+
         <span id="empresaParceira">
           Empresa Parceira Oficial
         </span>
+
       </div>
 
       <p class="descricao">
-        Parceiro oficial do Nosso Modelo.
+        Parceiro do Nosso Modelo.
+        Empresas podem divulgar produtos,
+        serviços e oportunidades para os utilizadores.
       </p>
 
-      <p>
-        ⭐ Divulgação de produtos e serviços
-      </p>
+      <div class="beneficios">
 
-      <p class="descricao">
-        Sua empresa também pode aparecer aqui!
-        Divulgue sua marca, produto ou serviço
-        para os utilizadores do Nosso Modelo.
-      </p>
+        <div class="beneficio">
+          📢 Divulgação da empresa
+        </div>
+
+        <div class="beneficio">
+          🛍️ Divulgação de produtos e serviços
+        </div>
+
+        <div class="beneficio">
+          🚀 Maior visibilidade dentro do projeto
+        </div>
+
+      </div>
 
       <a
         class="botao parceiro"
@@ -141,33 +280,74 @@
         🤝 Quero ser parceiro
       </a>
 
-    </div>
+    </section>
 
 
-    <div class="anuncio">
+    <!-- ESPAÇO DE DIVULGAÇÃO -->
 
-      <h2>🎁 Espaço de Divulgação</h2>
+    <section class="cartao divulgacao">
+
+      <div class="icone-secao">
+        🎁
+      </div>
+
+      <h2>
+        Espaço de Divulgação
+      </h2>
 
       <p class="descricao">
-        Este espaço poderá ser utilizado para divulgar
-        produtos, serviços e empresas parceiras.
-      </p>
-
-      <p>
-        🚀 Em breve teremos novas oportunidades
+        Um espaço preparado para empresas,
+        produtos, serviços e futuras oportunidades
         de divulgação.
       </p>
 
-    </div>
+      <div class="lista">
 
+        <div>🏢 Empresas e marcas</div>
+
+        <div>🛍️ Produtos e serviços</div>
+
+        <div>🚀 Novas oportunidades</div>
+
+        <div>🤝 Parcerias comerciais</div>
+
+      </div>
+
+      <div class="chamada">
+
+        <strong>
+          💡 Quer divulgar seu negócio?
+        </strong>
+
+        <span>
+          Cadastre-se como parceiro e envie
+          sua proposta para o Nosso Modelo.
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- VOLTAR -->
 
     <button
       class="botao voltar"
       onclick="window.location.href='index.html'">
+
       🏠 Voltar para o início
+
     </button>
 
-  </div>
+
+    <footer>
+
+      Nosso Modelo © 2026<br>
+      Parceiros e oportunidades
+
+    </footer>
+
+  </main>
 
 
   <script>
@@ -175,7 +355,9 @@
     function carregarParceiro() {
 
       const parceiros =
-        JSON.parse(localStorage.getItem("listaParceiros")) || [];
+        JSON.parse(
+          localStorage.getItem("listaParceiros")
+        ) || [];
 
       const empresa =
         document.getElementById("empresaParceira");
@@ -185,8 +367,10 @@
         const ultimoParceiro = parceiros[0];
 
         if (ultimoParceiro.empresa) {
+
           empresa.textContent =
             ultimoParceiro.empresa;
+
         }
 
       }
