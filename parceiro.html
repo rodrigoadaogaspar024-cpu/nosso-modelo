@@ -19,66 +19,112 @@
     body {
       min-height: 100vh;
       background:
-        radial-gradient(circle at top, #252525 0%, #0d0d0d 50%);
+        radial-gradient(circle at top, #303030 0%, #111 40%, #080808 100%);
       color: white;
     }
 
     .container {
       width: 100%;
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
-      padding: 20px 18px 35px;
+      padding: 20px 18px 40px;
     }
+
+    /* TOPO */
 
     .topo {
       text-align: center;
-      padding: 15px 0 25px;
+      padding: 18px 0 25px;
     }
 
     .icone {
-      width: 85px;
-      height: 85px;
-      margin: auto;
-      border-radius: 26px;
-      background: linear-gradient(145deg, #fff, #888);
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 15px;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 44px;
-      box-shadow: 0 10px 30px rgba(255,255,255,0.12);
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(145deg, #303030, #171717);
+
+      border: 1px solid #444;
+
+      box-shadow:
+        0 15px 35px rgba(0,0,0,0.45);
+
+      font-size: 42px;
     }
 
     h1 {
-      margin-top: 15px;
-      font-size: 30px;
+      font-size: 31px;
+      margin-bottom: 9px;
     }
 
     .subtitulo {
-      color: #999;
-      margin-top: 8px;
+      color: #aaa;
       font-size: 14px;
       line-height: 1.5;
     }
 
+    /* CARD PRINCIPAL */
+
     .card {
-      background: #181818;
-      border: 1px solid #333;
-      border-radius: 22px;
-      padding: 23px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      background:
+        linear-gradient(145deg, #292929, #141414);
+
+      border: 1px solid #414141;
+
+      border-radius: 24px;
+
+      padding: 24px 20px;
+
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.45);
+    }
+
+    .introducao {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .introducao strong {
+      display: block;
+      font-size: 19px;
+      margin-bottom: 8px;
     }
 
     .descricao {
       color: #aaa;
       font-size: 14px;
       line-height: 1.6;
-      text-align: center;
-      margin-bottom: 20px;
     }
+
+    /* BENEFÍCIOS */
+
+    .beneficios {
+      display: grid;
+      gap: 9px;
+      margin-bottom: 22px;
+    }
+
+    .beneficio {
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 13px;
+      padding: 12px;
+      color: #ccc;
+      font-size: 13px;
+    }
+
+    /* FORMULÁRIO */
 
     label {
       display: block;
-      margin: 15px 0 7px;
+      margin: 17px 0 7px;
       color: #ddd;
       font-size: 14px;
       font-weight: bold;
@@ -88,22 +134,24 @@
     textarea {
       width: 100%;
       padding: 15px;
-      background: #101010;
+
+      background: #0f0f0f;
       color: white;
+
       border: 1px solid #3a3a3a;
       border-radius: 13px;
+
       font-size: 16px;
+
       outline: none;
+
+      transition: 0.2s;
     }
 
     input:focus,
     textarea:focus {
       border-color: #777;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 120px;
+      background: #121212;
     }
 
     input::placeholder,
@@ -111,15 +159,27 @@
       color: #666;
     }
 
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    /* BOTÕES */
+
     button {
       width: 100%;
       padding: 16px;
+
       margin-top: 12px;
-      border: none;
-      border-radius: 14px;
+
+      border-radius: 15px;
+
       font-size: 16px;
       font-weight: bold;
+
       cursor: pointer;
+
+      transition: 0.2s;
     }
 
     button:active {
@@ -127,32 +187,71 @@
     }
 
     .enviar {
+      margin-top: 22px;
+
       background: white;
       color: #111;
-      margin-top: 20px;
+
+      border: none;
+    }
+
+    .enviar:hover {
+      background: #e8e8e8;
     }
 
     .secundario {
-      background: #242424;
+      background: #202020;
       color: white;
-      border: 1px solid #3a3a3a;
+
+      border: 1px solid #3b3b3b;
     }
+
+    .secundario:hover {
+      background: #292929;
+    }
+
+    /* RESULTADO */
 
     #resultado {
       text-align: center;
-      color: #ccc;
+
+      color: #ddd;
+
       font-size: 14px;
+
       line-height: 1.5;
-      margin-top: 18px;
-      min-height: 20px;
+
+      margin-top: 17px;
+
+      min-height: 21px;
     }
+
+    /* RODAPÉ */
 
     .rodape {
       text-align: center;
-      color: #555;
-      font-size: 13px;
-      padding: 22px 0;
-      line-height: 1.5;
+
+      color: #666;
+
+      font-size: 12px;
+
+      line-height: 1.6;
+
+      padding: 25px 0 5px;
+    }
+
+    @media (max-width: 400px) {
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .icone {
+        width: 72px;
+        height: 72px;
+        font-size: 38px;
+      }
+
     }
 
   </style>
@@ -163,6 +262,8 @@
 
   <main class="container">
 
+    <!-- TOPO -->
+
     <section class="topo">
 
       <div class="icone">
@@ -172,20 +273,51 @@
       <h1>Seja Parceiro</h1>
 
       <p class="subtitulo">
-        Faça parte do Nosso Modelo
+        Faça parte do crescimento do Nosso Modelo.
       </p>
 
     </section>
 
 
+    <!-- CARD -->
+
     <section class="card">
 
-      <p class="descricao">
-        Divulgue sua empresa, produto ou serviço
-        no Nosso Modelo e apresente sua proposta
-        de parceria.
-      </p>
+      <div class="introducao">
 
+        <strong>
+          🚀 Vamos criar uma parceria?
+        </strong>
+
+        <p class="descricao">
+          Apresente sua empresa, produto ou serviço
+          e envie sua proposta para participar
+          do Nosso Modelo.
+        </p>
+
+      </div>
+
+
+      <!-- BENEFÍCIOS -->
+
+      <div class="beneficios">
+
+        <div class="beneficio">
+          📢 Divulgue sua empresa
+        </div>
+
+        <div class="beneficio">
+          🛍️ Apresente produtos e serviços
+        </div>
+
+        <div class="beneficio">
+          🤝 Crie novas oportunidades
+        </div>
+
+      </div>
+
+
+      <!-- NOME -->
 
       <label for="nome">
         👤 Seu nome
@@ -197,6 +329,8 @@
         placeholder="Digite seu nome">
 
 
+      <!-- EMPRESA -->
+
       <label for="empresa">
         🏢 Nome da empresa
       </label>
@@ -206,6 +340,8 @@
         id="empresa"
         placeholder="Digite o nome da empresa">
 
+
+      <!-- EMAIL -->
 
       <label for="email">
         📧 E-mail
@@ -217,6 +353,8 @@
         placeholder="Digite seu e-mail">
 
 
+      <!-- WHATSAPP -->
+
       <label for="whatsapp">
         📱 WhatsApp
       </label>
@@ -227,6 +365,8 @@
         placeholder="Digite seu WhatsApp">
 
 
+      <!-- PROPOSTA -->
+
       <label for="mensagem">
         💬 Sua proposta
       </label>
@@ -235,6 +375,8 @@
         id="mensagem"
         placeholder="Conte-nos como gostaria de ser parceiro..."></textarea>
 
+
+      <!-- ENVIAR -->
 
       <button
         class="enviar"
@@ -248,6 +390,8 @@
       <p id="resultado"></p>
 
 
+      <!-- PARCEIROS -->
+
       <button
         class="secundario"
         onclick="window.location.href='lista-parceiros.html'">
@@ -256,6 +400,8 @@
 
       </button>
 
+
+      <!-- INÍCIO -->
 
       <button
         class="secundario"
