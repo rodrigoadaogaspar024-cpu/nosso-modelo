@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Anúncios - Nosso Modelo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0 10px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+    }
+
+    .anuncio {
+      background: white;
+      color: #111827;
+      padding: 25px;
+      margin: 20px 0;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .anuncio h2 {
+      margin-bottom: 15px;
+    }
+
+    .empresa {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .descricao {
+      color: #4b5563;
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+
+    .botao {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .parceiro {
+      background: #2563eb;
+      color: white;
+    }
+
+    .voltar {
+      background: #374151;
+      color: white;
+    }
+
+    .empresaAtual {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 15px;
+    }
+
+    .semParceiro {
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>📢 Anúncios</h1>
+
+    <p class="subtitulo">
+      Conheça os parceiros e espaços de divulgação do Nosso Modelo.
+    </p>
+
+
+    <div class="anuncio">
+
+      <h2>🤝 Parceiro em Destaque</h2>
+
+      <div class="empresaAtual">
+        🏢
+        <span id="empresaParceira">
+          Empresa Parceira Oficial
+        </span>
+      </div>
+
+      <p class="descricao">
+        Parceiro oficial do Nosso Modelo.
+      </p>
+
+      <p>
+        ⭐ Divulgação de produtos e serviços
+      </p>
+
+      <p class="descricao">
+        Sua empresa também pode aparecer aqui!
+        Divulgue sua marca, produto ou serviço
+        para os utilizadores do Nosso Modelo.
+      </p>
+
+      <a
+        class="botao parceiro"
+        href="parceiro.html">
+        🤝 Quero ser parceiro
+      </a>
+
+    </div>
+
+
+    <div class="anuncio">
+
+      <h2>🎁 Espaço de Divulgação</h2>
+
+      <p class="descricao">
+        Este espaço poderá ser utilizado para divulgar
+        produtos, serviços e empresas parceiras.
+      </p>
+
+      <p>
+        🚀 Em breve teremos novas oportunidades
+        de divulgação.
+      </p>
+
+    </div>
+
+
+    <button
+      class="botao voltar"
+      onclick="window.location.href='index.html'">
+      🏠 Voltar para o início
+    </button>
+
+  </div>
+
+
+  <script>
+
+    function carregarParceiro() {
+
+      const parceiros =
+        JSON.parse(localStorage.getItem("listaParceiros")) || [];
+
+      const empresa =
+        document.getElementById("empresaParceira");
+
+      if (parceiros.length > 0) {
+
+        const ultimoParceiro = parceiros[0];
+
+        if (ultimoParceiro.empresa) {
+          empresa.textContent =
+            ultimoParceiro.empresa;
+        }
+
+      }
+
+    }
+
+    carregarParceiro();
+
+  </script>
+
+</body>
+</html>

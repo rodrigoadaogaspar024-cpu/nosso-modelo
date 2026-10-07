@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard - Nosso Modelo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, #252525 0%, #0d0d0d 50%);
+      color: white;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px 18px 35px;
+    }
+
+    .topo {
+      text-align: center;
+      padding: 15px 0 25px;
+    }
+
+    .icone {
+      width: 85px;
+      height: 85px;
+      margin: auto;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #fff, #888);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      box-shadow: 0 10px 30px rgba(255,255,255,0.12);
+    }
+
+    h1 {
+      margin-top: 15px;
+      font-size: 30px;
+    }
+
+    .nome {
+      color: #aaa;
+      margin-top: 7px;
+      font-size: 15px;
+    }
+
+    .subtitulo {
+      color: #666;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    .card {
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 21px;
+      padding: 22px;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .numero {
+      font-size: 38px;
+      font-weight: bold;
+    }
+
+    .destaque {
+      background: linear-gradient(145deg, #292929, #151515);
+      border: 1px solid #404040;
+    }
+
+    .nivel {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .acoes {
+      margin-top: 20px;
+    }
+
+    .acoes h2 {
+      font-size: 19px;
+      margin-bottom: 12px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 11px;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .principal {
+      background: white;
+      color: #111;
+    }
+
+    .secundario {
+      background: #242424;
+      color: white;
+      border: 1px solid #3a3a3a;
+    }
+
+    .parceiros {
+      background: #1f1f1f;
+      color: white;
+      border: 1px solid #444;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #555;
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="topo">
+
+      <div class="icone">
+        📊
+      </div>
+
+      <h1>Dashboard</h1>
+
+      <p class="nome" id="nomeDashboard">
+        Utilizador
+      </p>
+
+      <p class="subtitulo">
+        Resumo da sua atividade
+      </p>
+
+    </section>
+
+
+    <section class="card destaque">
+
+      <h2>⭐ Pontos</h2>
+
+      <div
+        class="numero"
+        id="pontosDashboard">
+        0
+      </div>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>🎮 Partidas</h2>
+
+      <div
+        class="numero"
+        id="partidasDashboard">
+        0
+      </div>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>🎁 Recompensas resgatadas</h2>
+
+      <div
+        class="numero"
+        id="recompensasDashboard">
+        0
+      </div>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>🏆 Nível do jogador</h2>
+
+      <div
+        class="nivel"
+        id="nivelDashboard">
+        🥉 Iniciante
+      </div>
+
+    </section>
+
+
+    <section class="acoes">
+
+      <h2>⚡ Acesso rápido</h2>
+
+      <button
+        class="principal"
+        onclick="window.location.href='jogos.html'">
+
+        🎮 Jogar agora
+
+      </button>
+
+      <button
+        class="secundario"
+        onclick="window.location.href='historico.html'">
+
+        📜 Ver histórico
+
+      </button>
+
+      <button
+        class="secundario"
+        onclick="window.location.href='perfil.html'">
+
+        👤 Meu perfil
+
+      </button>
+
+      <button
+        class="parceiros"
+        onclick="window.location.href='lista-parceiros.html'">
+
+        🤝 Ver parceiros
+
+      </button>
+
+      <button
+        class="secundario"
+        onclick="window.location.href='recompensas.html'">
+
+        🎁 Ver recompensas
+
+      </button>
+
+    </section>
+
+
+    <button
+      class="secundario"
+      onclick="window.location.href='index.html'">
+
+      ← Voltar para o início
+
+    </button>
+
+
+    <div class="rodape">
+
+      Nosso Modelo © 2026<br>
+      Entretenimento e recompensas
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    // NOME
+
+    const nome =
+      localStorage.getItem("nomeUsuario") ||
+      "Utilizador";
+
+    document.getElementById(
+      "nomeDashboard"
+    ).textContent = nome;
+
+
+    // PONTOS
+
+    const pontos =
+      Number(
+        localStorage.getItem("pontosUsuario")
+      ) || 0;
+
+    document.getElementById(
+      "pontosDashboard"
+    ).textContent = pontos;
+
+
+    // HISTÓRICO
+
+    const historico =
+      JSON.parse(
+        localStorage.getItem("historicoUsuario")
+      ) || [];
+
+
+    // PARTIDAS
+
+    const partidas =
+      historico.filter(function(item) {
+
+        return item.tipo === "🎮 Jogo";
+
+      }).length;
+
+
+    // RECOMPENSAS
+
+    const recompensas =
+      historico.filter(function(item) {
+
+        return item.tipo === "🎁 Recompensa";
+
+      }).length;
+
+
+    document.getElementById(
+      "partidasDashboard"
+    ).textContent = partidas;
+
+
+    document.getElementById(
+      "recompensasDashboard"
+    ).textContent = recompensas;
+
+
+    // NÍVEL
+
+    let nivel =
+      "🥉 Iniciante";
+
+
+    if (partidas >= 100) {
+
+      nivel = "🥇 Mestre";
+
+    } else if (partidas >= 50) {
+
+      nivel = "🥈 Avançado";
+
+    } else if (partidas >= 20) {
+
+      nivel = "🎖️ Intermediário";
+
+    }
+
+
+    document.getElementById(
+      "nivelDashboard"
+    ).textContent = nivel;
+
+  </script>
+
+</body>
+</html>

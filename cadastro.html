@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Criar conta - Nosso Modelo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cadastro {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(255,255,255,0.08);
+      padding: 30px 25px;
+      border-radius: 22px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 45px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 17px;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 22px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .criar {
+      background: #2563eb;
+      color: white;
+    }
+
+    .voltar {
+      background: #374151;
+      color: white;
+    }
+
+    .aviso {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      color: #cbd5e1;
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cadastro">
+
+    <div class="logo">🎮</div>
+
+    <h1>Nosso Modelo</h1>
+
+    <p class="subtitulo">
+      Crie sua conta e comece a participar.
+    </p>
+
+    <form id="cadastroForm">
+
+      <label for="nome">👤 Nome</label>
+
+      <input
+        type="text"
+        id="nome"
+        placeholder="Digite seu nome"
+        autocomplete="name"
+        required
+      >
+
+
+      <label for="email">📧 E-mail</label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Digite seu e-mail"
+        autocomplete="email"
+        required
+      >
+
+
+      <label for="senha">🔒 Senha</label>
+
+      <input
+        type="password"
+        id="senha"
+        placeholder="Crie uma senha"
+        autocomplete="new-password"
+        minlength="4"
+        required
+      >
+
+
+      <button class="criar" type="submit">
+        🚀 Criar minha conta
+      </button>
+
+    </form>
+
+
+    <button
+      class="voltar"
+      onclick="window.location.href='index.html'">
+      ← Voltar para o início
+    </button>
+
+
+    <div class="aviso">
+      ℹ️ Este é um protótipo. Os dados da conta ficam apenas
+      neste navegador.
+    </div>
+
+  </div>
+
+
+  <script>
+
+    document
+      .getElementById("cadastroForm")
+      .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const nome =
+          document.getElementById("nome").value.trim();
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const senha =
+          document.getElementById("senha").value;
+
+        if (!nome || !email || !senha) {
+          alert("⚠️ Preencha todos os campos.");
+          return;
+        }
+
+        if (senha.length < 4) {
+          alert("⚠️ A senha deve ter pelo menos 4 caracteres.");
+          return;
+        }
+
+        /*
+          Guardamos apenas os dados básicos.
+          A senha NÃO é guardada no localStorage.
+        */
+
+        localStorage.setItem("nomeUsuario", nome);
+        localStorage.setItem("emailUsuario", email);
+
+        /*
+          Inicializa os pontos apenas se ainda não existirem.
+        */
+
+        if (localStorage.getItem("pontosUsuario") === null) {
+          localStorage.setItem("pontosUsuario", "0");
+        }
+
+        if (localStorage.getItem("historicoUsuario") === null) {
+          localStorage.setItem(
+            "historicoUsuario",
+            JSON.stringify([])
+          );
+        }
+
+        alert(
+          "🎉 Conta criada com sucesso, " +
+          nome +
+          "!"
+        );
+
+        window.location.href = "index.html";
+
+      });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pedidos de Parceiros</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0 10px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+    }
+
+    .contador {
+      background: rgba(255,255,255,0.08);
+      padding: 15px;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .pedido {
+      background: white;
+      color: #111827;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    }
+
+    .pedido h2 {
+      margin-bottom: 15px;
+    }
+
+    .pedido p {
+      margin: 10px 0;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+
+    .mensagem {
+      background: #f3f4f6;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 5px;
+    }
+
+    .botoes {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .botao {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .email {
+      background: #2563eb;
+      color: white;
+    }
+
+    .whatsapp {
+      background: #16a34a;
+      color: white;
+    }
+
+    .apagar {
+      background: #dc2626;
+      color: white;
+    }
+
+    .vazio {
+      background: white;
+      color: #111827;
+      padding: 30px 20px;
+      border-radius: 18px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .voltar {
+      background: #374151;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>🤝 Pedidos de Parceiros</h1>
+
+    <p class="subtitulo">
+      Pessoas e empresas interessadas em fazer parceria com o Nosso Modelo.
+    </p>
+
+    <div class="contador">
+      📩 <strong id="contador">0</strong> pedido(s) registrado(s)
+    </div>
+
+    <div id="listaPedidos"></div>
+
+    <button
+      class="botao voltar"
+      onclick="window.location.href='admin.html'">
+      ⚙️ Voltar para Administração
+    </button>
+
+  </div>
+
+
+  <script>
+
+    function carregarPedidos() {
+
+      const parceiros =
+        JSON.parse(localStorage.getItem("listaParceiros")) || [];
+
+      const lista = document.getElementById("listaPedidos");
+      const contador = document.getElementById("contador");
+
+      contador.textContent = parceiros.length;
+
+      if (parceiros.length === 0) {
+
+        lista.innerHTML = `
+          <div class="vazio">
+            <h2>📭 Nenhum pedido</h2>
+            <p>
+              Ainda não existe nenhum pedido de parceria registrado.
+            </p>
+          </div>
+        `;
+
+        return;
+      }
+
+      lista.innerHTML = "";
+
+      parceiros.forEach((pedido, index) => {
+
+        let whatsappBotao = "";
+
+        if (pedido.whatsapp) {
+
+          const numero =
+            pedido.whatsapp.replace(/\D/g, "");
+
+          whatsappBotao = `
+            <a
+              class="botao whatsapp"
+              href="https://wa.me/${numero}"
+              target="_blank">
+              📱 Falar pelo WhatsApp
+            </a>
+          `;
+        }
+
+        lista.innerHTML += `
+
+          <div class="pedido">
+
+            <h2>🤝 Pedido #${index + 1}</h2>
+
+            <p>
+              <strong>👤 Nome:</strong>
+              ${pedido.nome || ""}
+            </p>
+
+            <p>
+              <strong>🏢 Empresa:</strong>
+              ${pedido.empresa || ""}
+            </p>
+
+            <p>
+              <strong>📧 E-mail:</strong>
+              ${pedido.email || ""}
+            </p>
+
+            ${
+              pedido.whatsapp
+              ? `
+                <p>
+                  <strong>📱 WhatsApp:</strong>
+                  ${pedido.whatsapp}
+                </p>
+              `
+              : ""
+            }
+
+            <p>
+              <strong>🕐 Data:</strong>
+              ${pedido.dataHora || ""}
+            </p>
+
+            <p>
+              <strong>💬 Mensagem:</strong>
+            </p>
+
+            <div class="mensagem">
+              ${pedido.mensagem || ""}
+            </div>
+
+            <div class="botoes">
+
+              <a
+                class="botao email"
+                href="mailto:${pedido.email}?subject=Sobre seu pedido de parceria&body=Olá ${encodeURIComponent(pedido.nome || "")},%0D%0A%0D%0AObrigado pelo seu interesse em ser parceiro do Nosso Modelo.">
+                📧 Responder por e-mail
+              </a>
+
+              ${whatsappBotao}
+
+              <button
+                class="botao apagar"
+                onclick="apagarPedido(${index})">
+                🗑️ Apagar pedido
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      });
+
+    }
+
+
+    function apagarPedido(index) {
+
+      const confirmar = confirm(
+        "⚠️ Tem certeza que deseja apagar este pedido?"
+      );
+
+      if (!confirmar) {
+        return;
+      }
+
+      const parceiros =
+        JSON.parse(localStorage.getItem("listaParceiros")) || [];
+
+      parceiros.splice(index, 1);
+
+      localStorage.setItem(
+        "listaParceiros",
+        JSON.stringify(parceiros)
+      );
+
+      alert("🗑️ Pedido apagado com sucesso!");
+
+      carregarPedidos();
+    }
+
+
+    carregarPedidos();
+
+  </script>
+
+</body>
+</html>
+

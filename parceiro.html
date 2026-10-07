@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Seja Parceiro - Nosso Modelo</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, #252525 0%, #0d0d0d 50%);
+      color: white;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px 18px 35px;
+    }
+
+    .topo {
+      text-align: center;
+      padding: 15px 0 25px;
+    }
+
+    .icone {
+      width: 85px;
+      height: 85px;
+      margin: auto;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #fff, #888);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      box-shadow: 0 10px 30px rgba(255,255,255,0.12);
+    }
+
+    h1 {
+      margin-top: 15px;
+      font-size: 30px;
+    }
+
+    .subtitulo {
+      color: #999;
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 22px;
+      padding: 23px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+
+    .descricao {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      color: #ddd;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 15px;
+      background: #101010;
+      color: white;
+      border: 1px solid #3a3a3a;
+      border-radius: 13px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #777;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #666;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .enviar {
+      background: white;
+      color: #111;
+      margin-top: 20px;
+    }
+
+    .secundario {
+      background: #242424;
+      color: white;
+      border: 1px solid #3a3a3a;
+    }
+
+    #resultado {
+      text-align: center;
+      color: #ccc;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 18px;
+      min-height: 20px;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #555;
+      font-size: 13px;
+      padding: 22px 0;
+      line-height: 1.5;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="topo">
+
+      <div class="icone">
+        🤝
+      </div>
+
+      <h1>Seja Parceiro</h1>
+
+      <p class="subtitulo">
+        Faça parte do Nosso Modelo
+      </p>
+
+    </section>
+
+
+    <section class="card">
+
+      <p class="descricao">
+        Divulgue sua empresa, produto ou serviço
+        no Nosso Modelo e apresente sua proposta
+        de parceria.
+      </p>
+
+
+      <label for="nome">
+        👤 Seu nome
+      </label>
+
+      <input
+        type="text"
+        id="nome"
+        placeholder="Digite seu nome">
+
+
+      <label for="empresa">
+        🏢 Nome da empresa
+      </label>
+
+      <input
+        type="text"
+        id="empresa"
+        placeholder="Digite o nome da empresa">
+
+
+      <label for="email">
+        📧 E-mail
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Digite seu e-mail">
+
+
+      <label for="whatsapp">
+        📱 WhatsApp
+      </label>
+
+      <input
+        type="tel"
+        id="whatsapp"
+        placeholder="Digite seu WhatsApp">
+
+
+      <label for="mensagem">
+        💬 Sua proposta
+      </label>
+
+      <textarea
+        id="mensagem"
+        placeholder="Conte-nos como gostaria de ser parceiro..."></textarea>
+
+
+      <button
+        class="enviar"
+        onclick="enviarContato()">
+
+        📩 Enviar interesse
+
+      </button>
+
+
+      <p id="resultado"></p>
+
+
+      <button
+        class="secundario"
+        onclick="window.location.href='lista-parceiros.html'">
+
+        🤝 Ver parceiros cadastrados
+
+      </button>
+
+
+      <button
+        class="secundario"
+        onclick="window.location.href='index.html'">
+
+        🏠 Voltar para início
+
+      </button>
+
+    </section>
+
+
+    <div class="rodape">
+
+      Nosso Modelo © 2026<br>
+      Área de parceiros
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    function enviarContato() {
+
+      const nome =
+        document.getElementById("nome").value.trim();
+
+      const empresa =
+        document.getElementById("empresa").value.trim();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const whatsapp =
+        document.getElementById("whatsapp").value.trim();
+
+      const mensagem =
+        document.getElementById("mensagem").value.trim();
+
+
+      if (!nome || !empresa || !email || !mensagem) {
+
+        alert(
+          "⚠️ Preencha nome, empresa, e-mail e proposta."
+        );
+
+        return;
+
+      }
+
+
+      const dataHora =
+        new Date().toLocaleString("pt-PT");
+
+
+      const novoParceiro = {
+
+        nome: nome,
+
+        empresa: empresa,
+
+        email: email,
+
+        whatsapp: whatsapp,
+
+        mensagem: mensagem,
+
+        dataHora: dataHora
+
+      };
+
+
+      let parceiros =
+        JSON.parse(
+          localStorage.getItem("listaParceiros")
+        ) || [];
+
+
+      parceiros.unshift(novoParceiro);
+
+
+      localStorage.setItem(
+        "listaParceiros",
+        JSON.stringify(parceiros)
+      );
+
+
+      document.getElementById(
+        "resultado"
+      ).textContent =
+        "✅ Interesse registrado com sucesso!";
+
+
+      document.getElementById("nome").value = "";
+
+      document.getElementById("empresa").value = "";
+
+      document.getElementById("email").value = "";
+
+      document.getElementById("whatsapp").value = "";
+
+      document.getElementById("mensagem").value = "";
+
+    }
+
+  </script>
+
+</body>
+</html>

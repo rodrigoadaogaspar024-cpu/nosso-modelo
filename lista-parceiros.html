@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Parceiros - Nosso Modelo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, #252525 0%, #0d0d0d 50%);
+      color: white;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px 18px 35px;
+    }
+
+    .topo {
+      text-align: center;
+      padding: 15px 0 25px;
+    }
+
+    .icone {
+      width: 85px;
+      height: 85px;
+      margin: auto;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #fff, #888);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      box-shadow: 0 10px 30px rgba(255,255,255,0.12);
+    }
+
+    h1 {
+      margin-top: 15px;
+      font-size: 30px;
+    }
+
+    .subtitulo {
+      color: #999;
+      margin-top: 7px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 21px;
+      padding: 22px;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .card h2 {
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+
+    .informacao {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      word-break: break-word;
+    }
+
+    .informacao strong {
+      color: white;
+    }
+
+    .vazio {
+      text-align: center;
+      color: #777;
+      line-height: 1.6;
+      padding: 25px 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .email {
+      background: white;
+      color: #111;
+    }
+
+    .whatsapp {
+      background: #242424;
+      color: white;
+      border: 1px solid #444;
+    }
+
+    .parceiro {
+      background: white;
+      color: #111;
+      margin-top: 8px;
+    }
+
+    .voltar {
+      background: #242424;
+      color: white;
+      border: 1px solid #3a3a3a;
+      margin-top: 12px;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #555;
+      font-size: 13px;
+      padding: 22px 0;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="topo">
+
+      <div class="icone">
+        🤝
+      </div>
+
+      <h1>Parceiros</h1>
+
+      <p class="subtitulo">
+        Conheça os parceiros do Nosso Modelo
+      </p>
+
+    </section>
+
+
+    <section id="lista">
+
+      <div class="card">
+        <p class="vazio">
+          Nenhum parceiro cadastrado ainda.
+        </p>
+      </div>
+
+    </section>
+
+
+    <button
+      class="parceiro"
+      onclick="window.location.href='parceiro.html'">
+
+      🤝 Seja Parceiro
+
+    </button>
+
+
+    <button
+      class="voltar"
+      onclick="window.location.href='index.html'">
+
+      🏠 Voltar para início
+
+    </button>
+
+
+    <div class="rodape">
+
+      Nosso Modelo © 2026<br>
+      Empresas e parceiros
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    const lista =
+      document.getElementById("lista");
+
+
+    const parceiros =
+      JSON.parse(
+        localStorage.getItem("listaParceiros")
+      ) || [];
+
+
+    if (parceiros.length > 0) {
+
+      lista.innerHTML = "";
+
+
+      parceiros.forEach(function(parceiro) {
+
+        const card =
+          document.createElement("div");
+
+        card.className = "card";
+
+
+        const titulo =
+          document.createElement("h2");
+
+        titulo.textContent =
+          "🤝 " + (parceiro.empresa || "Parceiro");
+
+
+        card.appendChild(titulo);
+
+
+        const nome =
+          document.createElement("p");
+
+        nome.className = "informacao";
+
+        nome.innerHTML =
+          "<strong>👤 Nome:</strong> " +
+          (parceiro.nome || "Não informado");
+
+        card.appendChild(nome);
+
+
+        const email =
+          document.createElement("p");
+
+        email.className = "informacao";
+
+        email.innerHTML =
+          "<strong>📧 E-mail:</strong> " +
+          (parceiro.email || "Não informado");
+
+        card.appendChild(email);
+
+
+        if (parceiro.whatsapp) {
+
+          const whatsapp =
+            document.createElement("p");
+
+          whatsapp.className = "informacao";
+
+          whatsapp.innerHTML =
+            "<strong>📱 WhatsApp:</strong> " +
+            parceiro.whatsapp;
+
+          card.appendChild(whatsapp);
+
+        }
+
+
+        const mensagem =
+          document.createElement("p");
+
+        mensagem.className = "informacao";
+
+        mensagem.innerHTML =
+          "<strong>💬 Mensagem:</strong> " +
+          (parceiro.mensagem || "Sem mensagem");
+
+        card.appendChild(mensagem);
+
+
+        const data =
+          document.createElement("p");
+
+        data.className = "informacao";
+
+        data.innerHTML =
+          "<strong>🕒 Data:</strong> " +
+          (parceiro.dataHora || "Não informada");
+
+        card.appendChild(data);
+
+
+        if (parceiro.email) {
+
+          const botaoEmail =
+            document.createElement("button");
+
+          botaoEmail.className = "email";
+
+          botaoEmail.textContent =
+            "📧 Contactar parceiro";
+
+          botaoEmail.onclick =
+            function() {
+
+              window.location.href =
+                "mailto:" + parceiro.email;
+
+            };
+
+          card.appendChild(botaoEmail);
+
+        }
+
+
+        if (parceiro.whatsapp) {
+
+          const botaoWhatsApp =
+            document.createElement("button");
+
+          botaoWhatsApp.className =
+            "whatsapp";
+
+          botaoWhatsApp.textContent =
+            "📱 WhatsApp";
+
+          botaoWhatsApp.onclick =
+            function() {
+
+              const numero =
+                parceiro.whatsapp
+                  .replace(/\D/g, "");
+
+              if (numero) {
+
+                window.location.href =
+                  "https://wa.me/" + numero;
+
+              }
+
+            };
+
+          card.appendChild(botaoWhatsApp);
+
+        }
+
+
+        lista.appendChild(card);
+
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>

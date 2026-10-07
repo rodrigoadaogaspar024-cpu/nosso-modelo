@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Seja Parceiro - Nosso Modelo</title>
+
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="card">
+
+      <h1>🤝 Seja Parceiro</h1>
+
+      <p style="text-align:center;">
+        Divulgue sua empresa, produto ou serviço
+        no Nosso Modelo.
+      </p>
+
+      <input
+        type="text"
+        id="nome"
+        placeholder="Seu nome">
+
+      <input
+        type="text"
+        id="empresa"
+        placeholder="Nome da empresa">
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Seu e-mail">
+
+      <textarea
+        id="mensagem"
+        rows="5"
+        placeholder="Conte-nos como gostaria de ser parceiro..."></textarea>
+
+      <button onclick="enviarContato()">
+  📩 Enviar interesse
+</button>
+
+<button onclick="window.location.href='index.html'">
+  🏠 Voltar para início
+</button>
+
+      <p id="resultado" style="text-align:center;"></p>
+
+    </div>
+
+  </div>
+
+  <script>
+const lista = document.getElementById("lista");
+
+const parceiros =
+  JSON.parse(localStorage.getItem("listaParceiros")) || [];
+
+if (parceiros.length > 0) {
+
+  lista.innerHTML = "";
+
+  parceiros.forEach(function(parceiro) {
+
+    const card = document.createElement("div");
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <h2>🤝 ${parceiro.empresa}</h2>
+      <p><strong>👤 Nome:</strong> ${parceiro.nome}</p>
+      <p><strong>📧 E-mail:</strong> ${parceiro.email}</p>
+      <p><strong>💬 Mensagem:</strong> ${parceiro.mensagem}</p>
+      <p><strong>🕒 Data:</strong> ${parceiro.dataHora}</p>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+    
+  </script>
+
+</body>
+</html>

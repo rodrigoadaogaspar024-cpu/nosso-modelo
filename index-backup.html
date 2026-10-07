@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosso Modelo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #111;
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: #1b1b1b;
+      border-bottom: 1px solid #333;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: #aaa;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .saldo {
+      background: #222;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .saldo h2 {
+      margin-bottom: 10px;
+    }
+
+    .saldo strong {
+      font-size: 30px;
+    }
+
+    .botoes {
+      display: grid;
+      gap: 15px;
+    }
+
+    button {
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .entrar {
+      background: white;
+      color: #111;
+    }
+
+    .jogos {
+      background: #333;
+      color: white;
+    }
+
+    .recompensas {
+      background: #333;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+<nav class="menu-principal">
+
+  <button onclick="window.location.href='index.html'">
+    🏠 Início
+  </button>
+
+  <button onclick="window.location.href='jogos.html'">
+    🎮 Jogos
+  </button>
+
+  <button onclick="window.location.href='recompensas.html'">
+    🎁 Recompensas
+  </button>
+
+  <button onclick="window.location.href='perfil.html'">
+    👤 Perfil
+  </button>
+<button onclick="window.location.href='dashboard.html'">
+  🎮 Dashboard
+</button>
+<button onclick="window.location.href='lista-parceiros.html'">
+  🤝 Ver parceiros
+</button>
+</nav>
+  
+<div id="boasVindas" style="text-align:center; padding:15px;"></div>
+
+  <header>
+    <h1>🎮 NOSSO MODELO</h1>
+<div style="background:#ffffff; padding:20px; margin:20px auto; max-width:400px; border-radius:18px; box-shadow:0 4px 12px rgba(0,0,0,0.15); text-align:center;">
+
+  <h2>⭐ Seus Pontos</h2>
+
+  <p>⭐ Pontos: <span id="pontosMenu">0</span></p>
+
+  <p>Continue jogando para acumular pontos!</p>
+
+</div>
+<div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:20px auto; max-width:500px;">
+
+  <button
+    onclick="window.location.href='jogos.html'"
+    style="padding:15px 22px; border:none; border-radius:12px; font-size:16px; cursor:pointer;">
+    🎮 Jogar agora
+  </button>
+
+  <button
+    onclick="window.location.href='recompensas.html'"
+    style="padding:15px 22px; border:none; border-radius:12px; font-size:16px; cursor:pointer;">
+    🎁 Ver recompensas
+  </button>
+
+</div>
+<div style="background:#ffffff; padding:20px; margin:25px auto; max-width:500px; border-radius:18px; box-shadow:0 4px 12px rgba(0,0,0,0.15); text-align:center;">
+
+  <h2>📢 Parceiros em destaque</h2>
+
+  <p>
+    Empresas e parceiros podem divulgar seus produtos e serviços aqui.
+  </p>
+
+  <button
+    onclick="window.location.href='anuncios.html'"
+    style="padding:14px 22px; border:none; border-radius:12px; font-size:16px; cursor:pointer;">
+    🤝 Ver parceiros
+  </button>
+
+</div>
+
+<p style="text-align:center; color:#666;">
+  Uma plataforma de entretenimento e recompensas.
+</p>
+    <p>Entretenimento e recompensas</p>
+  </header>
+
+  <main class="container">
+
+    <section class="saldo">
+      <h2>💰 Saldo demonstrativo</h2>
+      <strong>€ 0,00</strong>
+<p>⭐ Pontos: <span id="pontosInicio">0</span></p>
+
+    </section>
+
+    <section class="botoes">
+
+      <button class="entrar" onclick="window.location.href='cadastro.html'">
+  👤 Entrar / Criar conta
+</button>
+<button class="jogos" onclick="window.location.href='jogos.html'">
+  🎮 Jogos
+</button>
+
+<button class="jogos" onclick="window.location.href='perfil.html'">
+  👤 Meu Perfil
+</button>
+<button class="recompensas" onclick="window.location.href='anuncios.html'">
+  📢 Anúncios
+<button class="jogos" onclick="window.location.href='admin.html'">
+  ⚙️ Administração
+</button>
+</button>
+<button class="recompensas" onclick="window.location.href='recompensas.html'">
+  🎁 Recompensas
+</button>
+    </section>
+
+  </main>
+<script src="script.js"></script>
+<script>
+  const nomeUsuario = localStorage.getItem("nomeUsuario");
+
+  if (nomeUsuario) {
+    document.getElementById("boasVindas").innerHTML =
+      "👋 Olá, " + nomeUsuario + "!";
+  }
+</script>
+<script>
+  const pontosInicio =
+    Number(localStorage.getItem("pontosUsuario")) || 0;
+
+ document.getElementById("pontosMenu").textContent = pontosInicio;
+
+</script>
+
+</body>
+</html>
