@@ -1,8 +1,12 @@
-<!DOCTYPE html><html lang="pt">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosso Modelo</title>  <style>
+
+  <title>Nosso Modelo</title>
+
+  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -11,7 +15,8 @@
     }
 
     body {
-      background: #0d0d0d;
+      background:
+        radial-gradient(circle at top, #303030 0%, #111 38%, #080808 100%);
       color: white;
       min-height: 100vh;
     }
@@ -22,126 +27,170 @@
       gap: 8px;
       overflow-x: auto;
       padding: 12px;
-      background: #171717;
+      background: rgba(10, 10, 10, 0.96);
       border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-principal::-webkit-scrollbar {
+      display: none;
     }
 
     .menu-principal button {
       flex-shrink: 0;
-      border: 1px solid #333;
-      background: #222;
+      border: 1px solid #3d3d3d;
+      background: #1c1c1c;
       color: white;
-      padding: 10px 13px;
-      border-radius: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
       font-size: 13px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
     }
 
     .menu-principal button:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     /* BOAS VINDAS */
     #boasVindas {
       text-align: center;
-      padding: 18px 10px 5px;
-      color: #bbb;
+      padding: 20px 15px 0;
+      color: #ddd;
       font-size: 15px;
+      font-weight: bold;
     }
 
-    /* CABEÇALHO */
+    /* HERO */
     header {
       text-align: center;
-      padding: 25px 18px 20px;
+      padding: 28px 18px 24px;
+    }
+
+    .logo {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #303030, #171717);
+      border: 1px solid #444;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+      font-size: 44px;
     }
 
     header h1 {
-      font-size: 34px;
-      margin-bottom: 8px;
+      font-size: 35px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
     }
 
     header p {
-      color: #999;
+      color: #bbb;
       font-size: 15px;
+      line-height: 1.6;
     }
 
     .subtitulo {
-      margin-top: 8px;
-      color: #666;
+      margin-top: 6px;
+      color: #777;
+    }
+
+    /* DESTAQUE */
+    .hero-destaque {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #242424, #151515);
+      border: 1px solid #3a3a3a;
+    }
+
+    .hero-destaque strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .hero-destaque span {
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     /* CONTAINER */
     .container {
       width: 100%;
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
-      padding: 10px 18px 35px;
+      padding: 8px 18px 40px;
     }
 
-    /* CARTÃO DE PONTOS */
+    /* PONTOS */
     .cartao-pontos {
-      background: linear-gradient(145deg, #222, #151515);
-      border: 1px solid #333;
-      border-radius: 22px;
-      padding: 25px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(145deg, #292929, #121212);
+      border: 1px solid #4a4a4a;
+      border-radius: 26px;
+      padding: 28px 20px;
       text-align: center;
-      margin-bottom: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      margin-bottom: 20px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.5);
+    }
+
+    .cartao-pontos::before {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+      top: -90px;
+      right: -70px;
     }
 
     .cartao-pontos h2 {
-      font-size: 21px;
-      margin-bottom: 12px;
+      font-size: 20px;
+      margin-bottom: 8px;
+      position: relative;
     }
 
     .numero-pontos {
-      font-size: 48px;
+      font-size: 62px;
       font-weight: bold;
-      margin: 5px 0;
+      margin: 4px 0;
+      position: relative;
     }
 
     .cartao-pontos p {
       color: #999;
       font-size: 14px;
+      position: relative;
     }
 
-    /* SALDO */
-    .saldo {
-      background: #181818;
-      border: 1px solid #2d2d2d;
-      border-radius: 18px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .saldo h2 {
+    /* AÇÕES */
+    .titulo-secao {
       font-size: 18px;
-      margin-bottom: 10px;
+      margin: 25px 0 13px;
+      color: #eee;
     }
 
-    .saldo strong {
-      display: block;
-      font-size: 30px;
-      margin-bottom: 8px;
-    }
-
-    .saldo p {
-      color: #999;
-    }
-
-    /* BOTÕES PRINCIPAIS */
     .botoes {
       display: grid;
-      gap: 12px;
+      gap: 11px;
     }
 
     .botoes button {
       width: 100%;
       padding: 17px;
-      border: none;
-      border-radius: 14px;
+      border: 1px solid #383838;
+      border-radius: 16px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -155,47 +204,89 @@
     .entrar {
       background: white;
       color: #111;
+      border-color: white !important;
     }
 
-    .jogos {
-      background: #242424;
-      color: white;
-      border: 1px solid #3a3a3a !important;
-    }
-
+    .jogos,
     .recompensas {
-      background: #242424;
+      background: #1e1e1e;
       color: white;
-      border: 1px solid #3a3a3a !important;
+    }
+
+    .jogos:hover,
+    .recompensas:hover {
+      background: #2b2b2b;
+    }
+
+    /* SALDO */
+    .saldo {
+      background: linear-gradient(145deg, #1d1d1d, #111);
+      border: 1px solid #353535;
+      border-radius: 22px;
+      padding: 24px 20px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .saldo h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .saldo strong {
+      display: block;
+      font-size: 31px;
+      margin-bottom: 8px;
+    }
+
+    .saldo p {
+      color: #999;
+      font-size: 14px;
+    }
+
+    .demonstrativo {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: #252525;
+      color: #777;
+      font-size: 11px;
     }
 
     /* PARCEIROS */
     .parceiros {
-      margin-top: 22px;
-      background: linear-gradient(145deg, #202020, #151515);
-      border: 1px solid #333;
-      border-radius: 20px;
-      padding: 22px;
+      margin-top: 24px;
+      background: linear-gradient(145deg, #292929, #131313);
+      border: 1px solid #444;
+      border-radius: 24px;
+      padding: 26px 20px;
       text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    }
+
+    .icone-parceiro {
+      font-size: 36px;
+      margin-bottom: 8px;
     }
 
     .parceiros h2 {
       margin-bottom: 10px;
-      font-size: 20px;
+      font-size: 21px;
     }
 
     .parceiros p {
       color: #aaa;
-      line-height: 1.5;
-      margin-bottom: 16px;
+      line-height: 1.6;
+      margin-bottom: 18px;
       font-size: 14px;
     }
 
     .botao-parceiro {
       width: 100%;
-      padding: 15px;
+      padding: 16px;
       border: none;
-      border-radius: 13px;
+      border-radius: 15px;
       background: white;
       color: #111;
       font-size: 16px;
@@ -206,139 +297,228 @@
     /* RODAPÉ */
     footer {
       text-align: center;
-      padding: 25px 15px;
-      color: #555;
+      padding: 30px 15px;
+      color: #666;
       font-size: 13px;
+      line-height: 1.7;
     }
 
     @media (max-width: 400px) {
       header h1 {
-        font-size: 28px;
+        font-size: 29px;
+      }
+
+      .logo {
+        width: 72px;
+        height: 72px;
+        font-size: 39px;
       }
 
       .numero-pontos {
-        font-size: 42px;
+        font-size: 51px;
       }
     }
-  </style></head><body>  <!-- MENU -->  <nav class="menu-principal"><button onclick="window.location.href='index.html'">
-  🏠 Início
-</button>
+  </style>
+</head>
 
-<button onclick="window.location.href='jogos.html'">
-  🎮 Jogos
-</button>
+<body>
 
-<button onclick="window.location.href='recompensas.html'">
-  🎁 Recompensas
-</button>
+  <!-- MENU -->
+  <nav class="menu-principal">
 
-<button onclick="window.location.href='perfil.html'">
-  👤 Perfil
-</button>
+    <button onclick="window.location.href='index.html'">
+      🏠 Início
+    </button>
 
-<button onclick="window.location.href='dashboard.html'">
-  📊 Dashboard
-</button>
+    <button onclick="window.location.href='jogos.html'">
+      🎮 Jogos
+    </button>
 
-<button onclick="window.location.href='lista-parceiros.html'">
-  🤝 Parceiros
-</button>
+    <button onclick="window.location.href='recompensas.html'">
+      🎁 Recompensas
+    </button>
 
-  </nav>  <!-- BOAS VINDAS -->  <div id="boasVindas"></div>  <!-- CABEÇALHO -->  <header>
-    <h1>🎮 NOSSO MODELO</h1>
-    <p>Entretenimento e recompensas</p>
-    <p class="subtitulo">Uma nova forma de participar, jogar e conquistar.</p>
-  </header>  <main class="container"><!-- PONTOS -->
-<section class="cartao-pontos">
+    <button onclick="window.location.href='perfil.html'">
+      👤 Perfil
+    </button>
 
-  <h2>⭐ Seus Pontos</h2>
+    <button onclick="window.location.href='dashboard.html'">
+      📊 Dashboard
+    </button>
 
-  <div class="numero-pontos">
-    <span id="pontosMenu">0</span>
-  </div>
+    <button onclick="window.location.href='lista-parceiros.html'">
+      🤝 Parceiros
+    </button>
 
-  <p>Continue jogando para acumular pontos!</p>
+  </nav>
 
-</section>
+  <!-- BOAS VINDAS -->
+  <div id="boasVindas"></div>
 
-<!-- AÇÕES RÁPIDAS -->
-<section class="botoes">
+  <!-- HERO -->
+  <header>
 
-  <button class="entrar"
-    onclick="window.location.href='cadastro.html'">
-    👤 Entrar / Criar conta
-  </button>
+    <div class="logo">🎮</div>
 
-  <button class="jogos"
-    onclick="window.location.href='jogos.html'">
-    🎮 Jogar agora
-  </button>
+    <h1>NOSSO MODELO</h1>
 
-  <button class="recompensas"
-    onclick="window.location.href='recompensas.html'">
-    🎁 Ver recompensas
-  </button>
+    <p>
+      Entretenimento, participação e recompensas.
+    </p>
 
-  <button class="jogos"
-    onclick="window.location.href='perfil.html'">
-    👤 Meu Perfil
-  </button>
+    <p class="subtitulo">
+      Uma nova forma de participar, jogar e conquistar.
+    </p>
 
-  <button class="recompensas"
-    onclick="window.location.href='anuncios.html'">
-    📢 Anúncios
-  </button>
+    <div class="hero-destaque">
+      <strong>🚀 Faça parte do projeto</strong>
+      <span>
+        Crie sua conta, participe dos jogos, acumule pontos
+        e descubra novas oportunidades.
+      </span>
+    </div>
 
-  <button class="jogos"
-    onclick="window.location.href='admin.html'">
-    ⚙️ Administração
-  </button>
+  </header>
 
-</section>
+  <main class="container">
 
-<!-- SALDO -->
-<section class="saldo">
+    <!-- PONTOS -->
+    <section class="cartao-pontos">
 
-  <h2>💰 Saldo demonstrativo</h2>
+      <h2>⭐ Seus Pontos</h2>
 
-  <strong>€ 0,00</strong>
+      <div class="numero-pontos">
+        <span id="pontosMenu">0</span>
+      </div>
 
-  <p>⭐ Pontos: <span id="pontosInicio">0</span></p>
+      <p>
+        Continue jogando para acumular pontos!
+      </p>
 
-</section>
+    </section>
 
-<!-- PARCEIROS -->
-<section class="parceiros">
+    <!-- AÇÕES -->
+    <h3 class="titulo-secao">
+      🚀 Acesso rápido
+    </h3>
 
-  <h2>🤝 Parceiros em destaque</h2>
+    <section class="botoes">
 
-  <p>
-    Empresas e parceiros podem divulgar
-    seus produtos e serviços no Nosso Modelo.
-  </p>
+      <button
+        class="entrar"
+        onclick="window.location.href='cadastro.html'">
+        👤 Entrar / Criar conta
+      </button>
 
-  <button class="botao-parceiro"
-    onclick="window.location.href='anuncios.html'">
-    🤝 Ver parceiros
-  </button>
+      <button
+        class="jogos"
+        onclick="window.location.href='jogos.html'">
+        🎮 Jogar agora
+      </button>
 
-</section>
+      <button
+        class="recompensas"
+        onclick="window.location.href='recompensas.html'">
+        🎁 Ver recompensas
+      </button>
 
-  </main>  <footer>
+      <button
+        class="jogos"
+        onclick="window.location.href='perfil.html'">
+        👤 Meu Perfil
+      </button>
+
+      <button
+        class="recompensas"
+        onclick="window.location.href='anuncios.html'">
+        📢 Anúncios
+      </button>
+
+      <button
+        class="jogos"
+        onclick="window.location.href='admin.html'">
+        ⚙️ Administração
+      </button>
+
+    </section>
+
+    <!-- SALDO -->
+    <section class="saldo">
+
+      <h2>💰 Saldo demonstrativo</h2>
+
+      <strong>€ 0,00</strong>
+
+      <p>
+        ⭐ Pontos:
+        <span id="pontosInicio">0</span>
+      </p>
+
+      <span class="demonstrativo">
+        Área demonstrativa
+      </span>
+
+    </section>
+
+    <!-- PARCEIROS -->
+    <section class="parceiros">
+
+      <div class="icone-parceiro">
+        🤝
+      </div>
+
+      <h2>Parceiros em destaque</h2>
+
+      <p>
+        Empresas e parceiros podem divulgar
+        seus produtos e serviços no Nosso Modelo.
+      </p>
+
+      <button
+        class="botao-parceiro"
+        onclick="window.location.href='anuncios.html'">
+
+        🤝 Ver parceiros
+
+      </button>
+
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+
     Nosso Modelo © 2026<br>
+
     Entretenimento e recompensas
-  </footer>  <!-- SCRIPTS EXISTENTES -->  <script src="script.js"></script>  <script>
-    const nomeUsuario = localStorage.getItem("nomeUsuario");
+
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script>
+
+    const nomeUsuario =
+      localStorage.getItem("nomeUsuario");
 
     if (nomeUsuario) {
+
       document.getElementById("boasVindas").innerHTML =
         "👋 Olá, " + nomeUsuario + "!";
+
     }
 
     const pontosInicio =
       Number(localStorage.getItem("pontosUsuario")) || 0;
 
-    document.getElementById("pontosMenu").textContent = pontosInicio;
-    document.getElementById("pontosInicio").textContent = pontosInicio;
-  </script></body>
+    document.getElementById("pontosMenu").textContent =
+      pontosInicio;
+
+    document.getElementById("pontosInicio").textContent =
+      pontosInicio;
+
+  </script>
+
+</body>
 </html>
