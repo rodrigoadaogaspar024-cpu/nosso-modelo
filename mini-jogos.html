@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mini Jogos - Nosso Modelo</title>
+<script>
+if(localStorage.getItem("usuarioLogado") !== "true"){
+  location.replace("cadastro.html");
+}
+</script>
+<style>
+*{box-sizing:border-box}
+body{
+ background:radial-gradient(ellipse at top,#493416,#100e0b);
+ color:#ffe8b2;font-family:Arial,sans-serif;
+ text-align:center;margin:0;padding:22px;
+ min-height:100vh
+}
+main{
+ max-width:540px;margin:35px auto;
+ background:#211a12;border:1px solid #987333;
+ border-radius:25px;padding:25px 18px
+}
+h1{font-size:27px}
+p{line-height:1.6}
+button,input{
+ padding:15px;border-radius:13px;
+ font-size:17px;margin:9px
+}
+button{
+ background:linear-gradient(135deg,#ffe49a,#c89638);
+ border:0;color:#201406;font-weight:bold
+}
+input{
+ width:85%;background:#100e0b;
+ border:1px solid #997738;color:white;
+ text-align:center
+}
+#toque{
+ width:90%;height:150px;
+ background:#514025;color:white
+}
+a{color:#ffdb85}
+.resultado{font-size:20px;min-height:50px}
+</style>
+</head>
+<body>
+<main>
+<h1 id="titulo">🎮 Nosso Modelo</h1>
+
+<section id="reflexo">
+<p>Espera até o botão ficar verde e toca o mais rápido possível!</p>
+<button onclick="comecar()">▶ Começar</button>
+<button id="toque" onclick="tocar()">⚡ Preparado?</button>
+<p class="resultado" id="resultadoR"></p>
+<p id="recordeR"></p>
+</section>
+
+<section id="adivinha" hidden>
+<p>Estou a pensar num número de 1 a 50.</p>
+<input id="palpite" type="number" min="1" max="50"
+ placeholder="O teu palpite">
+<button onclick="verificar()">🔎 Adivinhar</button>
+<button onclick="reiniciar()">🔄 Novo jogo</button>
+<p class="resultado" id="resultadoN"></p>
+<p id="recordeN"></p>
+</section>
+
+<p><a href="catalogo.html">← Voltar ao catálogo</a></p>
+</main>
+
+<script>
+const tipo = new URLSearchParams(location.search).get("tipo");
+
+document.getElementById("reflexo").hidden = tipo === "numero";
+document.getElementById("adivinha").hidden = tipo !== "numero";
+document.getElementById("titulo").textContent =
+ tipo === "numero" ? "🔢 Número Secreto" : "⚡ Reflexo Rápido";
+
+let inicioTempo = 0;
+let aguardando = false;
+let pronto = false;
+let temporizador;
+
+function mostrarRecordes(){
+ const r=localStorage.getItem("recordeReflexo");
+ const n=localStorage.getItem("recordeNumero");
+ document.getElementById("recordeR").textContent =
+   "🏆 Melhor tempo: " + (r ? r+" ms" : "—");
+ document.getElementById("recordeN").textContent =
+   "🏆 Melhor resultado: " + (n ? n+" tentativas" : "—");
+}
+
+function comecar(){
+ clearTimeout(temporizador);
+ aguardando=true;
+ pronto=false;
+ const b=document.getElementById("toque");
+ b.style.background="#824627";
+ b.textContent="⏳ Espera pelo verde...";
+ document.getElementById("resultadoR").textContent="";
+ temporizador=setTimeout(function(){
+   pronto=true;
+   inicioTempo=performance.now();
+   b.style.background="#16804b";
+   b.textContent="🟢 TOCA AGORA!";
+ },1500+Math.random()*2500);
+}
+
+function tocar(){
+ if(!aguardando)return;
+ const b=document.getElementById("toque");
+ if(!pronto){
+   clearTimeout(temporizador);
+   b.textContent="⚠️ Cedo demais!";
+   aguardando=false;
+   return;
+ }
+ const tempo=Math.round(performance.now()-inicioTempo);
+ aguardando=false;
+ pronto=false;
+ b.textContent="⚡ Jogar novamente";
+ b.style.background="#514025";
+ document.getElementById("resultadoR").textContent=
+   "O teu tempo: "+tempo+" ms";
+ const melhor=Number(localStorage.getItem("recordeReflexo"))||0;
+ if(!melhor || tempo<melhor){
+   localStorage.setItem("recordeReflexo",tempo);
+ }
+ mostrarRecordes();
+}
+
+let segredo=1+Math.floor(Math.random()*50);
+let tentativas=0;
+let terminado=false;
+
+function verificar(){
+ if(terminado)return;
+ const entrada=document.getElementById("palpite");
+ const n=Number(entrada.value);
+ const resultado=document.getElementById("resultadoN");
+
+ if(!Number.isInteger(n)||n<1||n>50||entrada.value===""){
+   resultado.textContent="Digita um número de 1 a 50.";
+   return;
+ }
+
+ tentativas++;
+
+ if(n===segredo){
+   terminado=true;
+   resultado.textContent="🏆 Acertaste em "+tentativas+" tentativas!";
+   const melhor=Number(localStorage.getItem("recordeNumero"))||0;
+   if(!melhor||tentativas<melhor){
+     localStorage.setItem("recordeNumero",tentativas);
+   }
+   mostrarRecordes();
+ }else{
+   resultado.textContent=n<segredo?
+     "⬆️ Tenta um número maior!":
+     "⬇️ Tenta um número menor!";
+ }
+ entrada.value="";
+}
+
+function reiniciar(){
+ segredo=1+Math.floor(Math.random()*50);
+ tentativas=0;
+ terminado=false;
+ document.getElementById("palpite").value="";
+ document.getElementById("resultadoN").textContent="Novo desafio!";
+}
+
+mostrarRecordes();
+</script>
+</body>
+</html>

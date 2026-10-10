@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jogo Online | Nosso Modelo</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:radial-gradient(ellipse at top,#382914,#100e0b);
+ color:#ffe5a8;font-family:Arial,sans-serif;text-align:center
+}
+main{
+ max-width:550px;margin:55px auto;padding:30px 20px;
+ background:#241c13;border:1px solid #987333;border-radius:25px
+}
+.arte{font-size:85px;margin:25px}
+p{color:#dfcba3;line-height:1.7}
+a{
+ display:inline-block;margin:15px;padding:14px 18px;
+ border-radius:12px;background:#e7bd60;color:#241807;
+ text-decoration:none;font-weight:bold
+}
+</style>
+</head>
+<body>
+<main>
+<h1 id="nome">🎮 Nosso Modelo</h1>
+<div class="arte" id="arte">🎮</div>
+<h2>⏳ Integração em preparação</h2>
+<p>Esta é uma demonstração do futuro catálogo.
+Este jogo ainda não está disponível nem integrado
+com um fornecedor parceiro.</p>
+<a href="catalogo.html">← Voltar ao catálogo</a>
+</main>
+<script src="jogos-dados.js"></script>
+<script>
+const id=new URLSearchParams(location.search).get("id");
+const jogo=(window.JOGOS_MODELO||[])
+  .find(j=>j.id===id && j.tipo==="pendente");
+if(jogo){
+ document.getElementById("nome").textContent=jogo.nome;
+ document.getElementById("arte").textContent=jogo.emoji;
+}
+</script>
+</body>
+</html>

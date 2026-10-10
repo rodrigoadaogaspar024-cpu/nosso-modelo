@@ -1,0 +1,42 @@
+
+window.JOGOS_MODELO = [
+ {id:"corrida",nome:"Corrida Turbo",categoria:"corrida",
+  tipo:"interno",emoji:"🏎️",link:"corrida.html",
+  cor:"#a6343a",busca:"corrida carros velocidade"},
+
+ {id:"snake",nome:"Snake",categoria:"arcade",
+  tipo:"interno",emoji:"🐍",link:"snake.html",
+  cor:"#197853",busca:"snake cobra arcade"},
+
+ {id:"memoria",nome:"Memória",categoria:"puzzle",
+  tipo:"interno",emoji:"🧠",link:"memoria.html",
+  cor:"#7541b8",busca:"memoria puzzle"},
+
+ {id:"reflexo",nome:"Reflexo Rápido",categoria:"arcade",
+  tipo:"interno",emoji:"⚡",link:"mini-jogos.html?tipo=reflexo",
+  cor:"#af571e",busca:"reflexo rapido arcade"},
+
+ {id:"numero",nome:"Número Secreto",categoria:"puzzle",
+  tipo:"interno",emoji:"🔢",link:"mini-jogos.html?tipo=numero",
+  cor:"#245c9b",busca:"numero secreto puzzle"},
+
+ {id:"bolhas",nome:"Bolhas Coloridas",categoria:"puzzle",
+  tipo:"pendente",emoji:"🫧",cor:"#245cba",
+  busca:"bolhas puzzle"},
+
+ {id:"frutas",nome:"Frutas Puzzle",categoria:"puzzle",
+  tipo:"pendente",emoji:"🍓",cor:"#a52e50",
+  busca:"frutas puzzle"},
+
+ {id:"blocos",nome:"Blocos Mágicos",categoria:"puzzle",
+  tipo:"pendente",emoji:"🧩",cor:"#8053a8",
+  busca:"blocos puzzle"},
+
+ {id:"aventura",nome:"Aventura Arcade",categoria:"arcade",
+  tipo:"pendente",emoji:"🗺️",cor:"#247464",
+  busca:"aventura arcade"},
+
+ {id:"kart",nome:"Kart Radical",categoria:"corrida",
+  tipo:"pendente",emoji:"🏁",cor:"#9f5423",
+  busca:"kart corrida"}
+];

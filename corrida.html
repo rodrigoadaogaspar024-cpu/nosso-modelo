@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<script id="acesso-jogos-v7">
+if (localStorage.getItem("usuarioLogado") !== "true") {
+  window.location.replace("cadastro.html");
+}
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corrida Premium - Nosso Modelo</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080808;color:#fff;
+  font-family:Arial,sans-serif;text-align:center
+}
+header{padding:20px 12px}
+h1{color:#f5c451;margin:5px}
+p{color:#d0c6ad}
+main{max-width:480px;margin:auto;padding:0 12px 25px}
+#placar{color:#f5c451;font-size:20px;font-weight:bold;margin:12px}
+canvas{
+  display:block;width:100%;max-width:360px;height:auto;
+  margin:auto;border:2px solid #c49a42;border-radius:15px;
+  background:#252525;touch-action:none
+}
+button{
+  padding:14px 18px;margin:7px 3px;border-radius:12px;
+  border:1px solid #f5c451;background:#17130c;
+  color:#ffe39a;font-weight:bold;font-size:17px
+}
+#iniciar{background:linear-gradient(135deg,#ffe39a,#c49a42);color:#171109}
+.controles{display:flex;justify-content:center;gap:18px}
+button:active{transform:scale(.96)}
+a{color:#f5c451}
+</style>
+</head>
+<body>
+<header>
+  <h1>🏎️ CORRIDA PREMIUM</h1>
+  <p>Desvia dos carros e bate o teu recorde!</p>
+</header>
+<main>
+  <div id="placar">Pontos da corrida: 0</div>
+  <canvas id="jogo" width="360" height="520"></canvas>
+  <div>
+    <button id="iniciar" onclick="iniciar()">▶ COMEÇAR</button>
+  </div>
+  <div class="controles">
+    <button onclick="mover(-1)" aria-label="Mover para a esquerda">⬅️</button>
+    <button onclick="mover(1)" aria-label="Mover para a direita">➡️</button>
+  </div>
+  <p>Também podes tocar no lado esquerdo ou direito da pista.</p>
+  <p id="mensagem">Prepara-te para a corrida!</p>
+  <button onclick="location.href='jogos.html'">🎮 Portal de jogos</button>
+  <button onclick="location.href='index.html'">🏠 Início</button>
+</main>
+<script>
+const canvas=document.getElementById("jogo");
+const ctx=canvas.getContext("2d");
+const placar=document.getElementById("placar");
+const mensagem=document.getElementById("mensagem");
+const pistas=[90,180,270];
+let faixa=1,obstaculos=[],pontos=0,ativo=false,frame=0,velocidade=3;
+let melhor=Number(localStorage.getItem("recordeCorrida"))||0;
+
+function desenhar(){
+  ctx.clearRect(0,0,360,520);
+  ctx.fillStyle="#28633b";ctx.fillRect(0,0,360,520);
+  ctx.fillStyle="#383838";ctx.fillRect(45,0,270,520);
+  ctx.strokeStyle="#f4d477";ctx.lineWidth=4;
+  ctx.setLineDash([24,20]);
+  ctx.beginPath();ctx.moveTo(135,0);ctx.lineTo(135,520);
+  ctx.moveTo(225,0);ctx.lineTo(225,520);ctx.stroke();
+  ctx.setLineDash([]);
+  obstaculos.forEach(o=>carro(o.x,o.y,"#d94838"));
+  carro(pistas[faixa],425,"#f5c451");
+}
+function carro(x,y,cor){
+  ctx.fillStyle=cor;ctx.fillRect(x-17,y-29,34,58);
+  ctx.fillStyle="#171717";ctx.fillRect(x-12,y-20,24,15);
+  ctx.fillStyle="#eee";ctx.fillRect(x-13,y+18,7,5);
+  ctx.fillRect(x+6,y+18,7,5);
+}
+function atualizar(){
+  if(!ativo)return;
+  frame++;
+  if(frame%48===0){
+    obstaculos.push({x:pistas[Math.floor(Math.random()*3)],y:-35});
+  }
+  obstaculos.forEach(o=>o.y+=velocidade);
+  obstaculos=obstaculos.filter(o=>{
+    if(o.y>560){pontos++;return false}
+    return true;
+  });
+  const jogadorX=pistas[faixa];
+  if(obstaculos.some(o=>Math.abs(o.x-jogadorX)<29&&Math.abs(o.y-425)<43)){
+    terminar();return;
+  }
+  placar.textContent="Pontos da corrida: "+pontos+" | Recorde: "+melhor;
+  desenhar();
+  requestAnimationFrame(atualizar);
+}
+function iniciar(){
+  faixa=1;obstaculos=[];pontos=0;frame=0;velocidade=3;
+  ativo=true;mensagem.textContent="Boa corrida! Desvia dos carros!";
+  placar.textContent="Pontos da corrida: 0 | Recorde: "+melhor;
+  desenhar();requestAnimationFrame(atualizar);
+}
+function mover(direcao){
+  if(!ativo)return;
+  faixa=Math.max(0,Math.min(2,faixa+direcao));
+  desenhar();
+}
+function terminar(){
+  ativo=false;
+  if(pontos>melhor){
+    melhor=pontos;
+    localStorage.setItem("recordeCorrida",melhor);
+  }
+  desenhar();
+  placar.textContent="Corrida: "+pontos+" | Recorde: "+melhor;
+  mensagem.textContent="🏁 Fim da corrida! Tenta bater o teu recorde.";
+}
+canvas.addEventListener("pointerdown",e=>{
+  if(!ativo)return;
+  const r=canvas.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width;
+  mover(x<0.5?-1:1);
+});
+desenhar();
+placar.textContent="Recorde: "+melhor;
+</script>
+</body>
+</html>

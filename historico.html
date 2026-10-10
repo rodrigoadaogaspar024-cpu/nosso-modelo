@@ -7,140 +7,30 @@
   <title>Histórico - Nosso Modelo</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
 
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top, #252525 0%, #0d0d0d 50%);
-      color: white;
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+:root { --verde: #20e58a; --dourado: #f3c969; --texto: #f4f7f4; --suave: #aab6ad; }
+body { min-height: 100vh; color: var(--texto); background: radial-gradient(ellipse at top, #173323, #0b110d 48%, #080b09); }
+.container { width: 100%; max-width: 700px; margin: auto; padding: 24px 18px 40px; }
+.topo { text-align: center; padding: 22px 0 30px; }
+.icone { width: 82px; height: 82px; margin: auto; border-radius: 25px; background: linear-gradient(145deg, #214b32, #101b13); border: 1px solid rgba(32,229,138,.4); display: flex; align-items: center; justify-content: center; font-size: 42px; box-shadow: 0 0 30px rgba(32,229,138,.12); }
+h1 { margin-top: 18px; font-size: clamp(29px, 7vw, 38px); color: var(--texto); }
+.subtitulo { color: var(--suave); margin-top: 9px; font-size: 14px; line-height: 1.6; }
+.saldo { background: linear-gradient(145deg, #17221a, #101510); border: 1px solid rgba(32,229,138,.25); border-radius: 24px; padding: 27px 20px; text-align: center; margin-bottom: 28px; box-shadow: 0 15px 35px rgba(0,0,0,.3); }
+.saldo p { color: var(--suave); margin-bottom: 10px; }
+.saldo h2 { font-size: clamp(44px, 12vw, 58px); color: var(--verde); overflow-wrap: anywhere; }
+.texto { color: #829087; font-size: 13px; margin-top: 8px; }
+.titulo { color: var(--dourado); font-size: 20px; margin-bottom: 15px; }
+#listaHistorico { display: grid; gap: 12px; }
+.item { background: linear-gradient(145deg, #17221a, #101510); border: 1px solid rgba(32,229,138,.2); border-radius: 18px; padding: 19px; overflow-wrap: anywhere; }
+.item strong { display: block; color: var(--verde); font-size: 16px; margin-bottom: 9px; }
+.descricao { color: #c0cbc2; font-size: 14px; line-height: 1.7; }
+.vazio { background: #121914; border: 1px solid rgba(32,229,138,.18); border-radius: 18px; padding: 25px 18px; text-align: center; color: var(--suave); line-height: 1.7; }
+.voltar { width: 100%; padding: 16px; margin-top: 25px; border: 1px solid #34463a; border-radius: 15px; background: #171e19; color: var(--texto); font-size: 16px; font-weight: bold; cursor: pointer; transition: transform .2s, background .2s; }
+.voltar:active { transform: scale(.98); }
+.voltar:hover { background: #202b23; }
+@media (max-width: 400px) { .container { padding: 18px 13px 32px; } .icone { width: 74px; height: 74px; font-size: 38px; } .saldo { padding: 23px 15px; } .item { padding: 16px; } }
 
-    .container {
-      width: 100%;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px 18px 35px;
-    }
-
-    /* TOPO */
-
-    .topo {
-      text-align: center;
-      padding: 15px 0 25px;
-    }
-
-    .icone {
-      width: 75px;
-      height: 75px;
-      margin: auto;
-      border-radius: 22px;
-      background: linear-gradient(145deg, #fff, #888);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 38px;
-      box-shadow: 0 10px 30px rgba(255,255,255,0.12);
-    }
-
-    h1 {
-      margin-top: 15px;
-      font-size: 30px;
-    }
-
-    .subtitulo {
-      color: #999;
-      margin-top: 7px;
-      font-size: 14px;
-    }
-
-    /* PONTOS */
-
-    .saldo {
-      background: linear-gradient(145deg, #292929, #151515);
-      border: 1px solid #404040;
-      border-radius: 24px;
-      padding: 25px;
-      text-align: center;
-      margin-bottom: 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
-    }
-
-    .saldo p {
-      color: #aaa;
-      margin-bottom: 8px;
-    }
-
-    .saldo h2 {
-      font-size: 52px;
-    }
-
-    .texto {
-      color: #777;
-      font-size: 13px;
-      margin-top: 5px;
-    }
-
-    /* HISTÓRICO */
-
-    .titulo {
-      font-size: 19px;
-      margin-bottom: 12px;
-    }
-
-    .item {
-      background: #181818;
-      border: 1px solid #333;
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 11px;
-    }
-
-    .item strong {
-      display: block;
-      font-size: 16px;
-      margin-bottom: 7px;
-    }
-
-    .descricao {
-      color: #999;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .vazio {
-      background: #151515;
-      border: 1px solid #292929;
-      border-radius: 18px;
-      padding: 25px 18px;
-      text-align: center;
-      color: #777;
-      line-height: 1.5;
-    }
-
-    /* VOLTAR */
-
-    .voltar {
-      width: 100%;
-      padding: 16px;
-      margin-top: 20px;
-      border: 1px solid #3a3a3a;
-      border-radius: 14px;
-      background: #242424;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .voltar:active {
-      transform: scale(0.98);
-    }
   </style>
 </head>
 
@@ -232,7 +122,6 @@
 
       lista.innerHTML = "";
 
-
       historico.forEach(function(item) {
 
         const div =
@@ -255,6 +144,15 @@
         lista.appendChild(div);
 
       });
+
+    } else {
+
+      lista.innerHTML =
+        "<div class='vazio'>" +
+        "<div style='font-size:36px;margin-bottom:12px'>📜</div>" +
+        "<strong style='display:block;color:#20e58a;margin-bottom:8px'>Ainda não tens atividades!</strong>" +
+        "<div>Participa nos jogos e regressa aqui para consultar o teu histórico.</div>" +
+        "</div>";
 
     }
 

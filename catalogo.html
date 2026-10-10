@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo de Jogos | Nosso Modelo</title>
+
+<style>
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:#100f0d;
+  color:#fff0cf;
+  font-family:Arial,sans-serif;
+}
+
+header {
+  background:#1c1710;
+  border-bottom:1px solid #9a742f;
+  padding:20px;
+  text-align:center;
+}
+
+header h1 {
+  color:#ffdb83;
+  margin:5px 0;
+  font-size:27px;
+}
+
+header p { color:#c9b992; }
+
+nav {
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:15px;
+}
+
+nav a {
+  padding:12px 16px;
+  border-radius:25px;
+  background:#352715;
+  color:#ffe1a0;
+  text-decoration:none;
+  white-space:nowrap;
+  font-size:14px;
+}
+
+main {
+  max-width:1000px;
+  margin:auto;
+  padding:15px;
+}
+
+.banner {
+  background:linear-gradient(125deg,#76521b,#25190e);
+  padding:25px 20px;
+  border-radius:22px;
+  border:1px solid #c79b45;
+  text-align:center;
+}
+
+.banner h2 { color:#ffe5a7; }
+
+.banner p { color:#ead6a9; }
+
+input {
+  width:100%;
+  padding:17px;
+  border-radius:14px;
+  border:1px solid #80602b;
+  background:#241d14;
+  color:white;
+  font-size:16px;
+  margin:20px 0;
+}
+
+h2 { color:#ffda83; }
+
+.grade {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.card {
+  border-radius:18px;
+  overflow:hidden;
+  background:#241d15;
+  border:1px solid #6e552e;
+}
+
+.capa {
+  height:155px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:75px;
+}
+
+.corrida { background:linear-gradient(140deg,#e64b32,#561a36); }
+.snake { background:linear-gradient(140deg,#39b877,#10463f); }
+.memoria { background:linear-gradient(140deg,#9a5aeb,#31225d); }
+
+.info { padding:14px; }
+
+.info h3 { margin:0 0 12px; }
+
+.info a {
+  display:block;
+  padding:12px;
+  text-align:center;
+  border-radius:11px;
+  background:linear-gradient(135deg,#ffe49c,#c39135);
+  color:#241600;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+footer {
+  padding:30px 16px;
+  text-align:center;
+  color:#c9b992;
+}
+
+@media(min-width:700px) {
+  .grade { grid-template-columns:repeat(3,1fr); }
+}
+</style>
+
+<style>
+.filtros-v3 {
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  padding:5px 0 18px;
+}
+.filtros-v3 button {
+  flex-shrink:0;
+  background:#342718;
+  border:1px solid #87642d;
+  color:#ffe2a5;
+  border-radius:25px;
+  padding:12px 15px;
+  font-weight:bold;
+}
+.filtros-v3 button.ativo {
+  background:#e6b955;
+  color:#211507;
+}
+</style>
+
+
+<style id="catalogo-compacto-v4">
+
+@media (max-width: 699px) {
+
+  header {
+    padding: 12px 10px;
+  }
+
+  header h1 {
+    font-size: 22px;
+    margin: 2px 0 5px;
+  }
+
+  header p {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  nav {
+    padding: 9px 12px;
+    gap: 7px;
+  }
+
+  nav a {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  main {
+    padding: 10px 12px 25px;
+  }
+
+  .banner {
+    padding: 16px 13px;
+    border-radius: 17px;
+  }
+
+  .banner h2 {
+    font-size: 19px;
+    margin: 0 0 7px;
+  }
+
+  .banner p {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  input {
+    padding: 13px;
+    font-size: 14px;
+    margin: 13px 0;
+  }
+
+  #filtros-v3 {
+    gap: 7px;
+    padding: 4px 0 8px;
+  }
+
+  #filtros-v3 button {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  main > h2 {
+    font-size: 20px;
+    margin: 14px 0 12px;
+  }
+
+  .capa {
+    height: 135px;
+    font-size: 57px;
+  }
+
+  .grade {
+    gap: 10px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>🎮 NOSSO MODELO</h1>
+  <p>Explora os nossos jogos online</p>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Início</a>
+  <a href="#jogos">🎮 Jogos</a>
+  <a href="cadastro.html">👤 Entrar</a>
+  <a href="recompensas.html">🎁 Prémios</a>
+</nav>
+
+<main>
+
+<section class="banner">
+  <h2>🏆 A diversão começa aqui!</h2>
+  <p>Descobre jogos, participa em desafios e supera recordes.</p>
+</section>
+
+<input id="pesquisa" type="search"
+ placeholder="🔎 Procurar jogos..."
+ oninput="filtrarJogos()">
+
+
+<div id="filtros-v3" class="filtros-v3">
+  <button data-cat="todos">✨ Todos</button>
+  <button data-cat="corrida">🏎️ Corrida</button>
+  <button data-cat="puzzle">🧠 Puzzle</button>
+  <button data-cat="arcade">🕹️ Arcade</button>
+</div>
+
+<h2 id="jogos">🔥 Jogos disponíveis</h2>
+
+<section class="grade" id="grade-jogos"></section>
+
+</main>
+
+<footer>
+  🖤💛 Nosso Modelo
+  <p>Mais jogos serão adicionados ao catálogo.</p>
+</footer>
+
+<script>
+function filtrarJogos() {
+  const termo = document.getElementById("pesquisa")
+    .value.toLowerCase();
+
+  document.querySelectorAll(".card").forEach(card => {
+    card.style.display =
+      card.dataset.nome.includes(termo) ? "" : "none";
+  });
+}
+</script>
+
+
+<script>
+let categoriaAtual = "todos";
+
+function aplicarCategoria() {
+  const pesquisa = document.getElementById("pesquisa")
+    .value.toLowerCase();
+
+  document.querySelectorAll(".grade .card").forEach(card => {
+    const nome = card.dataset.nome || "";
+    const cat = card.dataset.categoria || "";
+
+    card.style.display =
+      nome.includes(pesquisa) &&
+      (categoriaAtual === "todos" || cat === categoriaAtual)
+      ? "" : "none";
+  });
+}
+
+document.querySelectorAll("#filtros-v3 button")
+  .forEach(botao => {
+    botao.addEventListener("click", () => {
+      categoriaAtual = botao.dataset.cat;
+      document.querySelectorAll("#filtros-v3 button")
+        .forEach(b => b.classList.remove("ativo"));
+      botao.classList.add("ativo");
+      aplicarCategoria();
+    });
+  });
+
+document.querySelector("#filtros-v3 button")
+  .classList.add("ativo");
+
+document.getElementById("pesquisa")
+  .addEventListener("input", aplicarCategoria);
+</script>
+
+
+<!-- CATALOGO DINAMICO V5 -->
+<style>
+.card.pendente {opacity:.85}
+.card.pendente .info a {
+ background:#50412c;color:#ffdc96;
+}
+.estado-v5 {
+ display:block;margin:0 0 10px;
+ color:#ffe3a4;font-size:12px;font-weight:bold;
+}
+</style>
+<script src="jogos-dados.js"></script>
+<script>
+(function(){
+ const grade=document.querySelector(".grade");
+ if(!grade || !window.JOGOS_MODELO)return;
+
+ const jogos=window.JOGOS_MODELO;
+
+ function elemento(tag,classe,texto){
+   const e=document.createElement(tag);
+   if(classe)e.className=classe;
+   if(texto)e.textContent=texto;
+   return e;
+ }
+
+ jogos.forEach(function(jogo){
+   const card=elemento("article","card");
+   if(jogo.tipo==="pendente")card.classList.add("pendente");
+
+   card.dataset.nome=(jogo.nome+" "+jogo.busca).toLowerCase();
+   card.dataset.categoria=jogo.categoria;
+
+   const capa=elemento("div","capa",jogo.emoji);
+   capa.style.background=
+     "linear-gradient(135deg,"+jogo.cor+",#17121d)";
+
+   const info=elemento("div","info");
+   info.appendChild(elemento("h3","",jogo.nome));
+
+   const pendente=jogo.tipo==="pendente";
+
+   if(pendente){
+     info.appendChild(
+       elemento("span","estado-v5","⏳ Futuro jogo parceiro")
+     );
+   }
+
+   const botao=elemento(
+     "a","",pendente?"VER DETALHES":"▶ JOGAR"
+   );
+
+   botao.href=pendente
+     ?"jogo-online.html?id="+encodeURIComponent(jogo.id)
+     :jogo.link;
+
+   info.appendChild(botao);
+   card.appendChild(capa);
+   card.appendChild(info);
+   grade.appendChild(card);
+ });
+
+ const ativos=jogos.filter(j=>j.tipo==="interno").length;
+ const futuros=jogos.length-ativos;
+ document.getElementById("jogos").textContent=
+   "🔥 "+ativos+" jogos disponíveis · "+futuros+" em preparação";
+
+ if(typeof aplicarCategoria==="function")aplicarCategoria();
+})();
+</script>
+
+</body>
+</html>

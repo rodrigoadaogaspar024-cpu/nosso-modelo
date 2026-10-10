@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+<script id="acesso-jogos-v7">
+if (localStorage.getItem("usuarioLogado") !== "true") {
+  window.location.replace("cadastro.html");
+}
+</script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Jogos - Nosso Modelo</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,110 +21,123 @@
       font-family: Arial, sans-serif;
     }
 
+    :root {
+      --verde: #00d563;
+      --dourado: #f5c451;
+      --borda: #29382e;
+      --texto-secundario: #aab7ad;
+    }
+
     body {
       min-height: 100vh;
       background:
-        radial-gradient(circle at top, #252525 0%, #0d0d0d 50%);
-      color: white;
+        radial-gradient(ellipse at top, #173323 0%, #0b110d 42%, #080b09 100%);
+      color: #f5fff7;
     }
 
     .container {
       width: 100%;
       max-width: 600px;
       margin: auto;
-      padding: 20px 18px 35px;
+      padding: 22px 18px 35px;
     }
-
-    /* TOPO */
 
     .topo {
       text-align: center;
-      padding: 15px 0 25px;
+      padding: 18px 0 28px;
     }
 
     .icone {
-      width: 75px;
-      height: 75px;
+      width: 85px;
+      height: 85px;
       margin: auto;
-      border-radius: 22px;
-      background: linear-gradient(145deg, #fff, #888);
+      border-radius: 27px;
+      background: linear-gradient(145deg, #00d563, #075d32);
+      border: 1px solid #3ce883;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 38px;
-      box-shadow: 0 10px 30px rgba(255,255,255,0.12);
+      font-size: 42px;
+      box-shadow: 0 12px 35px rgba(0, 213, 99, 0.22);
     }
 
     h1 {
-      margin-top: 15px;
+      margin-top: 17px;
       font-size: 30px;
+      overflow-wrap: anywhere;
     }
 
     .subtitulo {
-      color: #999;
-      margin-top: 7px;
+      color: var(--texto-secundario);
+      margin-top: 9px;
       font-size: 14px;
+      line-height: 1.6;
     }
 
-    /* PONTOS */
-
     .pontos {
-      background: linear-gradient(145deg, #292929, #151515);
-      border: 1px solid #404040;
+      background: linear-gradient(145deg, #183b25, #112117);
+      border: 1px solid #287c45;
       border-radius: 24px;
-      padding: 25px;
+      padding: 26px 20px;
       text-align: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+      box-shadow: 0 15px 35px rgba(0, 200, 83, 0.10);
       margin-bottom: 20px;
     }
 
     .pontos p {
-      color: #aaa;
-      margin-bottom: 8px;
+      color: #c6f5d2;
+      margin-bottom: 9px;
+      font-size: 16px;
     }
 
     .numero {
       font-size: 58px;
       font-weight: bold;
+      color: var(--dourado);
+      text-shadow: 0 0 25px rgba(245, 196, 81, 0.13);
+      overflow-wrap: anywhere;
     }
 
     .limite {
-      color: #777;
+      color: #aab7ad;
       font-size: 13px;
-      margin-top: 5px;
+      margin-top: 7px;
     }
 
-    /* JOGO */
-
     .jogo {
-      background: #181818;
-      border: 1px solid #333;
+      background: linear-gradient(145deg, #19231c, #101511);
+      border: 1px solid var(--borda);
       border-radius: 23px;
       padding: 25px 20px;
       text-align: center;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
     }
 
     .jogo h2 {
       font-size: 22px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      line-height: 1.4;
     }
 
     .jogo p {
-      color: #999;
-      line-height: 1.5;
+      color: var(--texto-secundario);
+      line-height: 1.7;
+      font-size: 14px;
     }
 
     .botao-jogar {
       width: 100%;
       padding: 18px;
       margin-top: 22px;
-      border: none;
+      border: 1px solid #3ce883;
       border-radius: 15px;
-      background: white;
-      color: #111;
+      background: linear-gradient(135deg, #00d563, #009b45);
+      color: #06190c;
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 213, 99, 0.18);
+      transition: transform 0.2s, opacity 0.2s;
     }
 
     .botao-jogar:active {
@@ -125,48 +145,46 @@
     }
 
     .botao-jogar:disabled {
-      background: #444;
-      color: #888;
+      background: #26352b;
+      color: #aab7ad;
+      border-color: #3a4b3e;
+      box-shadow: none;
       cursor: not-allowed;
     }
-
-    /* RESULTADO */
 
     #resultado {
       min-height: 28px;
       margin-top: 20px;
       font-size: 17px;
       font-weight: bold;
-      line-height: 1.5;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+      color: var(--dourado);
     }
-
-    /* INFORMAÇÃO */
 
     .info {
       margin-top: 18px;
-      background: #151515;
-      border: 1px solid #292929;
+      background: #141a16;
+      border: 1px solid #344438;
       border-radius: 18px;
-      padding: 18px;
+      padding: 19px;
       text-align: center;
     }
 
     .info p {
-      color: #888;
+      color: var(--texto-secundario);
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.8;
     }
-
-    /* VOLTAR */
 
     .voltar {
       width: 100%;
       padding: 16px;
       margin-top: 18px;
-      border: 1px solid #3b3b3b;
+      border: 1px solid #304737;
       border-radius: 14px;
-      background: #242424;
-      color: white;
+      background: #18211b;
+      color: #eaffef;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -174,6 +192,100 @@
 
     .voltar:active {
       transform: scale(0.98);
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .numero {
+        font-size: 50px;
+      }
+
+      .jogo {
+        padding: 22px 17px;
+      }
+    }
+
+
+    /* PORTAL DE JOGOS PREMIUM */
+    .portal-jogos {
+      margin-top: 24px;
+      padding: 22px 16px;
+      border: 1px solid #c49a42;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #211a0e, #0d0c09);
+      box-shadow: 0 12px 30px rgba(0,0,0,.3);
+    }
+
+    .portal-jogos > h2 {
+      color: #ffe39a;
+      text-align: center;
+      font-size: 23px;
+      margin-bottom: 10px;
+    }
+
+    .portal-subtitulo {
+      text-align: center;
+      color: #d0c6ad;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .cartoes-portal {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .cartao-portal {
+      padding: 20px 16px;
+      border: 1px solid #8e6b2c;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #19150e, #101010);
+      text-align: center;
+    }
+
+    .emoji-jogo {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    .cartao-portal h3 {
+      color: #f5c451;
+      font-size: 20px;
+      margin-bottom: 9px;
+    }
+
+    .cartao-portal p {
+      color: #cfc5b0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .cartao-portal button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px 10px;
+      border: 1px solid #f5c451;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffe39a, #c49a42);
+      color: #171109;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    @media (min-width: 540px) {
+      .cartoes-portal {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
   </style>
@@ -241,6 +353,45 @@
 
     </section>
 
+
+
+    <!-- PORTAL DE JOGOS PREMIUM -->
+
+    <section class="portal-jogos">
+      <h2>🏆 PORTAL DE JOGOS</h2>
+      <p class="portal-subtitulo">
+        Escolhe o teu jogo e diverte-te no Nosso Modelo!
+      </p>
+
+      <div class="cartoes-portal">
+        <article class="cartao-portal">
+          <div class="emoji-jogo">🏎️</div>
+          <h3>Corrida Premium</h3>
+          <p>Desvia dos carros e tenta bater o teu recorde.</p>
+          <button onclick="window.location.href='corrida.html'">
+            JOGAR CORRIDA
+          </button>
+        </article>
+
+        <article class="cartao-portal">
+          <div class="emoji-jogo">🐍</div>
+          <h3>Snake Premium</h3>
+          <p>Apanha a comida e faz crescer a tua cobra.</p>
+          <button onclick="window.location.href='snake.html'">
+            JOGAR SNAKE
+          </button>
+        </article>
+
+        <article class="cartao-portal">
+          <div class="emoji-jogo">🧠</div>
+          <h3>Memória Premium</h3>
+          <p>Encontra os pares e testa a tua memória.</p>
+          <button onclick="window.location.href='memoria.html'">
+            JOGAR MEMÓRIA
+          </button>
+        </article>
+      </div>
+    </section>
 
     <!-- INFORMAÇÃO -->
 
@@ -310,14 +461,11 @@
         Math.floor(Math.random() * 10) + 1;
 
 
-      pontos += ganho;
+      const pontosAntes = pontos;
 
+      pontos = Math.min(pontos + ganho, 100);
 
-      if (pontos > 100) {
-
-        pontos = 100;
-
-      }
+      const ganhoReal = pontos - pontosAntes;
 
 
       localStorage.setItem(
@@ -339,7 +487,7 @@
         tipo: "🎮 Jogo",
 
         descricao:
-          "Você ganhou " + ganho + " pontos."
+          "Você ganhou " + ganhoReal + " pontos."
 
       });
 
@@ -355,19 +503,20 @@
       if (ganho === 10) {
 
         document.getElementById("resultado").textContent =
-          "🏆 PRÊMIO MÁXIMO! Você ganhou 10 pontos!";
+          "🏆 PRÊMIO MÁXIMO! Foram adicionados " +
+          ganhoReal + " pontos!";
 
       } else if (ganho >= 6) {
 
         document.getElementById("resultado").textContent =
-          "💎 PRÊMIO ESPECIAL! Você ganhou " +
-          ganho + " pontos!";
+          "💎 PRÊMIO ESPECIAL! Foram adicionados " +
+          ganhoReal + " pontos!";
 
       } else {
 
         document.getElementById("resultado").textContent =
-          "🎉 Você ganhou " +
-          ganho + " pontos!";
+          "🎉 Foram adicionados " +
+          ganhoReal + " pontos!";
 
       }
 

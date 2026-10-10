@@ -9,338 +9,268 @@
 
   <style>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-
-      background:
-        radial-gradient(circle at top, #303030 0%, #111 42%, #080808 100%);
-
-      color: white;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 650px;
-      margin: auto;
-      padding: 20px 18px 40px;
-    }
-
-    /* TOPO */
-
-    .topo {
-      text-align: center;
-      padding: 18px 0 25px;
-    }
-
-    .icone {
-      width: 82px;
-      height: 82px;
-
-      margin: 0 auto 15px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 24px;
-
-      background:
-        linear-gradient(145deg, #303030, #171717);
-
-      border: 1px solid #444;
-
-      box-shadow:
-        0 15px 35px rgba(0,0,0,0.45);
-
-      font-size: 42px;
-    }
-
-    h1 {
-      font-size: 31px;
-      margin-bottom: 8px;
-    }
-
-    .subtitulo {
-      color: #aaa;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    /* CONTADOR */
-
-    .contador {
-      margin-top: 18px;
-
-      display: inline-block;
-
-      padding: 9px 15px;
-
-      border-radius: 30px;
-
-      background: #1b1b1b;
-
-      border: 1px solid #3b3b3b;
-
-      color: #ccc;
-
-      font-size: 13px;
-    }
-
-    .contador strong {
-      color: white;
-    }
-
-    /* CARTÃO DO PARCEIRO */
-
-    .card {
-      background:
-        linear-gradient(145deg, #292929, #141414);
-
-      border: 1px solid #414141;
-
-      border-radius: 24px;
-
-      padding: 22px 20px;
-
-      margin-bottom: 16px;
-
-      box-shadow:
-        0 18px 45px rgba(0,0,0,0.40);
-    }
-
-    .cabecalho-card {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-
-      padding-bottom: 17px;
-
-      margin-bottom: 16px;
-
-      border-bottom: 1px solid #333;
-    }
-
-    .empresa-icone {
-      width: 50px;
-      height: 50px;
-
-      flex-shrink: 0;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 15px;
-
-      background: #1a1a1a;
-
-      border: 1px solid #3b3b3b;
-
-      font-size: 25px;
-    }
-
-    .cabecalho-card h2 {
-      font-size: 20px;
-
-      line-height: 1.3;
-
-      word-break: break-word;
-    }
-
-    .etiqueta {
-      color: #777;
-
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      margin-bottom: 3px;
-    }
-
-    .informacao {
-      color: #aaa;
-
-      font-size: 14px;
-
-      line-height: 1.6;
-
-      margin-bottom: 10px;
-
-      word-break: break-word;
-    }
-
-    .informacao strong {
-      color: #eee;
-    }
-
-    .mensagem {
-      margin-top: 14px;
-
-      padding: 14px;
-
-      background: #101010;
-
-      border: 1px solid #303030;
-
-      border-radius: 14px;
-
-      color: #bbb;
-
-      font-size: 14px;
-
-      line-height: 1.6;
-
-      word-break: break-word;
-    }
-
-    .data {
-      margin-top: 13px;
-
-      color: #666;
-
-      font-size: 12px;
-    }
-
-    /* BOTÕES */
-
-    button {
-      width: 100%;
-
-      padding: 15px;
-
-      border-radius: 14px;
-
-      margin-top: 10px;
-
-      font-size: 15px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-      transition: 0.2s;
-    }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    .email {
-      background: white;
-
-      color: #111;
-
-      border: none;
-    }
-
-    .email:hover {
-      background: #e8e8e8;
-    }
-
-    .whatsapp {
-      background: #202020;
-
-      color: white;
-
-      border: 1px solid #444;
-    }
-
-    .whatsapp:hover {
-      background: #292929;
-    }
-
-    /* SEM PARCEIROS */
-
-    .vazio {
-      text-align: center;
-
-      color: #888;
-
-      line-height: 1.7;
-
-      padding: 28px 10px;
-    }
-
-    .vazio strong {
-      display: block;
-
-      color: white;
-
-      font-size: 18px;
-
-      margin-bottom: 8px;
-    }
-
-    /* BOTÕES FINAIS */
-
-    .parceiro {
-      background: white;
-
-      color: #111;
-
-      border: none;
-
-      margin-top: 4px;
-    }
-
-    .parceiro:hover {
-      background: #e8e8e8;
-    }
-
-    .voltar {
-      background: #202020;
-
-      color: white;
-
-      border: 1px solid #3b3b3b;
-
-      margin-top: 12px;
-    }
-
-    .voltar:hover {
-      background: #292929;
-    }
-
-    /* RODAPÉ */
-
-    .rodape {
-      text-align: center;
-
-      color: #666;
-
-      font-size: 12px;
-
-      line-height: 1.6;
-
-      padding: 25px 0 5px;
-    }
-
-    @media (max-width: 400px) {
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .icone {
-        width: 72px;
-        height: 72px;
-        font-size: 38px;
-      }
-
-      .card {
-        padding: 19px 16px;
-      }
-
-    }
-
-  </style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+  --verde: #20e58a;
+  --dourado: #f3c969;
+  --texto: #f4f7f4;
+  --suave: #aab6ad;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--texto);
+  background: radial-gradient(ellipse at top, #173323, #0b110d 45%, #080b09);
+}
+
+.container {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  padding: 24px 18px 42px;
+}
+
+.topo {
+  text-align: center;
+  padding: 24px 0 30px;
+}
+
+.icone {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #214b32, #101b13);
+  border: 1px solid rgba(32,229,138,.45);
+  box-shadow: 0 0 30px rgba(32,229,138,.12);
+  font-size: 42px;
+}
+
+h1 {
+  color: var(--texto);
+  font-size: clamp(29px, 7vw, 38px);
+  margin-bottom: 10px;
+}
+
+.subtitulo {
+  color: var(--suave);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.contador {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 11px 19px;
+  border-radius: 30px;
+  background: rgba(32,229,138,.08);
+  border: 1px solid rgba(32,229,138,.25);
+  color: var(--suave);
+  font-size: 14px;
+}
+
+.contador strong {
+  color: var(--verde);
+}
+
+#lista {
+  display: grid;
+  gap: 18px;
+}
+
+.card {
+  background: linear-gradient(145deg, #17221a, #101510);
+  border: 1px solid rgba(32,229,138,.22);
+  border-radius: 22px;
+  padding: 22px 19px;
+  margin-bottom: 0;
+  box-shadow: 0 16px 38px rgba(0,0,0,.28);
+  overflow-wrap: anywhere;
+}
+
+.cabecalho-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 17px;
+  margin-bottom: 17px;
+  border-bottom: 1px solid #29362c;
+}
+
+.empresa-icone {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: #203a28;
+  border: 1px solid rgba(32,229,138,.3);
+  font-size: 26px;
+}
+
+.cabecalho-card h2 {
+  color: var(--dourado);
+  font-size: 20px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.etiqueta {
+  color: var(--verde);
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.informacao {
+  color: var(--suave);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
+}
+
+.informacao strong {
+  color: var(--texto);
+}
+
+.mensagem {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(0,0,0,.22);
+  border: 1px solid rgba(243,201,105,.2);
+  border-radius: 15px;
+  color: #c6d0c8;
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.mensagem strong {
+  color: var(--dourado);
+}
+
+.data {
+  margin-top: 14px;
+  color: #829087;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  margin-top: 11px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform .2s;
+  overflow-wrap: anywhere;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+.email {
+  background: linear-gradient(135deg, #f3d783, #dcae43);
+  color: #15170f;
+  border: none;
+}
+
+.email:hover {
+  background: #ffe7a0;
+}
+
+.whatsapp {
+  background: #123b27;
+  color: #7dffb7;
+  border: 1px solid rgba(32,229,138,.35);
+}
+
+.whatsapp:hover {
+  background: #194b32;
+}
+
+.vazio {
+  text-align: center;
+  color: var(--suave);
+  line-height: 1.8;
+  padding: 28px 10px;
+}
+
+.vazio strong {
+  display: block;
+  color: var(--dourado);
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.parceiro {
+  background: linear-gradient(135deg, #24e58a, #12ad65);
+  color: #07140c;
+  border: none;
+  margin-top: 24px;
+  box-shadow: 0 8px 24px rgba(32,229,138,.14);
+}
+
+.parceiro:hover {
+  background: #52f3a4;
+}
+
+.voltar {
+  background: #171e19;
+  color: var(--texto);
+  border: 1px solid #34463a;
+  margin-top: 12px;
+}
+
+.voltar:hover {
+  background: #202b23;
+}
+
+.rodape {
+  text-align: center;
+  color: #78857b;
+  font-size: 12px;
+  line-height: 1.8;
+  padding: 30px 0 5px;
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding: 18px 13px 32px;
+  }
+
+  .icone {
+    width: 74px;
+    height: 74px;
+    font-size: 38px;
+  }
+
+  .card {
+    padding: 19px 15px;
+  }
+
+  .cabecalho-card h2 {
+    font-size: 18px;
+  }
+}
+
+</style>
 
 </head>
 

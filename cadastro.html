@@ -596,7 +596,28 @@
   </main>
 
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDz64TGb5byQGuEi-NH78jx-ajB4IctE14",
+      authDomain: "nosso-modelo.firebaseapp.com",
+      projectId: "nosso-modelo",
+      storageBucket: "nosso-modelo.firebasestorage.app",
+      messagingSenderId: "172059200514",
+      appId: "1:172059200514:web:d8ec0988638970e9eeeb1b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+
 
 
     function mostrarSenha(id, botao) {
@@ -998,13 +1019,43 @@
       no projeto.
     */
 
-    function entrarGoogle() {
+    async function entrarGoogle() {
 
-      alert(
-        "🔵 O acesso com Google será ativado na próxima etapa, quando configurarmos a autenticação Google."
-      );
+      try {
+
+        const resultado = await signInWithPopup(auth, provider);
+        const usuario = resultado.user;
+
+        localStorage.setItem("nomeUsuario", usuario.displayName || "Utilizador");
+        localStorage.setItem("emailUsuario", usuario.email || "");
+        localStorage.setItem("usuarioLogado", "true");
+
+        if (!localStorage.getItem("pontosUsuario")) {
+          localStorage.setItem("pontosUsuario", "0");
+        }
+
+        if (!localStorage.getItem("historicoUsuario")) {
+          localStorage.setItem("historicoUsuario", "[]");
+        }
+
+        alert("✅ Entrada com Google realizada com sucesso!");
+
+        window.location.href = "index.html";
+
+      } catch (erro) {
+
+        console.error(erro);
+        alert("❌ Não foi possível entrar com Google. Tente novamente.");
+
+      }
 
     }
+
+
+    window.mostrarSenha = mostrarSenha;
+    window.mostrarCriar = mostrarCriar;
+    window.mostrarEntrar = mostrarEntrar;
+    window.entrarGoogle = entrarGoogle;
 
   </script>
 

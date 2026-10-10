@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<script id="acesso-jogos-v7">
+if (localStorage.getItem("usuarioLogado") !== "true") {
+  window.location.replace("cadastro.html");
+}
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snake Premium - Nosso Modelo</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080808;color:#fff;
+  font-family:Arial,sans-serif;text-align:center
+}
+header{padding:20px 12px}
+h1{color:#f5c451}
+p{color:#d0c6ad;line-height:1.5}
+main{max-width:430px;margin:auto;padding:0 12px 25px}
+#placar{font-size:21px;color:#f5c451;font-weight:bold;margin:15px}
+canvas{
+  display:block;width:100%;max-width:360px;height:auto;
+  margin:auto;border:2px solid #c49a42;border-radius:14px;
+  background:#111;touch-action:none
+}
+button{
+  padding:13px 18px;margin:6px;border-radius:12px;
+  border:1px solid #c49a42;background:#17130c;
+  color:#ffe39a;font-size:17px;font-weight:bold
+}
+#iniciar{background:linear-gradient(135deg,#ffe39a,#c49a42);color:#171109}
+.controles{display:grid;grid-template-columns:repeat(3,65px);justify-content:center;gap:6px}
+.controles button{margin:0;padding:14px 5px}
+a{color:#f5c451}
+</style>
+</head>
+<body>
+<header>
+<h1>🐍 SNAKE PREMIUM</h1>
+<p>Come a comida dourada e cresce sem bater nas paredes ou em ti próprio!</p>
+</header>
+<main>
+<div id="placar">Pontos: 0</div>
+<canvas id="tabuleiro" width="360" height="360"></canvas>
+<p id="mensagem">Carrega em COMEÇAR para jogar.</p>
+<button id="iniciar" onclick="iniciar()">▶ COMEÇAR</button>
+<div class="controles">
+  <span></span><button onclick="virar(0,-1)">⬆️</button><span></span>
+  <button onclick="virar(-1,0)">⬅️</button>
+  <button onclick="virar(0,1)">⬇️</button>
+  <button onclick="virar(1,0)">➡️</button>
+</div>
+<p>Também podes usar as setas do teclado.</p>
+<button onclick="location.href='jogos.html'">🎮 Portal de jogos</button>
+<button onclick="location.href='corrida.html'">🏎️ Corrida</button>
+<button onclick="location.href='index.html'">🏠 Início</button>
+</main>
+<script>
+const canvas=document.getElementById("tabuleiro");
+const ctx=canvas.getContext("2d");
+const tamanho=18, total=20;
+let cobra,comida,dx,dy,temporizador,ativo=false,pontos=0;
+let melhor=Number(localStorage.getItem("recordeSnake"))||0;
+
+function desenhar(){
+ ctx.fillStyle="#101010";ctx.fillRect(0,0,360,360);
+ ctx.strokeStyle="#202020";ctx.lineWidth=1;
+ for(let i=0;i<=360;i+=tamanho){
+  ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,360);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(360,i);ctx.stroke();
+ }
+ ctx.fillStyle="#ffd45c";
+ ctx.beginPath();
+ ctx.arc(comida.x*tamanho+9,comida.y*tamanho+9,7,0,Math.PI*2);
+ ctx.fill();
+ ctx.shadowColor="#f5c451";ctx.shadowBlur=8;
+ cobra.forEach((p,i)=>{
+  ctx.fillStyle=i===0?"#ffe39a":"#c49a42";
+  ctx.fillRect(p.x*tamanho+1,p.y*tamanho+1,16,16);
+ });
+ ctx.shadowBlur=0;
+}
+function novaComida(){
+ do{
+  comida={x:Math.floor(Math.random()*total),y:Math.floor(Math.random()*total)};
+ }while(cobra.some(p=>p.x===comida.x&&p.y===comida.y));
+}
+function iniciar(){
+ clearInterval(temporizador);
+ cobra=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+ dx=1;dy=0;pontos=0;ativo=true;
+ novaComida();atualizarPlacar();
+ document.getElementById("mensagem").textContent="Boa sorte!";
+ desenhar();
+ temporizador=setInterval(passo,135);
+}
+function virar(x,y){
+ if(!ativo)return;
+ if(x===-dx&&y===-dy)return;
+ dx=x;dy=y;
+}
+function passo(){
+ if(!ativo)return;
+ const cabeca={
+  x:(cobra[0].x+dx+total)%total,
+  y:(cobra[0].y+dy+total)%total
+ };
+ const comeu=cabeca.x===comida.x&&cabeca.y===comida.y;
+ const corpoVerificar=comeu?cobra:cobra.slice(0,-1);
+ if(corpoVerificar.some(p=>p.x===cabeca.x&&p.y===cabeca.y)){
+  terminar();return;
+ }
+ cobra.unshift(cabeca);
+ if(comeu){pontos++;novaComida();atualizarPlacar();}
+ else cobra.pop();
+ desenhar();
+}
+function atualizarPlacar(){
+ melhor=Math.max(melhor,pontos);
+ localStorage.setItem("recordeSnake",melhor);
+ document.getElementById("placar").textContent=
+  "Pontos: "+pontos+" | Recorde: "+melhor;
+}
+function terminar(){
+ ativo=false;clearInterval(temporizador);
+ document.getElementById("mensagem").textContent=
+  "🏁 Fim do jogo! Fizeste "+pontos+" pontos. Tenta novamente!";
+}
+document.addEventListener("keydown",e=>{
+ const teclas={
+  ArrowUp:[0,-1],ArrowDown:[0,1],
+  ArrowLeft:[-1,0],ArrowRight:[1,0],
+  w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]
+ };
+ const direcao=teclas[e.key] || teclas[e.key.toLowerCase()];
+ if(direcao){
+  e.preventDefault();
+  virar(direcao[0],direcao[1]);
+ }
+});
+
+/* CONTROLO POR DESLIZE NO TELEMOVEL */
+let toqueX=0, toqueY=0;
+
+canvas.addEventListener("pointerdown",e=>{
+ toqueX=e.clientX;
+ toqueY=e.clientY;
+});
+
+canvas.addEventListener("pointerup",e=>{
+ if(!ativo)return;
+ const difX=e.clientX-toqueX;
+ const difY=e.clientY-toqueY;
+
+ if(Math.max(Math.abs(difX),Math.abs(difY))<20)return;
+
+ if(Math.abs(difX)>Math.abs(difY)){
+  virar(difX>0?1:-1,0);
+ }else{
+  virar(0,difY>0?1:-1);
+ }
+});
+
+cobra=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+dx=1;
+dy=0;
+novaComida();
+desenhar();
+</script>
+</body>
+</html>

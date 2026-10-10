@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ganhar e Parceiros - Nosso Modelo</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body {
+      background: radial-gradient(ellipse at top, #18332b 0%, #101713 42%, #0b0d0c 100%);
+      color: #f5f7f5; padding: 24px 16px; min-height: 100vh;
+    }
+    .container { max-width: 650px; margin: 0 auto; }
+    h1 { text-align: center; margin: 16px 0 12px; font-size: clamp(27px, 6vw, 36px); letter-spacing: -.7px; }
+    .subtitulo { text-align: center; color: #bdcbc2; line-height: 1.7; margin: 0 auto 30px; max-width: 480px; }
+    .card {
+      background: linear-gradient(145deg, rgba(32, 43, 37, .98), rgba(22, 28, 24, .98));
+      border: 1px solid #344b3d; border-radius: 18px; padding: 23px;
+      margin-bottom: 17px; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      transition: transform .2s, border-color .2s;
+    }
+    .card h2 { font-size: 20px; margin-bottom: 11px; color: #f4fff6; }
+    .card p { color: #c5d0c8; line-height: 1.7; margin-bottom: 19px; font-size: 15px; }
+    button {
+      display: block; width: 100%; padding: 15px 16px; border: 1px solid transparent;
+      border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: transform .15s, filter .15s; -webkit-tap-highlight-color: transparent;
+    }
+    button:active { transform: scale(.98); filter: brightness(.92); }
+    .botao { background: linear-gradient(135deg, #21c568, #11964b); color: #fff; box-shadow: 0 5px 14px rgba(17,150,75,.2); }
+    .voltar { background: #242d27; color: #edf5ef; border-color: #405046; margin-top: 22px; }
+    @media (min-width: 600px) { body { padding-top: 36px; } .card { padding: 27px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>💰 Ganhar e Parceiros</h1>
+
+    <p class="subtitulo">
+      Encontre formas de participar e criar oportunidades dentro do Nosso Modelo.
+    </p>
+
+    <div class="card">
+      <h2>🤝 Seja parceiro</h2>
+
+      <p>
+        Tem uma empresa, produto ou serviço?
+        Apresente sua proposta e veja como podemos criar uma parceria.
+      </p>
+
+      <button class="botao"
+        onclick="window.location.href='parceiro.html'">
+        🤝 Quero ser parceiro
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>📢 Divulgue sua empresa</h2>
+
+      <p>
+        Empresas poderão apresentar seus produtos e serviços
+        para os utilizadores do Nosso Modelo.
+      </p>
+
+      <button class="botao"
+        onclick="window.location.href='anuncios.html'">
+        📢 Quero anunciar
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>🛒 Ofertas e afiliados</h2>
+
+      <p>
+        Área destinada a ofertas e produtos de parceiros.
+        Algumas ofertas poderão gerar comissão para o projeto.
+      </p>
+
+      <button class="botao"
+        onclick="window.location.href='anuncios.html'">
+        🛒 Ver ofertas
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>💎 Oportunidades de Ganhos</h2>
+
+      <p>
+        Descubra oportunidades de parceria, divulgação de produtos
+        e programas de afiliados. As comissões dependem das condições
+        de cada parceiro.
+      </p>
+
+      <button class="botao"
+        onclick="window.location.href='anuncios.html'">
+        🚀 Explorar oportunidades
+      </button>
+    </div>
+
+
+
+    <button class="voltar"
+      onclick="window.location.href='index.html'">
+      🏠 Voltar ao início
+    </button>
+
+  </div>
+
+</body>
+</html>
