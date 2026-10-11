@@ -1,5 +1,13 @@
 
 window.JOGOS_MODELO = [
+{id:"trap-the-convoy",
+nome:"Trap the Convoy",
+categoria:"arcade",
+tipo:"interno",
+emoji:"🚗",
+link:"trap-the-convoy.html",
+cor:"#75501e",
+busca:"trap the convoy gamepix carros arcade"},
  {id:"corrida",nome:"Corrida Turbo",categoria:"corrida",
   tipo:"interno",emoji:"🏎️",link:"corrida.html",
   cor:"#a6343a",busca:"corrida carros velocidade"},
