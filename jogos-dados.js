@@ -20,6 +20,10 @@ window.JOGOS_MODELO = [
   tipo:"interno",emoji:"🔢",link:"mini-jogos.html?tipo=numero",
   cor:"#245c9b",busca:"numero secreto puzzle"},
 
+ {id:"drop-planets",nome:"Drop Planets",categoria:"puzzle",
+  tipo:"interno",emoji:"🪐",link:"drop-planets.html",
+  cor:"#245c9b",busca:"drop planets planetas puzzle gamepix"},
+
  {id:"bolhas",nome:"Bolhas Coloridas",categoria:"puzzle",
   tipo:"pendente",emoji:"🫧",cor:"#245cba",
   busca:"bolhas puzzle"},
