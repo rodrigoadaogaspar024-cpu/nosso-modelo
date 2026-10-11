@@ -24,6 +24,10 @@ window.JOGOS_MODELO = [
   tipo:"interno",emoji:"🪐",link:"drop-planets.html",
   cor:"#245c9b",busca:"drop planets planetas puzzle gamepix"},
 
+ {id:"prism-match-3d",nome:"Prism Match 3D",categoria:"puzzle",
+  tipo:"interno",emoji:"🧩",link:"prism-match-3d.html",
+  cor:"#3754a8",busca:"prism match 3d cubos puzzle gamepix"},
+
  {id:"bolhas",nome:"Bolhas Coloridas",categoria:"puzzle",
   tipo:"pendente",emoji:"🫧",cor:"#245cba",
   busca:"bolhas puzzle"},
