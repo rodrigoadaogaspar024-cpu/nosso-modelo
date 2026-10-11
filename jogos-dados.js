@@ -10,23 +10,23 @@ imagem:"imagens/jogos/trap-the-convoy.jpeg",
 cor:"#75501e",
 busca:"trap the convoy gamepix carros arcade"},
  {id:"corrida",nome:"Corrida Turbo",categoria:"corrida",
-  tipo:"interno",emoji:"🏎️",link:"corrida.html",
+  tipo:"interno",emoji:"🏎️",link:"corrida.html",imagem:"imagens/jogos/corrida-turbo.jpeg",
   cor:"#a6343a",busca:"corrida carros velocidade"},
 
  {id:"snake",nome:"Snake",categoria:"arcade",
-  tipo:"interno",emoji:"🐍",link:"snake.html",
+  tipo:"interno",emoji:"🐍",link:"snake.html",imagem:"imagens/jogos/snake.jpeg",
   cor:"#197853",busca:"snake cobra arcade"},
 
  {id:"memoria",nome:"Memória",categoria:"puzzle",
-  tipo:"interno",emoji:"🧠",link:"memoria.html",
+  tipo:"interno",emoji:"🧠",link:"memoria.html",imagem:"imagens/jogos/memoria.jpeg",
   cor:"#7541b8",busca:"memoria puzzle"},
 
  {id:"reflexo",nome:"Reflexo Rápido",categoria:"arcade",
-  tipo:"interno",emoji:"⚡",link:"mini-jogos.html?tipo=reflexo",
+  tipo:"interno",emoji:"⚡",link:"mini-jogos.html?tipo=reflexo",imagem:"imagens/jogos/reflexo-rapido.jpeg",
   cor:"#af571e",busca:"reflexo rapido arcade"},
 
  {id:"numero",nome:"Número Secreto",categoria:"puzzle",
-  tipo:"interno",emoji:"🔢",link:"mini-jogos.html?tipo=numero",
+  tipo:"interno",emoji:"🔢",link:"mini-jogos.html?tipo=numero",imagem:"imagens/jogos/numero-secreto.jpeg",
   cor:"#245c9b",busca:"numero secreto puzzle"},
 
  {id:"drop-planets",nome:"Drop Planets",categoria:"puzzle",
