@@ -443,6 +443,16 @@ header {
 
 <section class="grade" id="grade-jogos"></section>
 
+<section id="secao-em-breve" style="display:none; margin-top:40px;">
+  <h2 style="color:#e8bd66; text-align:center;">
+    🚧 EM BREVE
+  </h2>
+  <p style="text-align:center; color:#c8b99f; margin:12px 0 25px;">
+    Novos jogos estão a caminho!
+  </p>
+  <div class="grade" id="grade-em-breve"></div>
+</section>
+
 </main>
 
 <footer>
@@ -533,6 +543,9 @@ document.getElementById("pesquisa")
  });
 
  const jogos=window.JOGOS_MODELO.concat(gamepix);
+ jogos.sort((a,b)=>
+   (a.tipo==="pendente")-(b.tipo==="pendente")
+ );
 
  function elemento(tag,classe,texto){
    const e=document.createElement(tag);
@@ -588,7 +601,18 @@ document.getElementById("pesquisa")
    card.appendChild(marca);
 
    card.appendChild(info);
-   grade.appendChild(card);
+   if(pendente){
+     const gradeFutura=document.getElementById("grade-em-breve");
+     const secaoFutura=document.getElementById("secao-em-breve");
+     if(gradeFutura && secaoFutura){
+       gradeFutura.appendChild(card);
+       secaoFutura.style.display="block";
+     }else{
+       grade.appendChild(card);
+     }
+   }else{
+     grade.appendChild(card);
+   }
  });
 
  const ativos=jogos.filter(j=>j.tipo==="interno").length;
