@@ -34,6 +34,7 @@ busca:"trap the convoy gamepix carros arcade"},
 
  {id:"prism-match-3d",nome:"Prism Match 3D",categoria:"puzzle",
   tipo:"interno",emoji:"🧩",link:"prism-match-3d.html",
+imagem:"imagens/jogos/prism-match-3d.jpeg",
   cor:"#3754a8",busca:"prism match 3d cubos puzzle gamepix"},
 
  {id:"bolhas",nome:"Bolhas Coloridas",categoria:"puzzle",

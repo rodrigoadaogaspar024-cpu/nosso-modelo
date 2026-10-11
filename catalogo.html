@@ -438,9 +438,17 @@ document.getElementById("pesquisa")
    card.dataset.nome=(jogo.nome+" "+jogo.busca).toLowerCase();
    card.dataset.categoria=jogo.categoria;
 
-   const capa=elemento("div","capa",jogo.emoji);
-   capa.style.background=
-     "linear-gradient(135deg,"+jogo.cor+",#17121d)";
+   const capa=elemento("div","capa",jogo.imagem ? "" : jogo.emoji);
+
+   if (jogo.imagem) {
+     capa.style.backgroundImage = 'url("' + jogo.imagem + '")';
+     capa.style.backgroundSize = "cover";
+     capa.style.backgroundPosition = "center";
+     capa.style.backgroundRepeat = "no-repeat";
+   } else {
+     capa.style.background =
+       "linear-gradient(135deg,"+jogo.cor+",#17121d)";
+   }
 
    const info=elemento("div","info");
    info.appendChild(elemento("h3","",jogo.nome));
