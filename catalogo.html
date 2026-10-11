@@ -349,6 +349,52 @@ header {
 
 </style>
 
+
+<style>
+#destaques-premium-v9 {
+  margin:24px 0 30px;
+}
+#destaques-premium-v9 h2 {
+  color:#ffda83;
+  margin-bottom:6px;
+}
+.subtitulo-destaques {
+  color:#c9b992;
+  font-size:14px;
+}
+#grade-destaques-v9 {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:15px;
+}
+.destaque-v9 {
+  background:#21180e;
+  border:1px solid #b98c3b;
+  border-radius:15px;
+  overflow:hidden;
+  text-decoration:none;
+  color:#ffe5a7;
+}
+.destaque-v9 img {
+  display:block;
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+}
+.destaque-v9 span {
+  display:block;
+  padding:10px 6px;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+}
+@media(min-width:700px) {
+  #grade-destaques-v9 {gap:18px;}
+  .destaque-v9 span {font-size:16px;}
+}
+</style>
+
 </head>
 
 <body>
@@ -383,6 +429,15 @@ header {
   <button data-cat="puzzle">🧠 Puzzle</button>
   <button data-cat="arcade">🕹️ Arcade</button>
 </div>
+
+
+<section id="destaques-premium-v9">
+  <h2>⭐ Jogos em Destaque</h2>
+  <p class="subtitulo-destaques">
+    Descobre os nossos jogos selecionados!
+  </p>
+  <div id="grade-destaques-v9"></div>
+</section>
 
 <h2 id="jogos">🔥 Jogos disponíveis</h2>
 
@@ -527,6 +582,41 @@ document.getElementById("pesquisa")
    "🔥 "+ativos+" jogos disponíveis · "+futuros+" em preparação";
 
  if(typeof aplicarCategoria==="function")aplicarCategoria();
+})();
+</script>
+
+
+<script>
+(function(){
+  const area=document.getElementById("grade-destaques-v9");
+  if(!area || !window.JOGOS_MODELO)return;
+
+  const ids=[
+    "drop-planets",
+    "prism-match-3d",
+    "trap-the-convoy"
+  ];
+
+  ids.forEach(id=>{
+    const jogo=window.JOGOS_MODELO.find(j=>j.id===id);
+    if(!jogo || !jogo.imagem || !jogo.link)return;
+
+    const link=document.createElement("a");
+    link.className="destaque-v9";
+    link.href=jogo.link;
+
+    const img=document.createElement("img");
+    img.src=jogo.imagem;
+    img.alt=jogo.nome;
+    img.loading="lazy";
+
+    const nome=document.createElement("span");
+    nome.textContent="▶ "+jogo.nome;
+
+    link.appendChild(img);
+    link.appendChild(nome);
+    area.appendChild(link);
+  });
 })();
 </script>
 
