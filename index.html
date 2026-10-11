@@ -899,7 +899,7 @@ body { padding-bottom: 85px; }
       <button
         class="entrar"
         onclick="window.location.href='cadastro.html'">
-        👤 Entrar / Criar conta
+        ✨ Conhecer a plataforma
       </button>
 
       <button
@@ -1037,18 +1037,7 @@ document.getElementById("boasVindas").appendChild(botaoSair);
   <a href="perfil.html">👤 Perfil</a>
 </nav>
 
-<!-- V5 ESCONDER CADASTRO -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  if (localStorage.getItem("usuarioLogado") === "true") {
-    document.querySelectorAll(".botoes button").forEach(function(botao) {
-      if (botao.textContent.includes("Entrar / Criar conta")) {
-        botao.style.display = "none";
-      }
-    });
-  }
-});
-</script>
+
 
 </body>
 </html>
