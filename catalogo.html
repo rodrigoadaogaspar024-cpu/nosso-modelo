@@ -512,12 +512,27 @@ document.getElementById("pesquisa")
 }
 </style>
 <script src="jogos-dados.js?v=13"></script>
+<script src="gamepix-dados.js?v=1"></script>
 <script>
 (function(){
  const grade=document.querySelector(".grade");
  if(!grade || !window.JOGOS_MODELO)return;
 
- const jogos=window.JOGOS_MODELO;
+ const gamepix=(window.JOGOS_GAMEPIX || []).map(function(j){
+   return {
+     id:j.namespace,
+     nome:j.title,
+     categoria:j.category || "arcade",
+     tipo:"interno",
+     emoji:"🎮",
+     link:j.url,
+     imagem:j.banner_image || j.image,
+     cor:"#75501e",
+     busca:(j.title+" "+(j.category || "")+" gamepix").toLowerCase()
+   };
+ });
+
+ const jogos=window.JOGOS_MODELO.concat(gamepix);
 
  function elemento(tag,classe,texto){
    const e=document.createElement(tag);
