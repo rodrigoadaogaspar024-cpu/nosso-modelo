@@ -54,7 +54,7 @@ function abrirParceiros() {
 
 // Ir para administração
 function abrirAdministracao() {
-  window.location.href = "admin.html";
+  alert("Administracao indisponivel na demonstracao.");
 }
 
 
