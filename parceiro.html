@@ -426,87 +426,63 @@
 
   <script>
 
-    function enviarContato() {
 
-      const nome =
-        document.getElementById("nome").value.trim();
-
-      const empresa =
-        document.getElementById("empresa").value.trim();
-
-      const email =
-        document.getElementById("email").value.trim();
-
-      const whatsapp =
-        document.getElementById("whatsapp").value.trim();
-
-      const mensagem =
-        document.getElementById("mensagem").value.trim();
-
+    async function enviarContato() {
+      const nome = document.getElementById("nome").value.trim();
+      const empresa = document.getElementById("empresa").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const whatsapp = document.getElementById("whatsapp").value.trim();
+      const mensagem = document.getElementById("mensagem").value.trim();
+      const resultado = document.getElementById("resultado");
 
       if (!nome || !empresa || !email || !mensagem) {
-
-        alert(
-          "⚠️ Preencha nome, empresa, e-mail e proposta."
-        );
-
+        resultado.textContent =
+          "⚠️ Preencha nome, empresa, e-mail e proposta.";
         return;
-
       }
 
+      const botao = document.querySelector("button.enviar");
+      botao.disabled = true;
+      resultado.textContent = "⏳ A enviar proposta...";
 
-      const dataHora =
-        new Date().toLocaleString("pt-PT");
+      try {
+        const resposta = await fetch(
+          "https://formspree.io/f/meaeldar",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              nome,
+              empresa,
+              email,
+              whatsapp,
+              mensagem,
+              dataHora: new Date().toLocaleString("pt-PT")
+            })
+          }
+        );
 
+        if (!resposta.ok) {
+          throw new Error("Falha no envio");
+        }
 
-      const novoParceiro = {
+        resultado.textContent =
+          "✅ Proposta enviada com sucesso!";
 
-        nome: nome,
+        ["nome", "empresa", "email", "whatsapp", "mensagem"]
+          .forEach(id => {
+            document.getElementById(id).value = "";
+          });
 
-        empresa: empresa,
-
-        email: email,
-
-        whatsapp: whatsapp,
-
-        mensagem: mensagem,
-
-        dataHora: dataHora
-
-      };
-
-
-      let parceiros =
-        JSON.parse(
-          localStorage.getItem("listaParceiros")
-        ) || [];
-
-
-      parceiros.unshift(novoParceiro);
-
-
-      localStorage.setItem(
-        "listaParceiros",
-        JSON.stringify(parceiros)
-      );
-
-
-      document.getElementById(
-        "resultado"
-      ).textContent =
-        "✅ Interesse registrado com sucesso!";
-
-
-      document.getElementById("nome").value = "";
-
-      document.getElementById("empresa").value = "";
-
-      document.getElementById("email").value = "";
-
-      document.getElementById("whatsapp").value = "";
-
-      document.getElementById("mensagem").value = "";
-
+      } catch (erro) {
+        resultado.textContent =
+          "⚠️ Não foi possível enviar. Tente novamente.";
+      } finally {
+        botao.disabled = false;
+      }
     }
 
   </script>
