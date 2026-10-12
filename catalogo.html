@@ -592,6 +592,12 @@ document.getElementById("pesquisa")
      ?"jogo-online.html?id="+encodeURIComponent(jogo.id)
      :jogo.link;
 
+   if (!pendente && jogo.link &&
+       jogo.link.includes("play.gamepix.com/")) {
+     botao.href="jogar-gamepix.html?id="+
+       encodeURIComponent(jogo.id);
+   }
+
    info.appendChild(botao);
    card.appendChild(capa);
 
