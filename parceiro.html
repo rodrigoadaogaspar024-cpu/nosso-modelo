@@ -469,8 +469,32 @@
           throw new Error("Falha no envio");
         }
 
-        resultado.textContent =
-          "✅ Proposta enviada com sucesso!";
+        // Guardar também no Supabase
+        try {
+          const respostaSupabase = await fetch(
+            "https://gynlfyucqnoacqjoadmi.supabase.co/functions/v1/nosso-modelo-parceiros",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                nome, empresa, email, whatsapp, mensagem
+              })
+            }
+          );
+
+          if (!respostaSupabase.ok) {
+            throw new Error("Falha no Supabase");
+          }
+
+          resultado.textContent =
+            "✅ Proposta enviada e guardada com sucesso!";
+        } catch (erroSupabase) {
+          console.error("Erro Supabase:", erroSupabase);
+          resultado.textContent =
+            "⚠️ Proposta recebida pelo Formspree, mas não guardada no Supabase.";
+        }
 
         ["nome", "empresa", "email", "whatsapp", "mensagem"]
           .forEach(id => {
@@ -478,8 +502,9 @@
           });
 
       } catch (erro) {
+        console.error("Erro no envio:", erro);
         resultado.textContent =
-          "⚠️ Não foi possível enviar. Tente novamente.";
+          "⚠️ Erro no envio: " + erro.message;
       } finally {
         botao.disabled = false;
       }
