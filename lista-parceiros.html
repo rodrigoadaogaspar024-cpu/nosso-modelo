@@ -357,236 +357,98 @@ button:active {
 
 
   <script>
+    const lista = document.getElementById("lista");
+    const contador = document.getElementById("contador");
 
-    const lista =
-      document.getElementById("lista");
+    async function carregarParceiros() {
+      try {
+        const resposta = await fetch(
+          "parceiros-aprovados.json",
+          { cache: "no-store" }
+        );
 
-
-    const parceiros =
-      JSON.parse(
-        localStorage.getItem("parceirosPublicosAprovados")
-      ) || [];
-
-
-    /* CONTADOR */
-
-    document.getElementById("contador").innerHTML =
-      "🤝 Parceiros: <strong>" +
-      parceiros.length +
-      "</strong>";
-
-
-    /* LISTA */
-
-    if (parceiros.length > 0) {
-
-      lista.innerHTML = "";
-
-
-      parceiros.forEach(function(parceiro) {
-
-        const card =
-          document.createElement("div");
-
-        card.className = "card";
-
-
-        /* CABEÇALHO */
-
-        const cabecalho =
-          document.createElement("div");
-
-        cabecalho.className =
-          "cabecalho-card";
-
-
-        const iconeEmpresa =
-          document.createElement("div");
-
-        iconeEmpresa.className =
-          "empresa-icone";
-
-        iconeEmpresa.textContent =
-          "🏢";
-
-
-        const blocoTitulo =
-          document.createElement("div");
-
-
-        const etiqueta =
-          document.createElement("div");
-
-        etiqueta.className =
-          "etiqueta";
-
-        etiqueta.textContent =
-          "PARCEIRO";
-
-
-        const titulo =
-          document.createElement("h2");
-
-        titulo.textContent =
-          parceiro.empresa || "Parceiro";
-
-
-        blocoTitulo.appendChild(etiqueta);
-
-        blocoTitulo.appendChild(titulo);
-
-        cabecalho.appendChild(iconeEmpresa);
-
-        cabecalho.appendChild(blocoTitulo);
-
-        card.appendChild(cabecalho);
-
-
-        /* NOME */
-
-        const nome =
-          document.createElement("p");
-
-        nome.className =
-          "informacao";
-
-        nome.innerHTML =
-          "<strong>👤 Nome:</strong> " +
-          (parceiro.nome || "Não informado");
-
-        card.appendChild(nome);
-
-
-        /* EMAIL */
-
-        const email =
-          document.createElement("p");
-
-        email.className =
-          "informacao";
-
-        email.innerHTML =
-          "<strong>📧 E-mail:</strong> " +
-          (parceiro.email || "Não informado");
-
-        card.appendChild(email);
-
-
-        /* WHATSAPP */
-
-        if (parceiro.whatsapp) {
-
-          const whatsapp =
-            document.createElement("p");
-
-          whatsapp.className =
-            "informacao";
-
-          whatsapp.innerHTML =
-            "<strong>📱 WhatsApp:</strong> " +
-            parceiro.whatsapp;
-
-          card.appendChild(whatsapp);
-
+        if (!resposta.ok) {
+          throw new Error("Não foi possível carregar os parceiros");
         }
 
+        const parceiros = await resposta.json();
 
-        /* MENSAGEM */
-
-        const mensagem =
-          document.createElement("div");
-
-        mensagem.className =
-          "mensagem";
-
-        mensagem.innerHTML =
-          "<strong>💬 Proposta</strong><br>" +
-          (parceiro.mensagem || "Sem mensagem");
-
-        card.appendChild(mensagem);
-
-
-        /* DATA */
-
-        const data =
-          document.createElement("p");
-
-        data.className =
-          "data";
-
-        data.textContent =
-          "🕒 " +
-          (parceiro.dataHora || "Data não informada");
-
-        card.appendChild(data);
-
-
-        /* EMAIL */
-
-        if (parceiro.email) {
-
-          const botaoEmail =
-            document.createElement("button");
-
-          botaoEmail.className =
-            "email";
-
-          botaoEmail.textContent =
-            "📧 Contactar parceiro";
-
-          botaoEmail.onclick =
-            function() {
-
-              window.location.href =
-                "mailto:" + parceiro.email;
-
-            };
-
-          card.appendChild(botaoEmail);
-
+        if (!Array.isArray(parceiros)) {
+          throw new Error("Formato inválido");
         }
 
+        contador.textContent =
+          "🤝 Parceiros: " + parceiros.length;
 
-        /* WHATSAPP */
+        if (parceiros.length === 0) {
+          return;
+        }
 
-        if (parceiro.whatsapp) {
+        lista.replaceChildren();
 
-          const botaoWhatsApp =
-            document.createElement("button");
+        parceiros.forEach(function(parceiro) {
+          const card = document.createElement("div");
+          card.className = "card";
 
-          botaoWhatsApp.className =
-            "whatsapp";
+          const cabecalho = document.createElement("div");
+          cabecalho.className = "cabecalho-card";
 
-          botaoWhatsApp.textContent =
-            "📱 Abrir WhatsApp";
+          const icone = document.createElement("div");
+          icone.className = "empresa-icone";
+          icone.textContent = "🏢";
 
-          botaoWhatsApp.onclick =
-            function() {
+          const bloco = document.createElement("div");
 
-              const numero =
-                parceiro.whatsapp
-                  .replace(/\D/g, "");
+          const etiqueta = document.createElement("div");
+          etiqueta.className = "etiqueta";
+          etiqueta.textContent = "PARCEIRO APROVADO";
 
-              if (numero) {
+          const titulo = document.createElement("h2");
+          titulo.textContent = parceiro.empresa || "Parceiro";
 
-                window.location.href =
-                  "https://wa.me/" + numero;
+          bloco.append(etiqueta, titulo);
+          cabecalho.append(icone, bloco);
+          card.appendChild(cabecalho);
 
+          if (parceiro.descricao) {
+            const descricao = document.createElement("p");
+            descricao.className = "informacao";
+            descricao.textContent = parceiro.descricao;
+            card.appendChild(descricao);
+          }
+
+          if (parceiro.site) {
+            try {
+              const url = new URL(parceiro.site);
+
+              if (["https:", "http:"].includes(url.protocol)) {
+                const botao = document.createElement("button");
+                botao.className = "email";
+                botao.textContent = "🌐 Visitar empresa";
+
+                botao.onclick = function() {
+                  window.open(url.href, "_blank", "noopener,noreferrer");
+                };
+
+                card.appendChild(botao);
               }
+            } catch (erro) {
+              console.warn("Site de parceiro inválido");
+            }
+          }
 
-            };
+          lista.appendChild(card);
+        });
 
-          card.appendChild(botaoWhatsApp);
-
-        }
-
-
-        lista.appendChild(card);
-
-      });
-
+      } catch (erro) {
+        console.error(erro);
+        contador.textContent = "🤝 Parceiros indisponíveis";
+        lista.textContent =
+          "Não foi possível carregar os parceiros. Tente novamente.";
+      }
     }
 
+    carregarParceiros();
   </script>
 
 </body>

@@ -483,7 +483,7 @@
         );
 
         if (!resposta.ok) {
-          throw new Error("Falha no envio");
+          throw new Error("Formspree HTTP " + resposta.status);
         }
 
         // Guardar também no Supabase
