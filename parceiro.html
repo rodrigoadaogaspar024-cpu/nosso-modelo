@@ -256,6 +256,7 @@
 
   </style>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 <body>
@@ -376,6 +377,12 @@
         placeholder="Conte-nos como gostaria de ser parceiro..."></textarea>
 
 
+
+      <!-- PROTEÇÃO CLOUDFLARE -->
+      <div class="cf-turnstile"
+           data-sitekey="0x4AAAAAAFWHR9mNnPzfLrID">
+      </div>
+
       <!-- ENVIAR -->
 
       <button
@@ -434,6 +441,16 @@
       const whatsapp = document.getElementById("whatsapp").value.trim();
       const mensagem = document.getElementById("mensagem").value.trim();
       const resultado = document.getElementById("resultado");
+      const turnstileToken =
+        typeof turnstile !== "undefined"
+          ? turnstile.getResponse()
+          : "";
+
+      if (!turnstileToken) {
+        resultado.textContent =
+          "⚠️ Confirme a verificação de segurança antes de enviar.";
+        return;
+      }
 
       if (!nome || !empresa || !email || !mensagem) {
         resultado.textContent =
@@ -479,7 +496,7 @@
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                nome, empresa, email, whatsapp, mensagem
+                nome, empresa, email, whatsapp, mensagem, turnstileToken
               })
             }
           );
