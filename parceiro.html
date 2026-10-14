@@ -502,7 +502,7 @@
           );
 
           if (!respostaSupabase.ok) {
-            throw new Error("Falha no Supabase");
+            throw new Error("Supabase HTTP " + respostaSupabase.status);
           }
 
           resultado.textContent =
@@ -510,7 +510,7 @@
         } catch (erroSupabase) {
           console.error("Erro Supabase:", erroSupabase);
           resultado.textContent =
-            "⚠️ Proposta recebida pelo Formspree, mas não guardada no Supabase.";
+            "⚠️ Formspree recebeu. Erro: " + erroSupabase.message;
         }
 
         ["nome", "empresa", "email", "whatsapp", "mensagem"]
