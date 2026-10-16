@@ -510,7 +510,11 @@
           );
 
           if (!respostaSupabase.ok) {
-            throw new Error("Supabase HTTP " + respostaSupabase.status);
+            const detalhes = await respostaSupabase.text();
+            throw new Error(
+              "Supabase HTTP " + respostaSupabase.status +
+              " - " + detalhes
+            );
           }
 
           resultado.textContent =
