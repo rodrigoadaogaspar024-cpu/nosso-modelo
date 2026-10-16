@@ -363,7 +363,7 @@ button:active {
     async function carregarParceiros() {
       try {
         const resposta = await fetch(
-          "parceiros-aprovados.json",
+          "https://gynlfyucqnoacqjoadmi.supabase.co/functions/v1/listar-parceiros",
           { cache: "no-store" }
         );
 
