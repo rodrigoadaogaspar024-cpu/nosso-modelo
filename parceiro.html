@@ -458,6 +458,14 @@
         return;
       }
 
+      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!emailValido) {
+        resultado.textContent =
+          "⚠️ Digite um e-mail válido. Exemplo: nome@gmail.com";
+        return;
+      }
+
       const botao = document.querySelector("button.enviar");
       botao.disabled = true;
       resultado.textContent = "⏳ A enviar proposta...";
