@@ -315,16 +315,9 @@
 
     // CONTADOR DE PARCEIROS
 
-    const parceiros =
-      JSON.parse(
-        localStorage.getItem("listaParceiros")
-      ) || [];
-
-
     document.getElementById(
       "contadorPedidos"
-    ).textContent =
-      parceiros.length;
+    ).textContent = "—";
 
 
     // MOSTRAR PONTOS
@@ -374,6 +367,24 @@
           await cliente.auth.signOut();
           window.location.replace("login-admin.html");
           return;
+        }
+
+        const { count, error: erroContagem } =
+          await cliente
+            .from("parceiros")
+            .select("id", {
+              count: "exact",
+              head: true
+            });
+
+        const contador =
+          document.getElementById("contadorPedidos");
+
+        if (erroContagem) {
+          console.error("Erro ao contar pedidos:", erroContagem);
+          contador.textContent = "Erro";
+        } else {
+          contador.textContent = count ?? 0;
         }
 
         painel.hidden = false;
