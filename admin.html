@@ -138,13 +138,18 @@
       padding: 22px 0;
     }
 
-  </style>
+
+    [hidden] {
+      display: none !important;
+    }
+
+</style>
 
 </head>
 
 <body>
 
-  <main class="container">
+  <main class="container" id="painelAdmin" hidden>
 
 
     <section class="topo">
@@ -339,6 +344,44 @@
 
     }
 
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <script>
+    (async function protegerAdministracao() {
+      const painel = document.getElementById("painelAdmin");
+
+      try {
+        const cliente = window.supabase.createClient(
+          SUPABASE_URL, SUPABASE_KEY
+        );
+
+        const { data: usuario, error: erroUsuario } =
+          await cliente.auth.getUser();
+
+        if (erroUsuario || !usuario.user) {
+          window.location.replace("login-admin.html");
+          return;
+        }
+
+        const { data: autorizado, error: erroAdmin } =
+          await cliente.rpc("eh_administrador");
+
+        if (erroAdmin || autorizado !== true) {
+          await cliente.auth.signOut();
+          window.location.replace("login-admin.html");
+          return;
+        }
+
+        painel.hidden = false;
+
+      } catch (erro) {
+        window.location.replace("login-admin.html");
+      }
+    })();
   </script>
 
 </body>
