@@ -127,8 +127,14 @@
             await cliente.rpc("eh_administrador");
 
           if (erroAdmin || data !== true) {
+            console.error("Erro RPC:", erroAdmin);
+            console.log("Resultado administrador:", data);
+
             await cliente.auth.signOut();
-            mensagem.textContent = "⛔ Acesso administrativo não autorizado.";
+
+            mensagem.textContent = erroAdmin
+              ? "❌ Erro Supabase: " + erroAdmin.message
+              : "⛔ Administrador não reconhecido.";
             return;
           }
 
