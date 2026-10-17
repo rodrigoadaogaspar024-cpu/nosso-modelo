@@ -55,6 +55,11 @@
       <button type="submit">Entrar</button>
     </form>
 
+    <button type="button" id="recuperarSenha"
+      style="background:#374151;color:white">
+      🔑 Esqueci minha senha
+    </button>
+
     <p id="mensagem" role="status">
       Login ainda não configurado.
     </p>
@@ -69,6 +74,36 @@
       SUPABASE_URL,
       SUPABASE_KEY
     );
+
+    document.getElementById("recuperarSenha")
+      .addEventListener("click", async function() {
+        const email = document.getElementById("email").value.trim();
+        const mensagem = document.getElementById("mensagem");
+
+        if (!email) {
+          mensagem.textContent = "⚠️ Digite seu e-mail primeiro.";
+          return;
+        }
+
+        mensagem.textContent = "⏳ Solicitando recuperação...";
+
+        const { error } = await cliente.auth.resetPasswordForEmail(
+          email,
+          {
+            redirectTo: new URL(
+              "recuperar-senha.html",
+              window.location.href
+            ).href
+          }
+        );
+
+        if (error) {
+          mensagem.textContent = "❌ " + error.message;
+        } else {
+          mensagem.textContent =
+            "✅ Se o e-mail estiver cadastrado, você receberá um link de recuperação.";
+        }
+      });
 
     document.getElementById("formLogin")
       .addEventListener("submit", async function(event) {
