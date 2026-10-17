@@ -367,7 +367,26 @@
 
       // Pontos e histórico ainda são demonstrativos.
       // Não usar dados antigos do navegador como pontos reais.
-      const pontos = 0;
+      const { data: saldo, error: erroSaldo } = await cliente
+        .from("pontos_jogadores")
+        .select("pontos")
+        .eq("usuario_id", usuario.id)
+        .maybeSingle();
+
+      if (erroSaldo) {
+        console.error("Erro ao consultar pontos:", erroSaldo);
+        document.getElementById("pontosPerfil").textContent =
+          "Indisponível";
+        return;
+      }
+
+      if (!saldo) {
+        document.getElementById("pontosPerfil").textContent =
+          "Sem saldo cadastrado";
+        return;
+      }
+
+      const pontos = saldo.pontos;
       const historico = [];
 
       const partidas = historico.filter(
