@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Administrativo - Nosso Modelo</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #111827, #111);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 20px;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      background: #22c55e;
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    a { color: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <div class="login">
+    <h1>🔐 Administração</h1>
+    <p>Nosso Modelo</p>
+
+    <form id="formLogin">
+      <input id="email" type="email"
+        placeholder="Seu e-mail" autocomplete="username" required>
+      <input id="senha" type="password"
+        placeholder="Sua senha" autocomplete="current-password" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <p id="mensagem" role="status">
+      Login ainda não configurado.
+    </p>
+
+    <a href="index.html">🏠 Voltar ao início</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const cliente = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    document.getElementById("formLogin")
+      .addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const mensagem = document.getElementById("mensagem");
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value;
+
+        mensagem.textContent = "⏳ Verificando acesso...";
+
+        try {
+          const { error } = await cliente.auth.signInWithPassword({
+            email,
+            password: senha
+          });
+
+          if (error) throw error;
+
+          const { data, error: erroAdmin } =
+            await cliente.rpc("eh_administrador");
+
+          if (erroAdmin || data !== true) {
+            await cliente.auth.signOut();
+            mensagem.textContent = "⛔ Acesso administrativo não autorizado.";
+            return;
+          }
+
+          mensagem.textContent = "✅ Login autorizado!";
+          window.location.href = "admin.html";
+
+        } catch (erro) {
+          mensagem.textContent =
+            "❌ Não foi possível entrar. Confira seu e-mail e senha.";
+        }
+      });
+  </script>
+</body>
+</html>

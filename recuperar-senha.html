@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recuperar senha - Nosso Modelo</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      margin: 0; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #111827; color: white; padding: 20px;
+    }
+    main {
+      width: 100%; max-width: 400px;
+      background: #1f2937; padding: 28px;
+      border-radius: 20px; text-align: center;
+    }
+    input, button {
+      width: 100%; padding: 15px;
+      margin-top: 15px; border: 0;
+      border-radius: 10px; font-size: 16px;
+    }
+    button { background: #22c55e; font-weight: bold; }
+    button:disabled { opacity: .5; }
+    a { color: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>🔐 Nova senha</h1>
+    <p>Nosso Modelo</p>
+    <form id="formSenha">
+      <input id="senha" type="password"
+        placeholder="Nova senha (mínimo 8 caracteres)"
+        minlength="8" autocomplete="new-password" required>
+      <input id="confirmar" type="password"
+        placeholder="Confirmar nova senha"
+        minlength="8" autocomplete="new-password" required>
+      <button id="botao" disabled>Guardar nova senha</button>
+    </form>
+    <p id="mensagem" role="status">A verificar o link...</p>
+    <a href="login-admin.html">Voltar ao login</a>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const cliente = window.supabase.createClient(
+      SUPABASE_URL, SUPABASE_KEY,
+      { auth: { detectSessionInUrl: true } }
+    );
+
+    const mensagem = document.getElementById("mensagem");
+    const botao = document.getElementById("botao");
+    let recuperacaoValida = false;
+
+    cliente.auth.onAuthStateChange((evento) => {
+      if (evento === "PASSWORD_RECOVERY") {
+        recuperacaoValida = true;
+        botao.disabled = false;
+        mensagem.textContent = "✅ Escolha a sua nova senha.";
+      }
+    });
+
+    cliente.auth.initialize().then(({ error }) => {
+      if (error) {
+        mensagem.textContent = "❌ Link inválido ou expirado.";
+      } else if (!recuperacaoValida) {
+        mensagem.textContent =
+          "Aguardando confirmação do link de recuperação.";
+      }
+    });
+
+    document.getElementById("formSenha")
+      .addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        if (!recuperacaoValida) return;
+
+        const senha = document.getElementById("senha").value;
+        const confirmar = document.getElementById("confirmar").value;
+
+        if (senha !== confirmar) {
+          mensagem.textContent = "❌ As senhas não coincidem.";
+          return;
+        }
+
+        botao.disabled = true;
+        mensagem.textContent = "⏳ A guardar nova senha...";
+
+        const { error } = await cliente.auth.updateUser({
+          password: senha
+        });
+
+        if (error) {
+          mensagem.textContent = "❌ " + error.message;
+          botao.disabled = false;
+          return;
+        }
+
+        await cliente.auth.signOut();
+        mensagem.textContent = "✅ Senha alterada com sucesso!";
+        document.getElementById("formSenha").reset();
+      });
+  </script>
+</body>
+</html>
