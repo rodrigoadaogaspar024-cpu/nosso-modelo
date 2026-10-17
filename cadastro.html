@@ -2,42 +2,126 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nosso Modelo - Demonstração</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criar conta - Nosso Modelo</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;
- display:grid;place-items:center;
- background:radial-gradient(circle at top,#443013,#100e0b);
- color:#ffe5a0;font-family:Arial,sans-serif;
- padding:20px;text-align:center
+  margin:0;min-height:100vh;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#101629,#20204b);
+  color:white;font-family:Arial,sans-serif;
+  padding:20px
 }
 main{
- max-width:450px;width:100%;
- padding:35px 20px;border-radius:25px;
- background:#211a12;border:1px solid #a47b33
+  width:100%;max-width:440px;
+  padding:28px 22px;border-radius:20px;
+  background:#1d2540;border:1px solid #44547a
 }
-h1{font-size:26px}
-p{color:#dfcfb3;line-height:1.7}
-a{
- display:block;margin-top:15px;padding:16px;
- background:linear-gradient(135deg,#ffe49a,#bc8a2c);
- color:#201407;border-radius:14px;
- text-decoration:none;font-weight:bold
+h1{text-align:center;color:#ffdc80}
+p{text-align:center;line-height:1.5}
+label{display:block;margin-top:15px}
+input{
+  width:100%;padding:14px;margin-top:6px;
+  border-radius:10px;border:1px solid #657293;
+  background:#10182e;color:white;font-size:16px
 }
+button,a.voltar{
+  display:block;width:100%;padding:15px;
+  margin-top:20px;border:0;border-radius:12px;
+  background:#f5c75c;color:#171717;
+  font-size:16px;font-weight:bold;
+  text-align:center;text-decoration:none
+}
+button:disabled{opacity:.6}
+#mensagem{margin-top:18px;white-space:pre-line}
 </style>
 </head>
 <body>
-<!-- CADASTRO DEMO PUBLICO -->
 <main>
 <h1>🎮 NOSSO MODELO</h1>
-<h2>✨ Versão de demonstração</h2>
-<p>Estamos a preparar o cadastro seguro da plataforma.</p>
-<p>Por enquanto, não é necessário criar conta
-nem fornecer uma senha para conhecer o projeto.</p>
-<a href="catalogo.html">🎮 Explorar jogos</a>
-<a href="index.html">🏠 Página inicial</a>
+<p>Cria a tua conta de jogador!</p>
+
+<form id="formCadastro">
+<label for="nome">👤 Nome</label>
+<input id="nome" required maxlength="80" autocomplete="name">
+
+<label for="email">📧 E-mail</label>
+<input id="email" type="email" required autocomplete="email">
+
+<label for="senha">🔐 Senha</label>
+<input id="senha" type="password" required
+ minlength="12" autocomplete="new-password">
+
+<label for="confirmar">🔐 Confirmar senha</label>
+<input id="confirmar" type="password" required
+ minlength="12" autocomplete="new-password">
+
+<p>Usa pelo menos 12 caracteres, com letras maiúsculas,
+minúsculas, números e símbolos.</p>
+
+<button id="botao" type="submit">🚀 Criar minha conta</button>
+</form>
+
+<p id="mensagem" role="status" aria-live="polite"></p>
+<a class="voltar" href="index.html">🏠 Voltar ao início</a>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const cliente = window.supabase.createClient(
+  SUPABASE_URL, SUPABASE_KEY
+);
+
+document.getElementById("formCadastro")
+.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const nome = document.getElementById("nome").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
+  const confirmar = document.getElementById("confirmar").value;
+  const mensagem = document.getElementById("mensagem");
+  const botao = document.getElementById("botao");
+
+  if (!nome) {
+    mensagem.textContent = "⚠️ Informa o teu nome.";
+    return;
+  }
+
+  if (senha !== confirmar) {
+    mensagem.textContent = "⚠️ As senhas não coincidem.";
+    return;
+  }
+
+  botao.disabled = true;
+  mensagem.textContent = "⏳ A criar conta...";
+
+  try {
+    const { error } = await cliente.auth.signUp({
+      email,
+      password: senha,
+      options: {
+        data: { nome }
+      }
+    });
+
+    if (error) throw error;
+
+    mensagem.textContent =
+      "✅ Pedido de cadastro recebido! Verifica o teu e-mail para confirmar a conta. Se não chegar, verifica também o spam.";
+
+    document.getElementById("formCadastro").reset();
+  } catch (erro) {
+    console.error("Erro de cadastro:", erro);
+    mensagem.textContent =
+      "⚠️ Não foi possível concluir o cadastro: " +
+      (erro.message || "Tenta novamente.");
+  } finally {
+    botao.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
