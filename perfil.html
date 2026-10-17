@@ -323,6 +323,13 @@
     </button>
 
 
+    <button
+      id="botaoSair"
+      class="voltar"
+      type="button">
+      🚪 Sair da minha conta
+    </button>
+
     <div class="rodape">
 
       Nosso Modelo © 2026
@@ -332,127 +339,70 @@
   </main>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
+    const cliente = window.supabase.createClient(
+      SUPABASE_URL, SUPABASE_KEY
+    );
 
-    // NOME DO UTILIZADOR
+    async function iniciarPerfil() {
+      const { data, error } = await cliente.auth.getUser();
 
-    const nome =
-      localStorage.getItem("nomeUsuario");
+      if (error || !data.user) {
+        window.location.replace("login.html");
+        return;
+      }
 
-    if (nome) {
+      const usuario = data.user;
 
-      document.getElementById("nomePerfil")
-        .textContent = nome;
+      document.getElementById("nomePerfil").textContent =
+        usuario.user_metadata?.nome || "Jogador";
 
-    }
+      document.getElementById("emailPerfil").textContent =
+        usuario.email || "Não informado";
 
+      document.getElementById("telemovelPerfil").textContent =
+        "Não informado";
 
-    // DADOS DA CONTA
+      // Pontos e histórico ainda são demonstrativos.
+      // Não usar dados antigos do navegador como pontos reais.
+      const pontos = 0;
+      const historico = [];
 
-    document.getElementById("emailPerfil").textContent =
-      localStorage.getItem("emailUsuario") || "Não informado";
+      const partidas = historico.filter(
+        item => item.tipo === "🎮 Jogo"
+      ).length;
 
-    document.getElementById("telemovelPerfil").textContent =
-      localStorage.getItem("telemovelUsuario") || "Não informado";
+      const recompensas = historico.filter(
+        item => item.tipo === "🎁 Recompensa"
+      ).length;
 
+      document.getElementById("pontosPerfil").textContent = pontos;
+      document.getElementById("partidasPerfil").textContent = partidas;
+      document.getElementById("recompensasPerfil").textContent = recompensas;
+      document.getElementById("nivelPerfil").textContent = "🥉 Iniciante";
 
-    // PONTOS
-
-    const pontos =
-      Number(
-        localStorage.getItem("pontosUsuario")
-      ) || 0;
-
-    document.getElementById("pontosPerfil")
-      .textContent = pontos;
-
-
-    // HISTÓRICO
-
-    const historico =
-      JSON.parse(
-        localStorage.getItem("historicoUsuario")
-      ) || [];
-
-
-    // PARTIDAS
-
-    const partidas =
-      historico.filter(function(item) {
-
-        return item.tipo === "🎮 Jogo";
-
-      }).length;
-
-
-    document.getElementById("partidasPerfil")
-      .textContent = partidas;
-
-
-    // RECOMPENSAS
-
-    const recompensas =
-      historico.filter(function(item) {
-
-        return item.tipo === "🎁 Recompensa";
-
-      }).length;
-
-
-    document.getElementById("recompensasPerfil")
-      .textContent = recompensas;
-
-
-    // NÍVEL
-
-    let nivel =
-      "🥉 Iniciante";
-
-
-    if (partidas >= 100) {
-
-      nivel = "🥇 Mestre";
-
-    } else if (partidas >= 50) {
-
-      nivel = "🥈 Avançado";
-
-    } else if (partidas >= 20) {
-
-      nivel = "🎖️ Intermediário";
-
-    }
-
-
-    document.getElementById("nivelPerfil")
-      .textContent = nivel;
-
-
-    // STATUS DAS RECOMPENSAS
-
-    const statusRecompensa =
-      document.getElementById(
-        "statusRecompensa"
-      );
-
-
-    if (pontos >= 100) {
-
-      statusRecompensa.textContent =
-        "🏆 Você tem pontos suficientes para a Recompensa 2!";
-
-    } else if (pontos >= 50) {
-
-      statusRecompensa.textContent =
-        "🎁 Você já pode resgatar a Recompensa 1!";
-
-    } else {
-
-      statusRecompensa.textContent =
+      document.getElementById("statusRecompensa").textContent =
         "⭐ Continue jogando para desbloquear recompensas!";
-
     }
 
+    document.getElementById("botaoSair")
+      .addEventListener("click", async function() {
+        this.disabled = true;
+
+        const { error } = await cliente.auth.signOut();
+
+        if (error) {
+          alert("Não foi possível sair. Tenta novamente.");
+          this.disabled = false;
+          return;
+        }
+
+        window.location.replace("login.html");
+      });
+
+    iniciarPerfil();
   </script>
 
 </body>
