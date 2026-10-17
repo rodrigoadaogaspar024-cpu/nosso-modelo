@@ -243,6 +243,51 @@
             }
           }
 
+          const botao = document.createElement("button");
+          botao.type = "button";
+          botao.className = "botao";
+          botao.textContent = pedido.aprovado
+            ? "❌ Retirar aprovação"
+            : "✅ Aprovar parceiro";
+
+          botao.addEventListener("click", async () => {
+            const aprovar = !pedido.aprovado;
+
+            const confirmado = confirm(
+              aprovar
+                ? "Deseja aprovar esta empresa?"
+                : "Deseja retirar a aprovação desta empresa?"
+            );
+
+            if (!confirmado) return;
+
+            botao.disabled = true;
+            botao.textContent = "⏳ A guardar...";
+
+            const { data, error } = await cliente
+              .from("parceiros")
+              .update({ aprovado: aprovar })
+              .eq("id", pedido.id)
+              .select("id,aprovado")
+              .single();
+
+            if (error || !data) {
+              alert("Erro ao atualizar: " +
+                (error?.message || "Sem confirmação"));
+              botao.disabled = false;
+              botao.textContent = pedido.aprovado
+                ? "❌ Retirar aprovação"
+                : "✅ Aprovar parceiro";
+              return;
+            }
+
+            pedido.aprovado = data.aprovado;
+            alert("✅ Situação atualizada com sucesso!");
+            window.location.reload();
+          });
+
+          cartao.appendChild(botao);
+
           lista.appendChild(cartao);
         }
 
