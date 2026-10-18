@@ -375,23 +375,23 @@
 
       if (erroSaldo) {
         console.error("Erro ao consultar pontos:", erroSaldo);
-        document.getElementById("pontosPerfil").textContent =
-          "Indisponível";
-        return;
       }
 
-      if (!saldo) {
-        document.getElementById("pontosPerfil").textContent =
-          "Sem saldo cadastrado";
-        return;
-      }
-
-      const pontos = saldo.pontos;
+      const pontos = erroSaldo
+        ? "Indisponível"
+        : (saldo?.pontos ?? 0);
       const historico = [];
 
-      const partidas = historico.filter(
-        item => item.tipo === "🎮 Jogo"
-      ).length;
+      const { count: totalPartidas, error: erroPartidas } = await cliente
+        .from("partidas_jogadores")
+        .select("id", { count: "exact", head: true })
+        .eq("usuario_id", usuario.id);
+
+      if (erroPartidas) {
+        console.error("Erro ao consultar partidas:", erroPartidas);
+      }
+
+      const partidas = erroPartidas ? "Indisponível" : (totalPartidas ?? 0);
 
       const recompensas = historico.filter(
         item => item.tipo === "🎁 Recompensa"

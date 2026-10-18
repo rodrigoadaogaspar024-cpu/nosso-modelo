@@ -54,7 +54,29 @@ button{
 }
 #iniciar{background:linear-gradient(135deg,#ffe39a,#c49a42);color:#171109}
 .controles{display:flex;justify-content:center;gap:18px}
+
+@media (max-width:600px){
+  header{padding:8px 6px}
+  h1{font-size:23px;margin:3px}
+  header p{font-size:13px;margin:5px}
+  main{padding:0 8px 12px}
+  #placar{font-size:16px;margin:6px}
+  canvas{
+    width:auto;
+    max-width:100%;
+    height:auto;
+    max-height:48dvh;
+  }
+  button{
+    padding:9px 13px;
+    margin:4px 2px;
+    font-size:15px;
+  }
+  .controles{gap:12px}
+  main p{font-size:13px;margin:6px}
+}
 button:active{transform:scale(.96)}
+
 a{color:#f5c451}
 </style>
 </head>
@@ -136,14 +158,39 @@ function mover(direcao){
   desenhar();
 }
 function terminar(){
+  if(!ativo) return;
   ativo=false;
+
   if(pontos>melhor){
     melhor=pontos;
     localStorage.setItem("recordeCorrida",melhor);
   }
+
   desenhar();
   placar.textContent="Corrida: "+pontos+" | Recorde: "+melhor;
   mensagem.textContent="🏁 Fim da corrida! Tenta bater o teu recorde.";
+
+  guardarPartidaCorrida();
+}
+
+async function guardarPartidaCorrida(){
+  try {
+    const cliente = window.supabase.createClient(
+      SUPABASE_URL, SUPABASE_KEY
+    );
+
+    const { error } = await cliente.rpc(
+      "registrar_partida_corrida"
+    );
+
+    if(error){
+      console.error("Erro ao guardar partida:", error);
+    } else {
+      console.log("Partida guardada no Supabase!");
+    }
+  } catch(erro){
+    console.error("Falha ao registar partida:", erro);
+  }
 }
 canvas.addEventListener("pointerdown",e=>{
   if(!ativo)return;
