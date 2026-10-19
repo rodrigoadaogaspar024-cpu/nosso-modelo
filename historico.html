@@ -98,64 +98,104 @@ h1 { margin-top: 18px; font-size: clamp(29px, 7vw, 38px); color: var(--texto); }
   </main>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
+    const cliente = window.supabase.createClient(
+      SUPABASE_URL, SUPABASE_KEY
+    );
 
-    const pontos =
-      Number(localStorage.getItem("pontosUsuario")) || 0;
+    async function carregarHistorico() {
+      const lista = document.getElementById("listaHistorico");
+      const elementoPontos = document.getElementById("pontos");
 
+      lista.textContent = "⏳ A carregar histórico...";
+      elementoPontos.textContent = "...";
 
-    document.getElementById("pontos").textContent =
-      pontos;
+      try {
+        const { data: auth, error: erroAuth } =
+          await cliente.auth.getUser();
 
+        if (erroAuth || !auth.user) {
+          window.location.replace("login.html");
+          return;
+        }
 
-    const historico =
-      JSON.parse(
-        localStorage.getItem("historicoUsuario")
-      ) || [];
+        const usuario = auth.user;
 
+        const { data: saldo, error: erroSaldo } =
+          await cliente
+            .from("pontos_jogadores")
+            .select("pontos")
+            .eq("usuario_id", usuario.id)
+            .maybeSingle();
 
-    const lista =
-      document.getElementById("listaHistorico");
+        elementoPontos.textContent = erroSaldo
+          ? "Indisponível"
+          : (saldo?.pontos ?? 0);
 
+        if (erroSaldo) {
+          console.error("Erro ao consultar saldo:", erroSaldo);
+        }
 
-    if (historico.length > 0) {
+        const { data: partidas, error: erroPartidas } =
+          await cliente
+            .from("partidas_jogadores")
+            .select("id, jogo, pontos_partida, criado_em")
+            .eq("usuario_id", usuario.id)
+            .order("criado_em", { ascending: false })
+            .limit(50);
 
-      lista.innerHTML = "";
+        if (erroPartidas) throw erroPartidas;
 
-      historico.forEach(function(item) {
+        lista.replaceChildren();
 
-        const div =
-          document.createElement("div");
+        if (!partidas || partidas.length === 0) {
+          const vazio = document.createElement("div");
+          vazio.className = "vazio";
+          vazio.textContent =
+            "📜 Ainda não tens partidas registadas. Joga e volta aqui!";
+          lista.appendChild(vazio);
+          return;
+        }
 
+        partidas.forEach(partida => {
+          const div = document.createElement("div");
+          div.className = "item";
 
-        div.className = "item";
+          const titulo = document.createElement("strong");
+          titulo.textContent = "🎮 " + partida.jogo;
 
+          const descricao = document.createElement("div");
+          descricao.className = "descricao";
 
-        div.innerHTML =
-          "<strong>" +
-          item.tipo +
-          "</strong>" +
+          const data = partida.criado_em
+            ? new Date(partida.criado_em).toLocaleString("pt-PT")
+            : "Data não disponível";
 
-          "<div class='descricao'>" +
-          item.descricao +
-          "</div>";
+          descricao.textContent =
+            "📅 " + data +
+            " | 🏁 Pontuação registada: " +
+            (partida.pontos_partida ?? 0);
 
+          div.appendChild(titulo);
+          div.appendChild(descricao);
+          lista.appendChild(div);
+        });
 
-        lista.appendChild(div);
+      } catch (erro) {
+        console.error("Erro no histórico:", erro);
+        lista.replaceChildren();
 
-      });
-
-    } else {
-
-      lista.innerHTML =
-        "<div class='vazio'>" +
-        "<div style='font-size:36px;margin-bottom:12px'>📜</div>" +
-        "<strong style='display:block;color:#20e58a;margin-bottom:8px'>Ainda não tens atividades!</strong>" +
-        "<div>Participa nos jogos e regressa aqui para consultar o teu histórico.</div>" +
-        "</div>";
-
+        const aviso = document.createElement("div");
+        aviso.className = "vazio";
+        aviso.textContent =
+          "⚠️ Não foi possível carregar o histórico. Tenta novamente.";
+        lista.appendChild(aviso);
+      }
     }
 
+    carregarHistorico();
   </script>
 
 </body>
