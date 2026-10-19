@@ -127,6 +127,52 @@ footer {
 @media(min-width:700px) {
   .grade { grid-template-columns:repeat(3,1fr); }
 }
+
+/* NOSSO MODELO VISUAL 2026 */
+
+main {
+  max-width: 1400px;
+  padding: 20px;
+}
+
+.grade {
+  grid-template-columns:
+    repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  border-radius: 18px;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.45);
+}
+
+.card .capa {
+  min-height: 170px;
+}
+
+.card .info a:hover {
+  filter: brightness(1.12);
+}
+
+@media (max-width: 480px) {
+  main { padding: 12px; }
+
+  .grade {
+    grid-template-columns:
+      repeat(2, minmax(0,1fr));
+    gap: 10px;
+  }
+
+  .card .capa {
+    min-height: 125px;
+  }
+}
+
 </style>
 
 <style>
