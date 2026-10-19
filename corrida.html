@@ -187,6 +187,8 @@ async function guardarPartidaCorrida(){
       console.error("Erro ao guardar partida:", error);
     } else {
       console.log("Partida guardada no Supabase!");
+      mensagem.textContent =
+        "✅ Partida registada no teu perfil! Pontuação da corrida: " + pontos;
     }
   } catch(erro){
     console.error("Falha ao registar partida:", erro);
