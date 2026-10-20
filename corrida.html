@@ -179,8 +179,10 @@ async function guardarPartidaCorrida(){
       SUPABASE_URL, SUPABASE_KEY
     );
 
+    const pontosFinais = pontos;
     const { error } = await cliente.rpc(
-      "registrar_partida_corrida"
+      "registrar_partida_corrida_demo",
+      { p_pontos: pontosFinais }
     );
 
     if(error){
@@ -188,7 +190,7 @@ async function guardarPartidaCorrida(){
     } else {
       console.log("Partida guardada no Supabase!");
       mensagem.textContent =
-        "✅ Partida registada no teu perfil! Pontuação da corrida: " + pontos;
+        "✅ Partida demonstrativa guardada: " + pontosFinais + " pontos (sem recompensas).";
     }
   } catch(erro){
     console.error("Falha ao registar partida:", erro);
