@@ -187,6 +187,11 @@ async function guardarPartidaCorrida(){
 
     if(error){
       console.error("Erro ao guardar partida:", error);
+
+      mensagem.textContent =
+        String(error.message || "").includes("Aguarde")
+        ? "⏳ Aguarda 30 segundos para registar outra partida."
+        : "⚠️ Não foi possível guardar a partida.";
     } else {
       console.log("Partida guardada no Supabase!");
       mensagem.textContent =
