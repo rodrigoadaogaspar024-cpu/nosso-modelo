@@ -197,7 +197,9 @@ function terminar(){
   placar.textContent="Corrida: "+pontos+" | Recorde: "+melhor;
   mensagem.textContent="🏁 Fim da corrida! Tenta bater o teu recorde.";
 
-  guardarPartidaCorrida();
+  mensagem.textContent =
+    "🏁 Fim da corrida! Recorde guardado neste dispositivo. " +
+    "O registo online de partidas está temporariamente indisponível.";
 }
 
 async function guardarPartidaCorrida(){
