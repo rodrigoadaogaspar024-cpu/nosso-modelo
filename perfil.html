@@ -314,6 +314,13 @@
     </section>
 
 
+    <section class="card">
+      <h2>🏁 Últimas partidas</h2>
+      <div id="listaPartidas">
+        A carregar partidas...
+      </div>
+    </section>
+
     <button
       class="voltar"
       onclick="window.location.href='index.html'">
@@ -392,6 +399,42 @@
       }
 
       const partidas = erroPartidas ? "Indisponível" : (totalPartidas ?? 0);
+
+      const listaPartidas =
+        document.getElementById("listaPartidas");
+
+      const { data: ultimas, error: erroHistorico } =
+        await cliente
+          .from("partidas_jogadores")
+          .select("jogo,pontos_partida,criado_em")
+          .eq("usuario_id", usuario.id)
+          .order("criado_em", { ascending: false })
+          .limit(10);
+
+      if (erroHistorico) {
+        listaPartidas.textContent =
+          "Não foi possível carregar as partidas.";
+      } else if (!ultimas || ultimas.length === 0) {
+        listaPartidas.textContent =
+          "Ainda não existem partidas registadas.";
+      } else {
+        listaPartidas.replaceChildren();
+
+        ultimas.forEach(partida => {
+          const item = document.createElement("p");
+          const data = new Date(partida.criado_em);
+
+          item.textContent =
+            "🎮 " + partida.jogo +
+            " | " + partida.pontos_partida + " pontos" +
+            " | " + data.toLocaleString("pt-PT");
+
+          item.style.padding = "10px 0";
+          item.style.borderBottom = "1px solid #444";
+
+          listaPartidas.appendChild(item);
+        });
+      }
 
       const recompensas = historico.filter(
         item => item.tipo === "🎁 Recompensa"
