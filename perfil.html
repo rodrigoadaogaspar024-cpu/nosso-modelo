@@ -208,6 +208,17 @@
     <section class="card">
       <h2>👤 Dados da minha conta</h2>
 
+      <div style="margin:18px 0;">
+        <button type="button"
+          id="editarNome"
+          style="padding:12px;border-radius:10px;">
+          ✏️ Editar meu nome
+        </button>
+        <p id="mensagemNome"
+          role="status"
+          aria-live="polite"></p>
+      </div>
+
       <p class="descricao">📧 E-mail</p>
       <p id="emailPerfil" style="overflow-wrap:anywhere;margin:8px 0 18px;">
         Não informado
@@ -462,6 +473,58 @@
         }
 
         window.location.replace("login.html");
+      });
+
+
+    document.getElementById("editarNome")
+      .addEventListener("click", async function() {
+
+        const botao = this;
+        const atual =
+          document.getElementById("nomePerfil")
+          .textContent.trim();
+
+        const nome = prompt(
+          "Digite seu nome:",
+          atual === "Jogador" ? "" : atual
+        );
+
+        if (nome === null) return;
+
+        const nomeLimpo = nome.trim();
+
+        if (!nomeLimpo || nomeLimpo.length > 80) {
+          alert("Informe um nome com até 80 caracteres.");
+          return;
+        }
+
+        botao.disabled = true;
+
+        const mensagem =
+          document.getElementById("mensagemNome");
+
+        mensagem.textContent = "A guardar nome...";
+
+        try {
+          const { data, error } =
+            await cliente.auth.updateUser({
+              data: { nome: nomeLimpo }
+            });
+
+          if (error) throw error;
+
+          document.getElementById("nomePerfil")
+            .textContent = data.user.user_metadata.nome;
+
+          mensagem.textContent =
+            "✅ Nome atualizado com sucesso!";
+        } catch (erro) {
+          mensagem.textContent =
+            "⚠️ Não foi possível atualizar o nome.";
+          console.error(erro);
+        } finally {
+          botao.disabled = false;
+        }
       });
 
     iniciarPerfil();
