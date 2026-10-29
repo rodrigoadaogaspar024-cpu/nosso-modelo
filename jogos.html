@@ -416,114 +416,151 @@
   </main>
 
 
-  <script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const cliente = window.supabase.createClient(
+  SUPABASE_URL, SUPABASE_KEY
+);
 
-    let pontos =
-      Number(localStorage.getItem("pontosUsuario")) || 0;
+let pontos = 0;
+let pronto = false;
+let processando = false;
+let segundosEspera = 0;
+let timerEspera = null;
+
+const botao = document.getElementById("botaoJogar");
+const resultado = document.getElementById("resultado");
+
+function atualizarTela() {
+  document.getElementById("pontos").textContent = pontos;
+
+  botao.disabled = !pronto || processando || segundosEspera > 0 || pontos >= 100;
+
+  botao.textContent = processando
+    ? "Registrando..."
+    : segundosEspera > 0
+      ? "⏳ AGUARDE " + segundosEspera + "s"
+      : pontos >= 100
+      ? "🏆 LIMITE DE 100 PONTOS"
+      : "🎮 JOGAR AGORA";
+}
+
+function iniciarEspera() {
+  if (timerEspera) clearInterval(timerEspera);
+
+  segundosEspera = 31;
+  atualizarTela();
+
+  timerEspera = setInterval(() => {
+    segundosEspera--;
+
+    if (segundosEspera <= 0) {
+      segundosEspera = 0;
+      clearInterval(timerEspera);
+      timerEspera = null;
+      resultado.textContent =
+        "✅ Você já pode jogar novamente!";
+    }
 
     atualizarTela();
+  }, 1000);
+}
 
+async function iniciarJogo() {
+  pronto = false;
+  atualizarTela();
 
-    function atualizarTela() {
+  resultado.textContent = "Verificando sua conta...";
 
-      document.getElementById("pontos").textContent = pontos;
+  try {
+    const {data, error} = await cliente.auth.getUser();
 
-      const botao =
-        document.getElementById("botaoJogar");
-
-      if (pontos >= 100) {
-
-        botao.disabled = true;
-
-        botao.textContent =
-          "🏆 LIMITE DE 100 PONTOS";
-
-      }
-
+    if (error || !data.user) {
+      window.location.replace("login.html");
+      return;
     }
 
+    const {data: saldo, error: erroSaldo} = await cliente
+      .from("pontos_jogadores")
+      .select("pontos")
+      .eq("usuario_id", data.user.id)
+      .maybeSingle();
 
-    function jogar() {
+    if (erroSaldo) throw erroSaldo;
 
-      if (pontos >= 100) {
+    pontos = saldo?.pontos ?? 0;
+    pronto = true;
+    resultado.textContent = "Sua conta está pronta para jogar!";
+  } catch (erro) {
+    console.error(erro);
+    resultado.textContent =
+      "Não foi possível carregar seus pontos. Atualize a página.";
+  }
 
-        document.getElementById("resultado").textContent =
-          "🏆 Você já chegou ao limite de 100 pontos!";
+  atualizarTela();
+}
 
-        return;
+async function jogar() {
+  if (!pronto || processando || pontos >= 100) return;
 
-      }
+  processando = true;
+  atualizarTela();
+  resultado.textContent = "Registrando sua partida...";
 
+  try {
+    const {data: ganho, error} = await cliente.rpc(
+      "jogar_desafio_pontos"
+    );
 
-      const ganho =
-        Math.floor(Math.random() * 10) + 1;
+    if (error) throw error;
 
+    const pontosGanhos = Number(ganho);
 
-      const pontosAntes = pontos;
+    const {data: usuario, error: erroUsuario} =
+      await cliente.auth.getUser();
 
-      pontos = Math.min(pontos + ganho, 100);
-
-      const ganhoReal = pontos - pontosAntes;
-
-
-      localStorage.setItem(
-        "pontosUsuario",
-        pontos
-      );
-
-
-      /* HISTÓRICO */
-
-      let historico =
-        JSON.parse(
-          localStorage.getItem("historicoUsuario")
-        ) || [];
-
-
-      historico.unshift({
-
-        tipo: "🎮 Jogo",
-
-        descricao:
-          "Você ganhou " + ganhoReal + " pontos."
-
-      });
-
-
-      localStorage.setItem(
-        "historicoUsuario",
-        JSON.stringify(historico)
-      );
-
-
-      /* RESULTADO */
-
-      if (ganho === 10) {
-
-        document.getElementById("resultado").textContent =
-          "🏆 PRÊMIO MÁXIMO! Foram adicionados " +
-          ganhoReal + " pontos!";
-
-      } else if (ganho >= 6) {
-
-        document.getElementById("resultado").textContent =
-          "💎 PRÊMIO ESPECIAL! Foram adicionados " +
-          ganhoReal + " pontos!";
-
-      } else {
-
-        document.getElementById("resultado").textContent =
-          "🎉 Foram adicionados " +
-          ganhoReal + " pontos!";
-
-      }
-
-
-      atualizarTela();
-
+    if (erroUsuario || !usuario.user) {
+      throw new Error("Sessão expirada. Entre novamente.");
     }
 
-  </script>
+    const {data: saldo, error: erroSaldo} = await cliente
+      .from("pontos_jogadores")
+      .select("pontos")
+      .eq("usuario_id", usuario.user.id)
+      .single();
+
+    if (erroSaldo) throw erroSaldo;
+
+    pontos = saldo.pontos;
+
+    resultado.textContent =
+      "🎉 Você ganhou " + pontosGanhos +
+      " pontos! Saldo atual: " + pontos;
+
+    iniciarEspera();
+
+  } catch (erro) {
+    console.error(erro);
+    resultado.textContent =
+      "⚠️ " + (erro.message || "Erro ao registrar partida.") +
+      " Confira seu saldo antes de tentar novamente.";
+    if ((erro.message || "").includes("Aguarde 30 segundos")) {
+      pronto = true;
+      resultado.textContent =
+        "⏳ Aguarde o tempo indicado para jogar novamente.";
+      iniciarEspera();
+    } else {
+      pronto = false;
+    }
+  } finally {
+    processando = false;
+    atualizarTela();
+  }
+}
+
+iniciarJogo();
+</script>
 
 </body>
 </html>
