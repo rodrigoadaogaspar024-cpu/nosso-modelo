@@ -198,8 +198,9 @@ function terminar(){
   mensagem.textContent="🏁 Fim da corrida! Tenta bater o teu recorde.";
 
   mensagem.textContent =
-    "🏁 Fim da corrida! Recorde guardado neste dispositivo. " +
-    "O registo online de partidas está temporariamente indisponível.";
+    "🏁 Fim da corrida! A guardar partida no Supabase...";
+
+  guardarPartidaCorrida();
 }
 
 async function guardarPartidaCorrida(){
@@ -220,7 +221,9 @@ async function guardarPartidaCorrida(){
       mensagem.textContent =
         String(error.message || "").includes("Aguarde")
         ? "⏳ Aguarda 30 segundos para registar outra partida."
-        : "⚠️ Não foi possível guardar a partida.";
+        : "⚠️ Erro Supabase: " +
+          (error.message || "Sem detalhes") +
+          " | Código: " + (error.code || "desconhecido");
     } else {
       console.log("Partida guardada no Supabase!");
       mensagem.textContent =
