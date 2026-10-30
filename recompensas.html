@@ -215,7 +215,7 @@
       <h1>Recompensas</h1>
 
       <p class="subtitulo">
-        Use seus pontos para resgatar recompensas
+        Conheça as recompensas futuras do Nosso Modelo
       </p>
 
     </section>
@@ -232,7 +232,7 @@
       </div>
 
       <div class="texto-pontos">
-        Pontos disponíveis para resgate
+        Saldo de pontos da sua conta
       </div>
 
     </section>
@@ -255,9 +255,9 @@
 
       <button
         class="resgatar"
-        onclick="resgatar(50)">
+        disabled title="Disponível futuramente">
 
-        🎁 RESGATAR RECOMPENSA
+        🔒 EM BREVE
 
       </button>
 
@@ -281,9 +281,9 @@
 
       <button
         class="resgatar"
-        onclick="resgatar(100)">
+        disabled title="Disponível futuramente">
 
-        🏆 RESGATAR RECOMPENSA
+        🔒 EM BREVE
 
       </button>
 
@@ -296,7 +296,7 @@
 
       <p>
         ℹ️ As recompensas apresentadas nesta versão
-        são demonstrativas.
+        são demonstrativas. Não há resgates reais nesta versão.
       </p>
 
     </section>
@@ -315,92 +315,52 @@
   </main>
 
 
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
+    async function carregarRecompensas() {
+      const visor = document.getElementById("pontos");
+      const descricao = document.querySelector(".texto-pontos");
 
-    let pontos =
-      Number(localStorage.getItem("pontosUsuario")) || 0;
+      visor.textContent = "...";
 
+      try {
+        const cliente = window.supabase.createClient(
+          SUPABASE_URL, SUPABASE_KEY
+        );
 
-    atualizarPontos();
+        const { data, error } = await cliente.auth.getUser();
 
+        if (error || !data.user) {
+          window.location.replace("login.html");
+          return;
+        }
 
-    function atualizarPontos() {
+        const { data: saldo, error: erroSaldo } =
+          await cliente
+            .from("pontos_jogadores")
+            .select("pontos")
+            .eq("usuario_id", data.user.id)
+            .maybeSingle();
 
-      document.getElementById("pontos").textContent =
-        pontos;
+        if (erroSaldo) throw erroSaldo;
 
+        visor.textContent = String(saldo?.pontos ?? 0);
+        descricao.textContent =
+          "Pontos registrados no seu perfil.";
+
+      } catch (erro) {
+        console.error("Erro de saldo:", erro);
+        visor.textContent = "—";
+        descricao.textContent =
+          "Não foi possível consultar os pontos.";
+      }
     }
 
-
-    function resgatar(valor) {
-
-      if (pontos < valor) {
-
-        alert(
-          "❌ Você precisa de " +
-          (valor - pontos) +
-          " pontos a mais."
-        );
-
-        return;
-      }
-
-
-      pontos -= valor;
-
-
-      localStorage.setItem(
-        "pontosUsuario",
-        pontos
-      );
-
-
-      /* HISTÓRICO */
-
-      let historico =
-        JSON.parse(
-          localStorage.getItem("historicoUsuario")
-        ) || [];
-
-
-      historico.unshift({
-
-        tipo: "🎁 Recompensa",
-
-        descricao:
-          "Você resgatou uma recompensa por " +
-          valor +
-          " pontos."
-
-      });
-
-
-      localStorage.setItem(
-        "historicoUsuario",
-        JSON.stringify(historico)
-      );
-
-
-      atualizarPontos();
-
-
-      if (valor === 100) {
-
-        alert(
-          "🏆 Parabéns! Você resgatou a Recompensa 2!"
-        );
-
-      } else {
-
-        alert(
-          "🎉 Parabéns! Você resgatou a Recompensa 1!"
-        );
-
-      }
-
-    }
-
+    carregarRecompensas();
   </script>
+
 
 </body>
 </html>
