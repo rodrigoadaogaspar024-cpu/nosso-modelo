@@ -402,8 +402,9 @@
 
       const { count: totalPartidas, error: erroPartidas } = await cliente
         .from("partidas_jogadores")
-        .select("id", { count: "exact", head: true })
-        .eq("usuario_id", usuario.id);
+        .select("id", { count: "exact" })
+        .eq("usuario_id", usuario.id)
+        .limit(1);
 
       if (erroPartidas) {
         console.error("Erro ao consultar partidas:", erroPartidas);
