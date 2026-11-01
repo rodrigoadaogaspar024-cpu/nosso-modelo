@@ -341,95 +341,77 @@
   </main>
 
 
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
+  async function iniciarDashboard() {
+    const pontosEl = document.getElementById("pontosDashboard");
+    const partidasEl = document.getElementById("partidasDashboard");
+    const recompensasEl = document.getElementById("recompensasDashboard");
 
-    // NOME
+    pontosEl.textContent = "A carregar...";
+    partidasEl.textContent = "A carregar...";
+    recompensasEl.textContent = "—";
+    recompensasEl.parentElement.querySelector("h2")
+      .textContent = "🎁 Resgates indisponíveis";
 
-    const nome =
-      localStorage.getItem("nomeUsuario") ||
-      "Utilizador";
+    try {
+      const cliente = window.supabase.createClient(
+        SUPABASE_URL, SUPABASE_KEY
+      );
 
-    document.getElementById(
-      "nomeDashboard"
-    ).textContent = nome;
+      const {data, error} = await cliente.auth.getUser();
 
+      if (error || !data.user) {
+        location.replace("login.html");
+        return;
+      }
 
-    // PONTOS
+      const usuario = data.user;
+      document.getElementById("nomeDashboard").textContent =
+        usuario.user_metadata?.nome || "Jogador";
 
-    const pontos =
-      Number(
-        localStorage.getItem("pontosUsuario")
-      ) || 0;
+      const [saldo, historico] = await Promise.all([
+        cliente.from("pontos_jogadores")
+          .select("pontos")
+          .eq("usuario_id", usuario.id)
+          .maybeSingle(),
 
-    document.getElementById(
-      "pontosDashboard"
-    ).textContent = pontos;
+        cliente.from("partidas_jogadores")
+          .select("id", {count:"exact", head:true})
+          .eq("usuario_id", usuario.id)
+      ]);
 
+      pontosEl.textContent = saldo.error
+        ? "Indisponível"
+        : (saldo.data?.pontos ?? 0);
 
-    // HISTÓRICO
+      partidasEl.textContent = historico.error
+        ? "Indisponível"
+        : (historico.count ?? 0);
 
-    const historico =
-      JSON.parse(
-        localStorage.getItem("historicoUsuario")
-      ) || [];
+      const total = historico.error ? null : historico.count;
+      let nivel = "🥉 Iniciante";
 
+      if (total >= 100) nivel = "🥇 Mestre";
+      else if (total >= 50) nivel = "🥈 Avançado";
+      else if (total >= 20) nivel = "🎖️ Intermediário";
 
-    // PARTIDAS
+      document.getElementById("nivelDashboard")
+        .textContent = total === null
+        ? "Indisponível" : nivel;
 
-    const partidas =
-      historico.filter(function(item) {
-
-        return item.tipo === "🎮 Jogo";
-
-      }).length;
-
-
-    // RECOMPENSAS
-
-    const recompensas =
-      historico.filter(function(item) {
-
-        return item.tipo === "🎁 Recompensa";
-
-      }).length;
-
-
-    document.getElementById(
-      "partidasDashboard"
-    ).textContent = partidas;
-
-
-    document.getElementById(
-      "recompensasDashboard"
-    ).textContent = recompensas;
-
-
-    // NÍVEL
-
-    let nivel =
-      "🥉 Iniciante";
-
-
-    if (partidas >= 100) {
-
-      nivel = "🥇 Mestre";
-
-    } else if (partidas >= 50) {
-
-      nivel = "🥈 Avançado";
-
-    } else if (partidas >= 20) {
-
-      nivel = "🎖️ Intermediário";
-
+    } catch (erro) {
+      console.error("Erro no Dashboard:", erro);
+      pontosEl.textContent = "Indisponível";
+      partidasEl.textContent = "Indisponível";
     }
+  }
 
-
-    document.getElementById(
-      "nivelDashboard"
-    ).textContent = nivel;
-
+  iniciarDashboard();
   </script>
+
 
 </body>
 </html>
