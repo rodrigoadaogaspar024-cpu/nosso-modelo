@@ -991,43 +991,77 @@ body { padding-bottom: 85px; }
   </footer>
 
   <script src="script.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
+    const clienteInicio = window.supabase.createClient(
+      SUPABASE_URL, SUPABASE_KEY
+    );
 
-    // V7: A página inicial é pública.
-    // O login é necessário apenas para jogar.
+    async function iniciarPagina() {
+      const boasVindas = document.getElementById("boasVindas");
+      const pontosMenu = document.getElementById("pontosMenu");
+      const pontosInicio = document.getElementById("pontosInicio");
 
-    const nomeUsuario =
-      localStorage.getItem("nomeUsuario");
+      pontosMenu.textContent = "0";
+      pontosInicio.textContent = "0";
 
-    if (nomeUsuario) {
+      try {
+        const {data, error} = await clienteInicio.auth.getUser();
 
-      document.getElementById("boasVindas").innerHTML =
-        "👋 Olá, " + nomeUsuario + "!";
+        if (error || !data.user) {
+          boasVindas.textContent = "Bem-vindo ao Nosso Modelo!";
+          return;
+        }
 
+        const usuario = data.user;
+        const nome = usuario.user_metadata?.nome || "Jogador";
+
+        boasVindas.textContent = "👋 Olá, " + nome + "!";
+
+        const botaoSair = document.createElement("button");
+        botaoSair.textContent = "🚪 Terminar sessão";
+        botaoSair.style.cssText =
+          "display:block;margin:15px auto;padding:12px 20px;" +
+          "border-radius:10px;background:#c62828;color:white;" +
+          "border:0;font-size:16px;";
+
+        botaoSair.onclick = async function () {
+          if (!confirm("Queres terminar a sessão?")) return;
+
+          botaoSair.disabled = true;
+          const {error: erroSair} = await clienteInicio.auth.signOut();
+
+          if (erroSair) {
+            alert("Não foi possível terminar a sessão.");
+            botaoSair.disabled = false;
+            return;
+          }
+
+          location.reload();
+        };
+
+        boasVindas.appendChild(botaoSair);
+
+        const {data: saldo, error: erroSaldo} = await clienteInicio
+          .from("pontos_jogadores")
+          .select("pontos")
+          .eq("usuario_id", usuario.id)
+          .maybeSingle();
+
+        if (erroSaldo) throw erroSaldo;
+
+        const pontos = saldo?.pontos ?? 0;
+
+        pontosMenu.textContent = pontos;
+        pontosInicio.textContent = pontos;
+
+      } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
+      }
     }
 
-    if (localStorage.getItem("usuarioLogado") === "true") {
-const botaoSair = document.createElement("button");
-botaoSair.textContent = "🚪 Terminar sessão";
-botaoSair.style.cssText = "display:block;margin:15px auto;padding:12px 20px;border-radius:10px;background:#c62828;color:white;border:0;font-size:16px;";
-botaoSair.onclick = function () {
-if (confirm("Queres terminar a sessão?")) {
-localStorage.setItem("usuarioLogado", "false");
-location.reload();
-}
-};
-document.getElementById("boasVindas").appendChild(botaoSair);
-}
- const pontosInicio =
-      Number(localStorage.getItem("pontosUsuario")) || 0;
-
-    document.getElementById("pontosMenu").textContent =
-      pontosInicio;
-
-    document.getElementById("pontosInicio").textContent =
-      pontosInicio;
-
+    iniciarPagina();
   </script>
 
 
