@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
+
+<title>Gerenciar usuários | Nosso Modelo</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  max-width: 850px;
+  margin: auto;
+  padding: 24px 16px;
+}
+
+h1 { color: #f5cf75; }
+
+.card {
+  background: #202020;
+  border: 1px solid #383838;
+  border-radius: 16px;
+  padding: 18px;
+  margin: 15px 0;
+}
+
+.nome {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.info {
+  margin: 8px 0;
+  color: #ddd;
+}
+
+a {
+  color: #f5cf75;
+}
+
+#conteudo[hidden] {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<main>
+  <h1>👥 Gerenciar usuários</h1>
+
+  <p>Administração do Nosso Modelo</p>
+
+  <p id="estado">🔒 Verificando autorização...</p>
+
+  <section id="conteudo" hidden>
+    <h2>Jogadores cadastrados</h2>
+    <div id="lista"></div>
+  </section>
+
+  <p>
+    <a href="admin.html">
+      ← Voltar à administração
+    </a>
+  </p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+(async function iniciar() {
+  const estado = document.getElementById("estado");
+  const lista = document.getElementById("lista");
+  const conteudo = document.getElementById("conteudo");
+
+  try {
+    const cliente = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const { data: usuario, error: erroUsuario } =
+      await cliente.auth.getUser();
+
+    if (erroUsuario || !usuario.user) {
+      window.location.replace("login-admin.html");
+      return;
+    }
+
+    const { data: autorizado, error: erroAdmin } =
+      await cliente.rpc("eh_administrador");
+
+    if (erroAdmin || autorizado !== true) {
+      estado.textContent = "⛔ Acesso não autorizado.";
+      return;
+    }
+
+    const { data: jogadores, error: erroLista } =
+      await cliente.rpc("listar_jogadores_admin");
+
+    if (erroLista) throw erroLista;
+
+    lista.replaceChildren();
+
+    for (const jogador of jogadores || []) {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const nome = document.createElement("div");
+      nome.className = "nome";
+      nome.textContent = "👤 " + (jogador.nome || "Sem nome");
+
+      const pontos = document.createElement("div");
+      pontos.className = "info";
+      pontos.textContent = "⭐ Pontos: " + jogador.pontos;
+
+      const partidas = document.createElement("div");
+      partidas.className = "info";
+      partidas.textContent = "🎮 Partidas: " + jogador.partidas;
+
+      card.append(nome, pontos, partidas);
+      lista.appendChild(card);
+    }
+
+    if (!jogadores || jogadores.length === 0) {
+      lista.textContent = "Nenhum jogador encontrado.";
+    }
+
+    estado.textContent =
+      "✅ Jogadores encontrados: " + (jogadores?.length || 0);
+
+    conteudo.hidden = false;
+
+  } catch (erro) {
+    console.error("Erro na administração:", erro);
+    estado.textContent =
+      "❌ Não foi possível carregar os jogadores.";
+  }
+})();
+</script>
+
+</body>
+</html>
