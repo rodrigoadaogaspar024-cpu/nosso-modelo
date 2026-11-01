@@ -176,9 +176,14 @@
         da plataforma.
       </p>
 
+      <p>
+        📊 Jogadores cadastrados:
+        <strong id="contadorJogadores">A carregar...</strong>
+      </p>
+
       <button
         class="secundario"
-        onclick="alert('👥 Administração de usuários em breve!')">
+        onclick="alert('👥 Gestão detalhada em desenvolvimento!')">
 
         👥 Gerenciar usuários
 
@@ -385,6 +390,19 @@
           contador.textContent = "Erro";
         } else {
           contador.textContent = count ?? 0;
+        }
+
+        const contadorJogadores =
+          document.getElementById("contadorJogadores");
+
+        const { data: totalJogadores, error: erroJogadores } =
+          await cliente.rpc("total_jogadores_admin");
+
+        if (erroJogadores) {
+          console.error("Erro ao contar jogadores:", erroJogadores);
+          contadorJogadores.textContent = "Erro";
+        } else {
+          contadorJogadores.textContent = totalJogadores ?? 0;
         }
 
         painel.hidden = false;
