@@ -3,6 +3,7 @@
 <head>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+<script src="guardar-partida-premium.js"></script>
 <script id="acesso-jogos-v7">
 (async function() {
   // Esconde o jogo até verificar a sessão.
@@ -131,6 +132,7 @@ function virarCarta(botao,simbolo){
     localStorage.setItem("recordeMemoria",recorde);
    }
    mensagem.textContent="🏆 Parabéns! Encontraste todos os pares em "+jogadas+" jogadas!";
+   guardarPartidaPremiumDemo("Memória Premium (demo)", jogadas, mensagem);
   }
   atualizar();
  }else{
