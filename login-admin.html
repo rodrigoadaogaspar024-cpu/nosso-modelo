@@ -142,8 +142,10 @@
           window.location.href = "admin.html";
 
         } catch (erro) {
+          console.error("Erro no login administrativo:", erro);
           mensagem.textContent =
-            "❌ Não foi possível entrar. Confira seu e-mail e senha.";
+            "❌ Falha na autenticação: " +
+            (erro.message || "Erro desconhecido");
         }
       });
   </script>
