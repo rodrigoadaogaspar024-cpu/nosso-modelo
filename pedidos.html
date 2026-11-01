@@ -264,14 +264,15 @@
             botao.disabled = true;
             botao.textContent = "⏳ A guardar...";
 
-            const { data, error } = await cliente
-              .from("parceiros")
-              .update({ aprovado: aprovar })
-              .eq("id", pedido.id)
-              .select("id,aprovado")
-              .single();
+            const { data, error } = await cliente.rpc(
+              "atualizar_aprovacao_parceiro",
+              {
+                p_id: pedido.id,
+                p_aprovado: aprovar
+              }
+            );
 
-            if (error || !data) {
+            if (error || data !== aprovar) {
               alert("Erro ao atualizar: " +
                 (error?.message || "Sem confirmação"));
               botao.disabled = false;
@@ -281,7 +282,7 @@
               return;
             }
 
-            pedido.aprovado = data.aprovado;
+            pedido.aprovado = data;
             alert("✅ Situação atualizada com sucesso!");
             window.location.reload();
           });
