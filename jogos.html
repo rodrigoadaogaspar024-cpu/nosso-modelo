@@ -321,7 +321,7 @@
       </div>
 
       <div class="limite">
-        Limite máximo: 100 pontos
+        No Desafio: <span id="pontosDesafio">0</span> / 100 pontos
       </div>
 
     </section>
@@ -424,6 +424,7 @@ const cliente = window.supabase.createClient(
 );
 
 let pontos = 0;
+let pontosDesafio = 0;
 let pronto = false;
 let processando = false;
 let segundosEspera = 0;
@@ -434,14 +435,15 @@ const resultado = document.getElementById("resultado");
 
 function atualizarTela() {
   document.getElementById("pontos").textContent = pontos;
+  document.getElementById("pontosDesafio").textContent = pontosDesafio;
 
-  botao.disabled = !pronto || processando || segundosEspera > 0 || pontos >= 100;
+  botao.disabled = !pronto || processando || segundosEspera > 0 || pontosDesafio >= 100;
 
   botao.textContent = processando
     ? "Registrando..."
     : segundosEspera > 0
       ? "⏳ AGUARDE " + segundosEspera + "s"
-      : pontos >= 100
+      : pontosDesafio >= 100
       ? "🏆 LIMITE DE 100 PONTOS"
       : "🎮 JOGAR AGORA";
 }
@@ -467,6 +469,22 @@ function iniciarEspera() {
   }, 1000);
 }
 
+async function carregarPontosDesafio(usuarioId) {
+  const {data, error} = await cliente
+    .from("partidas_jogadores")
+    .select("pontos_partida")
+    .eq("usuario_id", usuarioId)
+    .eq("jogo", "Desafio dos Pontos");
+
+  if (error) throw error;
+
+  return (data || []).reduce(
+    (total, partida) =>
+      total + Number(partida.pontos_partida || 0),
+    0
+  );
+}
+
 async function iniciarJogo() {
   pronto = false;
   atualizarTela();
@@ -490,6 +508,7 @@ async function iniciarJogo() {
     if (erroSaldo) throw erroSaldo;
 
     pontos = saldo?.pontos ?? 0;
+    pontosDesafio = await carregarPontosDesafio(data.user.id);
     pronto = true;
     resultado.textContent = "Sua conta está pronta para jogar!";
   } catch (erro) {
@@ -502,7 +521,7 @@ async function iniciarJogo() {
 }
 
 async function jogar() {
-  if (!pronto || processando || pontos >= 100) return;
+  if (!pronto || processando || pontosDesafio >= 100) return;
 
   processando = true;
   atualizarTela();
@@ -533,6 +552,7 @@ async function jogar() {
     if (erroSaldo) throw erroSaldo;
 
     pontos = saldo.pontos;
+    pontosDesafio = await carregarPontosDesafio(usuario.user.id);
 
     resultado.textContent =
       "🎉 Você ganhou " + pontosGanhos +
