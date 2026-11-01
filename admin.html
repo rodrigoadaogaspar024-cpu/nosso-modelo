@@ -282,13 +282,12 @@
       <h2>⭐ Pontos</h2>
 
       <p>
-        Visualização dos pontos do usuário
-        neste dispositivo.
+        Consulte os pontos reais e as partidas dos jogadores.
       </p>
 
       <button
         class="principal"
-        onclick="mostrarPontos()">
+        onclick="window.location.href='gerenciar-usuarios.html'">
 
         ⭐ Ver pontos atuais
 
@@ -325,22 +324,7 @@
     ).textContent = "—";
 
 
-    // MOSTRAR PONTOS
 
-    function mostrarPontos() {
-
-      const pontos =
-        Number(
-          localStorage.getItem("pontosUsuario")
-        ) || 0;
-
-
-      alert(
-        "⭐ Pontos atuais: " +
-        pontos
-      );
-
-    }
 
   </script>
 
