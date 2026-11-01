@@ -56,6 +56,10 @@ button:disabled{opacity:.6}
 </button>
 </form>
 
+<button id="recuperarSenha" type="button" class="link secundario">
+🔑 Esqueci minha senha
+</button>
+
 <p id="mensagem" role="status" aria-live="polite"></p>
 
 <a class="link secundario" href="cadastro.html">
@@ -73,6 +77,44 @@ button:disabled{opacity:.6}
 const cliente = window.supabase.createClient(
   SUPABASE_URL, SUPABASE_KEY
 );
+
+document.getElementById("recuperarSenha")
+.addEventListener("click", async function() {
+  const email = document.getElementById("email").value.trim();
+  const mensagem = document.getElementById("mensagem");
+  const botao = document.getElementById("recuperarSenha");
+
+  if (!email) {
+    mensagem.textContent = "⚠️ Informa primeiro o teu e-mail.";
+    return;
+  }
+
+  botao.disabled = true;
+  mensagem.textContent = "⏳ A solicitar recuperação...";
+
+  try {
+    const { error } = await cliente.auth.resetPasswordForEmail(
+      email,
+      {
+        redirectTo: new URL(
+          "recuperar-senha.html",
+          window.location.href
+        ).href
+      }
+    );
+
+    if (error) throw error;
+
+    mensagem.textContent =
+      "✅ Se o e-mail estiver cadastrado, receberás um link de recuperação. Verifica também o spam.";
+  } catch (erro) {
+    console.error("Erro de recuperação:", erro);
+    mensagem.textContent =
+      "⚠️ Não foi possível solicitar recuperação. Tenta novamente.";
+  } finally {
+    botao.disabled = false;
+  }
+});
 
 document.getElementById("formLogin")
 .addEventListener("submit", async function(event) {
