@@ -1,5 +1,16 @@
 
 window.JOGOS_MODELO = [
+{id:"mahjong-classic",
+nome:"Mahjong Classic",
+categoria:"puzzle",
+tipo:"interno",
+emoji:"🀄",
+link:"teste-playgama.html",
+imagem:"",
+cor:"#75501e",
+busca:"mahjong classic mahjongclassi puzzle playgama"},
+
+
 {id:"trap-the-convoy",
 nome:"Trap the Convoy",
 categoria:"arcade",
