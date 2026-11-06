@@ -508,13 +508,7 @@ header {
 
 <script>
 function filtrarJogos() {
-  const termo = document.getElementById("pesquisa")
-    .value.toLowerCase();
-
-  document.querySelectorAll(".card").forEach(card => {
-    card.style.display =
-      card.dataset.nome.includes(termo) ? "" : "none";
-  });
+  aplicarCategoria();
 }
 </script>
 
@@ -525,6 +519,11 @@ let categoriaAtual = "todos";
 function aplicarCategoria() {
   const pesquisa = document.getElementById("pesquisa")
     .value.toLowerCase();
+
+  const destaques = document.getElementById("destaques-premium-v9");
+  if (destaques) {
+    destaques.style.display = pesquisa.trim() ? "none" : "";
+  }
 
   document.querySelectorAll(".grade .card").forEach(card => {
     const nome = card.dataset.nome || "";
