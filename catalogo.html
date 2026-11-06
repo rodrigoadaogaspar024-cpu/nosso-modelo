@@ -525,15 +525,36 @@ function aplicarCategoria() {
     destaques.style.display = pesquisa.trim() ? "none" : "";
   }
 
+  let encontrados = 0;
+
   document.querySelectorAll(".grade .card").forEach(card => {
     const nome = card.dataset.nome || "";
     const cat = card.dataset.categoria || "";
 
-    card.style.display =
+    const visivel =
       nome.includes(pesquisa) &&
-      (categoriaAtual === "todos" || cat === categoriaAtual)
-      ? "" : "none";
+      (categoriaAtual === "todos" || cat === categoriaAtual);
+
+    card.style.display = visivel ? "" : "none";
+    if (visivel) encontrados++;
   });
+
+  let aviso = document.getElementById("sem-resultados");
+
+  if (!aviso) {
+    aviso = document.createElement("p");
+    aviso.id = "sem-resultados";
+    aviso.style.cssText =
+      "text-align:center;padding:30px;color:#e8bd66;font-size:18px";
+    document.getElementById("grade-jogos")
+      .insertAdjacentElement("afterend", aviso);
+  }
+
+  aviso.textContent = encontrados === 0
+    ? "🔎 Nenhum jogo encontrado. Experimente outro nome ou categoria."
+    : "";
+
+  aviso.style.display = encontrados === 0 ? "block" : "none";
 }
 
 document.querySelectorAll("#filtros-v3 button")
