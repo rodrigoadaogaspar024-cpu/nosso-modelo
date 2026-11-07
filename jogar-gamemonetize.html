@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+ content="width=device-width,initial-scale=1">
+<title>Jogar | Modelo Play</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#100e0b;
+ color:#ffe5a8;
+ font-family:Arial,sans-serif;
+ text-align:center;
+}
+header{padding:12px}
+h1{font-size:21px}
+a{
+ display:inline-block;
+ padding:10px 16px;
+ margin:8px;
+ background:#e7bd60;
+ color:#241807;
+ border-radius:10px;
+ text-decoration:none;
+ font-weight:bold;
+}
+iframe{
+ display:block;
+ width:100%;
+ height:75dvh;
+ border:0;
+ background:#111;
+}
+#aviso{padding:8px}
+</style>
+</head>
+<body>
+
+<header>
+<h1 id="titulo">🎮 Modelo Play</h1>
+<a href="catalogo.html">← Voltar ao catálogo</a>
+</header>
+
+<iframe id="jogo"
+ title="Jogo GameMonetize"
+ allow="fullscreen; autoplay"
+ allowfullscreen></iframe>
+
+<p id="aviso">A carregar jogo...</p>
+
+<script src="gamemonetize-dados-50.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get("id");
+
+const jogo = (window.JOGOS_GAMEMONETIZE || [])
+ .find(j => j.id === id);
+
+if (jogo) {
+ document.getElementById("titulo").textContent = jogo.nome;
+
+ try {
+  const url = new URL(jogo.link);
+
+  if (
+   url.protocol === "https:" &&
+   url.hostname === "html5.gamemonetize.co"
+  ) {
+   document.getElementById("jogo").src = url.href;
+   document.getElementById("aviso").textContent =
+    "Divirta-se! Este jogo não atribui pontos.";
+  } else {
+   document.getElementById("aviso").textContent =
+    "Endereço do jogo não permitido.";
+  }
+ } catch (e) {
+  document.getElementById("aviso").textContent =
+   "Endereço do jogo inválido.";
+ }
+} else {
+ document.getElementById("aviso").textContent =
+  "Jogo não encontrado.";
+}
+</script>
+
+</body>
+</html>
