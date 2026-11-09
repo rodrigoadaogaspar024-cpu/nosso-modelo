@@ -42,7 +42,13 @@
   const botao = document.createElement("button");
   botao.id = "ju-botao";
   botao.type = "button";
-  botao.textContent = "🤖";
+  botao.textContent = "";
+  const avatar = document.createElement("img");
+  avatar.src = "ju-robo.png";
+  avatar.alt = "";
+  avatar.style.cssText = "width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;";
+  botao.style.overflow = "hidden";
+  botao.appendChild(avatar);
   botao.setAttribute("aria-label", "Abrir assistente Ju");
 
   const janela = document.createElement("section");
