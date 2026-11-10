@@ -80,7 +80,55 @@
      "Abra Seja Parceiro e envie sua proposta comercial."]
   ];
 
+
+  // Voz da Ju pelo navegador
+  const vozDisponivel =
+    "speechSynthesis" in window &&
+    "SpeechSynthesisUtterance" in window;
+
+  function falarJu(texto) {
+    if (!vozDisponivel) return;
+
+    window.speechSynthesis.cancel();
+
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "pt-PT";
+    fala.rate = 0.95;
+    fala.pitch = 1.12;
+
+    const vozes = window.speechSynthesis.getVoices();
+    const portuguesa = vozes.find(v =>
+      v.lang.toLowerCase() === "pt-pt"
+    );
+    const brasileira = vozes.find(v =>
+      v.lang.toLowerCase() === "pt-br"
+    );
+
+    if (portuguesa || brasileira) {
+      fala.voice = portuguesa || brasileira;
+      fala.lang = fala.voice.lang;
+    }
+
+    window.speechSynthesis.speak(fala);
+  }
+
+  const ouvir = document.createElement("button");
+  ouvir.type = "button";
+  ouvir.textContent = "🔊 Ouvir saudação";
+  ouvir.addEventListener("click", () => {
+    falarJu("Olá! Eu sou a Ju, assistente virtual do Modelo Play. Como posso ajudar você?");
+  });
+
+  const parar = document.createElement("button");
+  parar.type = "button";
+  parar.textContent = "🔇 Parar voz";
+  parar.addEventListener("click", () => {
+    if (vozDisponivel) window.speechSynthesis.cancel();
+  });
+
   janela.append(titulo, saudacao);
+
+  janela.append(ouvir, parar);
 
   perguntas.forEach(([pergunta, texto]) => {
     const b = document.createElement("button");
@@ -88,6 +136,7 @@
     b.textContent = pergunta;
     b.addEventListener("click", () => {
       resposta.textContent = texto;
+      falarJu(texto);
     });
     janela.appendChild(b);
   });

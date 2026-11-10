@@ -1038,6 +1038,40 @@ function atualizarPais() {
 atualizarPais();
 </script>
 
+
+<section id="idioma-modeloplay"
+ style="margin:20px 0;padding:20px;
+ background:#101c35;color:white;
+ border-radius:16px;text-align:center">
+ <h2>🌐 Escolha seu idioma</h2>
+ <select id="idioma-escolhido"
+  aria-label="Idioma do site"
+  style="width:100%;padding:14px;
+  margin-top:12px;border-radius:10px;
+  font-size:16px">
+  <option value="pt">🇵🇹 Português</option>
+  <option value="en">🇬🇧 English</option>
+  <option value="es">🇪🇸 Español</option>
+  <option value="fr">🇫🇷 Français</option>
+  <option value="de">🇩🇪 Deutsch</option>
+ </select>
+</section>
+<script>
+const idiomaSelect =
+ document.getElementById("idioma-escolhido");
+
+idiomaSelect.value =
+ localStorage.getItem("modeloPlayIdioma") || "pt";
+
+idiomaSelect.addEventListener("change", () => {
+ localStorage.setItem(
+  "modeloPlayIdioma", idiomaSelect.value
+ );
+ document.documentElement.lang = idiomaSelect.value;
+});
+
+document.documentElement.lang = idiomaSelect.value;
+</script>
     <!-- SALDO -->
     <section class="saldo">
 
@@ -1202,6 +1236,259 @@ atualizarPais();
   </p>
 </footer>
 
+
+<script id="traducao-botoes">
+(function () {
+  const traducoes = {
+    pt: [
+      "✨ Conhecer a plataforma",
+      "🎮 Jogar agora",
+      "🎁 Ver recompensas",
+      "👤 Meu Perfil",
+      "📢 Anúncios",
+      "💰 Ganhar e Parceiros"
+    ],
+    en: [
+      "✨ Explore the platform",
+      "🎮 Play now",
+      "🎁 View rewards",
+      "👤 My Profile",
+      "📢 Advertisements",
+      "💰 Earn and Partners"
+    ],
+    es: [
+      "✨ Conocer la plataforma",
+      "🎮 Jugar ahora",
+      "🎁 Ver recompensas",
+      "👤 Mi perfil",
+      "📢 Anuncios",
+      "💰 Ganar y socios"
+    ],
+    fr: [
+      "✨ Découvrir la plateforme",
+      "🎮 Jouer maintenant",
+      "🎁 Voir les récompenses",
+      "👤 Mon profil",
+      "📢 Publicités",
+      "💰 Gagner et partenaires"
+    ],
+    de: [
+      "✨ Plattform entdecken",
+      "🎮 Jetzt spielen",
+      "🎁 Belohnungen ansehen",
+      "👤 Mein Profil",
+      "📢 Anzeigen",
+      "💰 Verdienen und Partner"
+    ]
+  };
+
+  function traduzirBotoes() {
+    const idioma =
+      document.getElementById("idioma-escolhido").value;
+
+    const botoes =
+      document.querySelectorAll(
+        "main .botoes button"
+      );
+
+    const textos = traducoes[idioma] || traducoes.pt;
+
+    botoes.forEach((botao, i) => {
+      if (i < textos.length) {
+        botao.textContent = textos[i];
+      }
+    });
+  }
+
+  const seletor =
+    document.getElementById("idioma-escolhido");
+
+  seletor.addEventListener("change", traduzirBotoes);
+  traduzirBotoes();
+})();
+</script>
+
+<script id="traducao-titulos">
+(function () {
+ const traducoes = {
+  pt: [
+   "⭐ Seus Pontos",
+   "🚀 Acesso rápido",
+   "🌍 Modelo Play Internacional",
+   "Escolha o seu país para personalizar a experiência!",
+   "🌐 Escolha seu idioma",
+   "💰 Saldo demonstrativo",
+   "Parceiros em destaque"
+  ],
+  en: [
+   "⭐ Your Points",
+   "🚀 Quick Access",
+   "🌍 Model Play International",
+   "Choose your country to personalize your experience!",
+   "🌐 Choose your language",
+   "💰 Demo Balance",
+   "Featured Partners"
+  ],
+  es: [
+   "⭐ Tus puntos",
+   "🚀 Acceso rápido",
+   "🌍 Modelo Play Internacional",
+   "¡Elige tu país para personalizar tu experiencia!",
+   "🌐 Elige tu idioma",
+   "💰 Saldo de demostración",
+   "Socios destacados"
+  ],
+  fr: [
+   "⭐ Vos points",
+   "🚀 Accès rapide",
+   "🌍 Modelo Play International",
+   "Choisissez votre pays pour personnaliser votre expérience !",
+   "🌐 Choisissez votre langue",
+   "💰 Solde de démonstration",
+   "Partenaires à la une"
+  ],
+  de: [
+   "⭐ Deine Punkte",
+   "🚀 Schnellzugriff",
+   "🌍 Modelo Play International",
+   "Wähle dein Land, um dein Erlebnis anzupassen!",
+   "🌐 Sprache wählen",
+   "💰 Demo-Guthaben",
+   "Ausgewählte Partner"
+  ]
+ };
+
+ const seletores = [
+  ".cartao-pontos h2",
+  ".titulo-secao",
+  "#modelo-paises h2",
+  "#modelo-paises > p:first-of-type",
+  "#idioma-modeloplay h2",
+  ".saldo h2",
+  ".parceiros h2"
+ ];
+
+ function traduzirTitulos() {
+  const seletor = document.getElementById("idioma-escolhido");
+  if (!seletor) return;
+
+  const idioma = seletor.value;
+  const textos = traducoes[idioma] || traducoes.pt;
+
+  seletores.forEach((css, i) => {
+   const elemento = document.querySelector(css);
+   if (elemento) elemento.textContent = textos[i];
+  });
+ }
+
+ const seletor = document.getElementById("idioma-escolhido");
+ if (seletor) {
+  seletor.addEventListener("change", traduzirTitulos);
+  traduzirTitulos();
+ }
+})();
+</script>
+
+<script id="traducao-menus">
+(function () {
+ const d = {
+  pt: [
+   "⭐ Pontos:", "Área demonstrativa",
+   "Empresas e parceiros podem divulgar seus produtos e serviços no Nosso Modelo.",
+   "🤝 Ver parceiros",
+   "🏠 Início", "🎮 Jogos", "🎁 Prémios", "👤 Perfil",
+   "🔐 Política de Privacidade",
+   "📧 Contacto:",
+   "📜 Termos e Condições"
+  ],
+  en: [
+   "⭐ Points:", "Demo area",
+   "Companies and partners can promote their products and services on Nosso Modelo.",
+   "🤝 View partners",
+   "🏠 Home", "🎮 Games", "🎁 Rewards", "👤 Profile",
+   "🔐 Privacy Policy",
+   "📧 Contact:",
+   "📜 Terms and Conditions"
+  ],
+  es: [
+   "⭐ Puntos:", "Área de demostración",
+   "Las empresas y los socios pueden promocionar sus productos y servicios en Nosso Modelo.",
+   "🤝 Ver socios",
+   "🏠 Inicio", "🎮 Juegos", "🎁 Premios", "👤 Perfil",
+   "🔐 Política de privacidad",
+   "📧 Contacto:",
+   "📜 Términos y condiciones"
+  ],
+  fr: [
+   "⭐ Points :", "Zone de démonstration",
+   "Les entreprises et partenaires peuvent promouvoir leurs produits et services sur Nosso Modelo.",
+   "🤝 Voir les partenaires",
+   "🏠 Accueil", "🎮 Jeux", "🎁 Récompenses", "👤 Profil",
+   "🔐 Politique de confidentialité",
+   "📧 Contact :",
+   "📜 Conditions générales"
+  ],
+  de: [
+   "⭐ Punkte:", "Demobereich",
+   "Unternehmen und Partner können ihre Produkte und Dienstleistungen auf Nosso Modelo präsentieren.",
+   "🤝 Partner ansehen",
+   "🏠 Startseite", "🎮 Spiele", "🎁 Prämien", "👤 Profil",
+   "🔐 Datenschutzerklärung",
+   "📧 Kontakt:",
+   "📜 Nutzungsbedingungen"
+  ]
+ };
+
+ const css = [
+  ".saldo p",
+  ".saldo .demonstrativo",
+  ".parceiros p",
+  ".parceiros .botao-parceiro",
+  ".v4-menu a:nth-child(1)",
+  ".v4-menu a:nth-child(2)",
+  ".v4-menu a:nth-child(3)",
+  ".v4-menu a:nth-child(4)",
+  "#rodape-privacidade a[href='politica-privacidade.html']",
+  "#rodape-privacidade p:nth-of-type(2)",
+  "#rodape-privacidade a[href='termos-condicoes.html']"
+ ];
+
+ function traduzir() {
+  const seletor = document.getElementById("idioma-escolhido");
+  if (!seletor) return;
+
+  const textos = d[seletor.value] || d.pt;
+
+  css.forEach((s, i) => {
+   const el = document.querySelector(s);
+   if (!el) return;
+
+   if (i === 0) {
+    const span = el.querySelector("#pontosInicio");
+    const valor = span ? span.textContent : "0";
+    el.textContent = textos[i] + " ";
+    if (span) el.appendChild(span);
+   } else if (i === 9) {
+    const link = el.querySelector("a");
+    if (link) {
+     el.replaceChildren(
+      document.createTextNode(textos[i] + " "),
+      link
+     );
+    }
+   } else {
+    el.textContent = textos[i];
+   }
+  });
+ }
+
+ const seletor = document.getElementById("idioma-escolhido");
+ if (seletor) {
+  seletor.addEventListener("change", traduzir);
+  traduzir();
+ }
+})();
+</script>
 <script src="assistente-ju.js"></script>
 </body>
 </html>
