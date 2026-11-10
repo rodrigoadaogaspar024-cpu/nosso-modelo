@@ -937,6 +937,107 @@ body { padding-bottom: 85px; }
 
     </section>
 
+
+<section id="modelo-paises" aria-label="Escolher país">
+  <h2>🌍 Modelo Play Internacional</h2>
+  <p>Escolha o seu país para personalizar a experiência!</p>
+  <div class="paises-grid">
+<button type="button" class="pais-botao" data-pais="PT" onclick="selecionarPais(this)">🇵🇹 Portugal</button>
+<button type="button" class="pais-botao" data-pais="BR" onclick="selecionarPais(this)">🇧🇷 Brasil</button>
+<button type="button" class="pais-botao" data-pais="AO" onclick="selecionarPais(this)">🇦🇴 Angola</button>
+<button type="button" class="pais-botao" data-pais="MZ" onclick="selecionarPais(this)">🇲🇿 Moçambique</button>
+<button type="button" class="pais-botao" data-pais="CV" onclick="selecionarPais(this)">🇨🇻 Cabo Verde</button>
+<button type="button" class="pais-botao" data-pais="GW" onclick="selecionarPais(this)">🇬🇼 Guiné-Bissau</button>
+<button type="button" class="pais-botao" data-pais="ST" onclick="selecionarPais(this)">🇸🇹 São Tomé e Príncipe</button>
+<button type="button" class="pais-botao" data-pais="TL" onclick="selecionarPais(this)">🇹🇱 Timor-Leste</button>
+<button type="button" class="pais-botao" data-pais="ES" onclick="selecionarPais(this)">🇪🇸 Espanha</button>
+<button type="button" class="pais-botao" data-pais="FR" onclick="selecionarPais(this)">🇫🇷 França</button>
+<button type="button" class="pais-botao" data-pais="DE" onclick="selecionarPais(this)">🇩🇪 Alemanha</button>
+<button type="button" class="pais-botao" data-pais="IT" onclick="selecionarPais(this)">🇮🇹 Itália</button>
+<button type="button" class="pais-botao" data-pais="GB" onclick="selecionarPais(this)">🇬🇧 Reino Unido</button>
+<button type="button" class="pais-botao" data-pais="IE" onclick="selecionarPais(this)">🇮🇪 Irlanda</button>
+<button type="button" class="pais-botao" data-pais="CH" onclick="selecionarPais(this)">🇨🇭 Suíça</button>
+<button type="button" class="pais-botao" data-pais="BE" onclick="selecionarPais(this)">🇧🇪 Bélgica</button>
+<button type="button" class="pais-botao" data-pais="NL" onclick="selecionarPais(this)">🇳🇱 Países Baixos</button>
+<button type="button" class="pais-botao" data-pais="LU" onclick="selecionarPais(this)">🇱🇺 Luxemburgo</button>
+<button type="button" class="pais-botao" data-pais="US" onclick="selecionarPais(this)">🇺🇸 Estados Unidos</button>
+<button type="button" class="pais-botao" data-pais="CA" onclick="selecionarPais(this)">🇨🇦 Canadá</button>
+<button type="button" class="pais-botao" data-pais="MX" onclick="selecionarPais(this)">🇲🇽 México</button>
+<button type="button" class="pais-botao" data-pais="AR" onclick="selecionarPais(this)">🇦🇷 Argentina</button>
+<button type="button" class="pais-botao" data-pais="CL" onclick="selecionarPais(this)">🇨🇱 Chile</button>
+<button type="button" class="pais-botao" data-pais="CO" onclick="selecionarPais(this)">🇨🇴 Colômbia</button>
+<button type="button" class="pais-botao" data-pais="UY" onclick="selecionarPais(this)">🇺🇾 Uruguai</button>
+<button type="button" class="pais-botao" data-pais="PY" onclick="selecionarPais(this)">🇵🇾 Paraguai</button>
+<button type="button" class="pais-botao" data-pais="PE" onclick="selecionarPais(this)">🇵🇪 Peru</button>
+<button type="button" class="pais-botao" data-pais="ZA" onclick="selecionarPais(this)">🇿🇦 África do Sul</button>
+<button type="button" class="pais-botao" data-pais="JP" onclick="selecionarPais(this)">🇯🇵 Japão</button>
+<button type="button" class="pais-botao" data-pais="IN" onclick="selecionarPais(this)">🇮🇳 Índia</button>
+  </div>
+  <p id="pais-escolhido" aria-live="polite"></p>
+</section>
+
+<style>
+#modelo-paises {
+  margin: 28px 0;
+  padding: 22px 14px;
+  border-radius: 18px;
+  background: #101c35;
+  color: white;
+  text-align: center;
+}
+.paises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+#modelo-paises .pais-botao {
+  padding: 12px 8px;
+  border: 1px solid #526887;
+  border-radius: 10px;
+  background: #23365a;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+#modelo-paises .pais-botao.ativo {
+  background: #087b65;
+  border: 2px solid #62f5c4;
+}
+#pais-escolhido {
+  margin-top: 16px;
+  font-weight: bold;
+}
+</style>
+
+<script>
+function selecionarPais(botao) {
+  const codigo = botao.dataset.pais;
+  localStorage.setItem("modeloPlayPais", codigo);
+  atualizarPais();
+}
+
+function atualizarPais() {
+  const codigo = localStorage.getItem("modeloPlayPais");
+  const botoes = document.querySelectorAll(
+    "#modelo-paises .pais-botao"
+  );
+  let nome = "";
+
+  botoes.forEach(botao => {
+    const ativo = botao.dataset.pais === codigo;
+    botao.classList.toggle("ativo", ativo);
+    botao.setAttribute("aria-pressed", String(ativo));
+    if (ativo) nome = botao.textContent.trim();
+  });
+
+  document.getElementById("pais-escolhido").textContent =
+    nome ? "✅ País selecionado: " + nome : "";
+}
+
+atualizarPais();
+</script>
+
     <!-- SALDO -->
     <section class="saldo">
 
