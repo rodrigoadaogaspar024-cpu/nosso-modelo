@@ -257,5 +257,18 @@
     botao.setAttribute("aria-expanded", String(!aberto));
   });
 
+
   document.body.append(janela, botao);
+
+  // Boas-vindas automaticas, sem reproduzir som.
+  // Abre apenas uma vez por sessao do navegador.
+  const chaveBoasVindas = "modeloPlayJuBoasVindas";
+
+  if (!sessionStorage.getItem(chaveBoasVindas)) {
+    sessionStorage.setItem(chaveBoasVindas, "1");
+
+    janela.style.display = "block";
+    botao.setAttribute("aria-expanded", "true");
+  }
+
 })();
