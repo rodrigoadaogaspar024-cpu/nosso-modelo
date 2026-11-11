@@ -180,7 +180,7 @@
 
         const { data: pedidos, error } = await cliente
           .from("parceiros")
-          .select("id,nome,empresa,email,whatsapp,mensagem,criado_em,aprovado")
+          .select("id,nome,empresa,email,whatsapp,mensagem,criado_em,aprovado,tipo_parceiro,atividade_confirmada,atividade_verificada")
           .order("criado_em", { ascending: false });
 
         if (error) throw error;
@@ -201,6 +201,16 @@
 
           const campos = [
             ["👤 Nome", pedido.nome],
+            ["🤝 Tipo de parceiro",
+              pedido.tipo_parceiro || "Não informado"],
+            ["📋 Atividade profissional",
+              pedido.atividade_confirmada === true
+                ? "Declarada — verificar antes de aprovar"
+                : "Não confirmada"],
+            ["🔒 Verificação administrativa",
+              pedido.atividade_verificada === true
+                ? "Atividade verificada"
+                : "Pendente de verificação"],
             ["📧 E-mail", pedido.email],
             ["📱 WhatsApp", pedido.whatsapp],
             ["🕐 Data", pedido.criado_em
