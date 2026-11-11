@@ -75,11 +75,11 @@
       ouvir: "🔊 Ouvir saudação",
       parar: "🔇 Parar voz",
       perguntas: [
-        ["📝 Como faço meu cadastro?", "Abra Cadastro, informe seus dados e siga as instruções de confirmação do e-mail."],
-        ["🎮 Como posso jogar?", "Entre em Jogos, escolha um jogo e siga as instruções."],
-        ["⭐ Como funcionam os pontos?", "Os jogos elegíveis podem guardar pontos no seu perfil. Consulte as regras de cada jogo."],
-        ["🎁 Como funcionam os prémios?", "Consulte a página de Prémios. A disponibilidade depende das ofertas e regras ativas."],
-        ["🤝 Como ser parceiro?", "Abra Seja Parceiro e envie sua proposta comercial."]
+        ["📝 Como faço meu cadastro?", "Para começar no Modelo Play, abra a página Cadastro. Informe seu nome, e-mail e crie uma senha segura. Depois, siga as instruções de confirmação enviadas para seu e-mail. Quando sua conta estiver confirmada, entre com seu e-mail e senha. No seu perfil, você poderá consultar seus pontos e histórico de partidas."],
+        ["🎮 Como posso jogar?", "Bem-vindo ao Modelo Play! Primeiro, crie a sua conta ou entre no seu perfil. Depois, abra a área de Jogos, escolha o seu favorito e divirta-se! Alguns jogos permitem acumular pontos. Consulte as regras de cada jogo e acompanhe os pontos no seu perfil."],
+        ["⭐ Como funcionam os pontos?", "No Modelo Play, alguns jogos permitem acumular pontos! Primeiro, entre na sua conta e escolha um jogo. Consulte as regras para saber se ele atribui pontos. Quando uma partida elegível é registada com sucesso, os pontos podem ser guardados na sua conta. Abra Meu Perfil para consultar o saldo e o histórico de partidas. Atenção: nem todos os jogos dão pontos, e os pontos não representam dinheiro."],
+        ["🎁 Como funcionam os prémios?", "No Modelo Play, você pode consultar as recompensas na página Recompensas! Entre na sua conta e veja as opções disponíveis. Cada oferta pode ter regras, condições e requisitos próprios. Os pontos acumulados não garantem prémios nem podem ser trocados por dinheiro. O resgate só estará disponível quando a plataforma habilitar uma recompensa válida. Consulte sempre as condições antes de participar!"],
+        ["🤝 Como ser parceiro?", "Quer divulgar a sua empresa no Modelo Play? Seja bem-vindo! Temos um espaço para empresas apresentarem produtos, serviços e ofertas. Abra a página Seja Parceiro e preencha o formulário com os dados da empresa e a sua proposta comercial. A equipa poderá analisar o pedido e entrar em contacto. O envio não garante aprovação automática."]
       ]
     },
     en: {
