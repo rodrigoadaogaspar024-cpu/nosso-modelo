@@ -330,10 +330,27 @@
         placeholder="Digite seu nome">
 
 
+      <!-- TIPO DE PARCEIRO -->
+      <label for="tipoParceiro">
+        🤝 Tipo de parceiro
+      </label>
+
+      <select id="tipoParceiro" required>
+        <option value="">Selecione uma opção</option>
+        <option value="Empresa">🏢 Empresa registada</option>
+        <option value="Profissional independente">👷 Profissional independente</option>
+      </select>
+
+      <label style="display:block; margin:18px 0;">
+        <input type="checkbox" id="atividadeConfirmada">
+        Confirmo que tenho atividade profissional
+        legalmente registada.
+      </label>
+
       <!-- EMPRESA -->
 
       <label for="empresa">
-        🏢 Nome da empresa
+        🏢 Nome da empresa ou atividade profissional
       </label>
 
       <input
@@ -462,6 +479,10 @@
       const email = document.getElementById("email").value.trim();
       const whatsapp = document.getElementById("whatsapp").value.trim();
       const mensagem = document.getElementById("mensagem").value.trim();
+      const tipoParceiro =
+        document.getElementById("tipoParceiro").value;
+      const atividadeConfirmada =
+        document.getElementById("atividadeConfirmada").checked;
       const resultado = document.getElementById("resultado");
       const turnstileToken =
         typeof turnstile !== "undefined"
@@ -477,6 +498,12 @@
       if (!nome || !empresa || !email || !mensagem) {
         resultado.textContent =
           "⚠️ Preencha nome, empresa, e-mail e proposta.";
+        return;
+      }
+
+      if (!tipoParceiro || !atividadeConfirmada) {
+        resultado.textContent =
+          "⚠️ Selecione o tipo de parceiro e confirme a atividade registada.";
         return;
       }
 
@@ -507,6 +534,8 @@
               email,
               whatsapp,
               mensagem,
+              tipoParceiro,
+              atividadeConfirmada,
               dataHora: new Date().toLocaleString("pt-PT")
             })
           }
@@ -526,7 +555,7 @@
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                nome, empresa, email, whatsapp, mensagem, turnstileToken
+                nome, empresa, email, whatsapp, mensagem, tipoParceiro, atividadeConfirmada, turnstileToken
               })
             }
           );
