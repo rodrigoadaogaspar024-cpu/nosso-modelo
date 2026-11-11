@@ -253,6 +253,63 @@
             }
           }
 
+          const botaoVerificar = document.createElement("button");
+          botaoVerificar.type = "button";
+          botaoVerificar.className = "botao";
+
+          const dadosValidos =
+            pedido.atividade_confirmada === true &&
+            ["Empresa", "Profissional independente"]
+              .includes(pedido.tipo_parceiro);
+
+          botaoVerificar.textContent =
+            pedido.atividade_verificada
+              ? "↩️ Retirar verificação"
+              : dadosValidos
+                ? "🔍 Verificar atividade"
+                : "🔒 Verificação indisponível";
+
+          if (!pedido.atividade_verificada && !dadosValidos) {
+            botaoVerificar.disabled = true;
+          }
+
+          botaoVerificar.addEventListener("click", async () => {
+            const verificar = !pedido.atividade_verificada;
+
+            const confirmado = confirm(
+              verificar
+                ? "Confirma que verificou a documentação e a atividade profissional deste parceiro?"
+                : "Retirar a verificação? A aprovação também será retirada."
+            );
+
+            if (!confirmado) return;
+
+            botaoVerificar.disabled = true;
+            botaoVerificar.textContent = "⏳ A guardar...";
+
+            try {
+              const { data, error } = await cliente.rpc(
+                "verificar_atividade_parceiro",
+                {
+                  p_id: pedido.id,
+                  p_verificada: verificar
+                }
+              );
+
+              if (error || data !== verificar) {
+                throw new Error(error?.message || "Sem confirmação");
+              }
+
+              alert("✅ Verificação atualizada!");
+              window.location.reload();
+            } catch (erro) {
+              alert("⚠️ " + erro.message);
+              window.location.reload();
+            }
+          });
+
+          cartao.appendChild(botaoVerificar);
+
           const botao = document.createElement("button");
           botao.type = "button";
           botao.className = "botao";
