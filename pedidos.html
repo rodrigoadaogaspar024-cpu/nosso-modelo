@@ -260,6 +260,19 @@
             ? "❌ Retirar aprovação"
             : "✅ Aprovar parceiro";
 
+          const podeAprovar =
+            pedido.atividade_verificada === true &&
+            pedido.atividade_confirmada === true &&
+            ["Empresa", "Profissional independente"]
+              .includes(pedido.tipo_parceiro);
+
+          if (!pedido.aprovado && !podeAprovar) {
+            botao.disabled = true;
+            botao.textContent = "🔒 Aprovação bloqueada";
+            botao.title =
+              "É necessário verificar a atividade profissional antes de aprovar.";
+          }
+
           botao.addEventListener("click", async () => {
             const aprovar = !pedido.aprovado;
 
